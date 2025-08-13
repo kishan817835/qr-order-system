@@ -12,15 +12,21 @@ const router = express.Router();
 router.get("/categories/restaurant/:restaurantId", async (req, res) => {
   try {
     const { restaurantId } = req.params;
+    let categories;
 
-    const categories = await Category.find({
-      restaurant_id: restaurantId,
-      is_active: true,
-    }).sort({ sort_order: 1, name: 1 });
+    if (!global.mongoConnected) {
+      // Use mock database
+      categories = findCategories(restaurantId);
+    } else {
+      categories = await Category.find({
+        restaurant_id: restaurantId,
+        is_active: true,
+      }).sort({ sort_order: 1, name: 1 });
+    }
 
     res.json({
       success: true,
-      data: { categories },
+      data: categories,
     });
   } catch (error) {
     res.status(500).json({
