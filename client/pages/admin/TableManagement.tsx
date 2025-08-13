@@ -186,6 +186,14 @@ export default function TableManagement() {
     }
   };
 
+  const changeTableStatus = (tableId: number, newStatus: 'available' | 'occupied' | 'reserved' | 'maintenance') => {
+    setTables(tables.map(table =>
+      table.id === tableId
+        ? { ...table, status: newStatus, lastUsed: newStatus === 'available' ? new Date().toISOString().split('T')[0] : table.lastUsed }
+        : table
+    ));
+  };
+
   const printAllQRCodes = () => {
     const printWindow = window.open('', '_blank');
     if (!printWindow) return;
