@@ -72,6 +72,10 @@ const initialState: RestaurantState = {
   categories: [],
   cart: [],
   selectedCategory: null,
+  serviceType: 'dining',
+  tableNumber: null,
+  extraCharges: [],
+  priorityItems: [],
   isLoading: false,
   error: null,
 };
