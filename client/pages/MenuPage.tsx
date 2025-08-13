@@ -169,7 +169,11 @@ export default function MenuPage() {
 
   useEffect(() => {
     const loadRestaurantData = async () => {
+      // Prevent multiple calls if already loading
+      if (state.isLoading) return;
+
       dispatch({ type: "SET_LOADING", payload: true });
+      dispatch({ type: "SET_ERROR", payload: null });
 
       // Get table number and service type from URL params if available
       const urlParams = new URLSearchParams(window.location.search);
@@ -626,7 +630,7 @@ export default function MenuPage() {
                         <div className="flex items-center justify-between mt-3">
                           <div className="flex items-center space-x-2">
                             <span className="font-bold text-primary">
-                              ��{item.price}
+                              ₹{item.price}
                             </span>
                             {item.discount && (
                               <span className="badge badge-orange">
