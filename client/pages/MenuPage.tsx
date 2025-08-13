@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useSearchParams } from 'react-router-dom';
 import { useRestaurant, MenuItem, Category, ServiceType } from '@/context/RestaurantContext';
 import { ShoppingCart, Plus, Minus, Search, Clock, MapPin, Phone, ArrowRight, X } from 'lucide-react';
 import { useCartItemCount } from '@/context/RestaurantContext';
