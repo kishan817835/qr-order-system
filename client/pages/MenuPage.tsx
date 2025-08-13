@@ -190,15 +190,23 @@ export default function MenuPage() {
       try {
         if (!restaurantId) {
           // Use default restaurant ID if none provided
-          const defaultRestaurantId = "1";
+          const defaultRestaurantId = "restaurant_1";
 
-          // Fetch restaurant data
-          const restaurantResponse =
-            await apiService.getRestaurant(defaultRestaurantId);
-          const menuResponse =
-            await apiService.getRestaurantMenu(defaultRestaurantId);
-          const categoriesResponse =
-            await apiService.getCategories(defaultRestaurantId);
+          // Fetch restaurant data sequentially to avoid race conditions
+          const restaurantResponse = await apiService.getRestaurant(defaultRestaurantId);
+          if (!restaurantResponse.success) {
+            throw new Error("Failed to load restaurant data");
+          }
+
+          const menuResponse = await apiService.getRestaurantMenu(defaultRestaurantId);
+          if (!menuResponse.success) {
+            throw new Error("Failed to load menu data");
+          }
+
+          const categoriesResponse = await apiService.getCategories(defaultRestaurantId);
+          if (!categoriesResponse.success) {
+            throw new Error("Failed to load categories data");
+          }
 
           if (
             restaurantResponse.success &&
