@@ -155,6 +155,57 @@ export default function Orders() {
         </button>
       </div>
 
+      {/* Service Type Filter Boxes */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+        <button
+          onClick={() => setFilter('dining')}
+          className={`card p-6 text-center hover:shadow-lg transition cursor-pointer ${
+            filter === 'dining' ? 'border-orange bg-orange-light' : ''
+          }`}
+        >
+          <div className="w-16 h-16 bg-orange rounded-full flex items-center justify-center mx-auto mb-3">
+            <span className="text-2xl">🍽️</span>
+          </div>
+          <h3 className="font-semibold text-primary mb-2">Dining Orders</h3>
+          <p className="text-2xl font-bold text-orange">
+            {orders.filter(order => order.serviceType === 'dining').length}
+          </p>
+          <p className="text-sm text-secondary">Active tables</p>
+        </button>
+
+        <button
+          onClick={() => setFilter('takeaway')}
+          className={`card p-6 text-center hover:shadow-lg transition cursor-pointer ${
+            filter === 'takeaway' ? 'border-orange bg-orange-light' : ''
+          }`}
+        >
+          <div className="w-16 h-16 bg-green rounded-full flex items-center justify-center mx-auto mb-3">
+            <span className="text-2xl">🥡</span>
+          </div>
+          <h3 className="font-semibold text-primary mb-2">Takeaway Orders</h3>
+          <p className="text-2xl font-bold text-green">
+            {orders.filter(order => order.serviceType === 'takeaway').length}
+          </p>
+          <p className="text-sm text-secondary">Ready for pickup</p>
+        </button>
+
+        <button
+          onClick={() => setFilter('delivery')}
+          className={`card p-6 text-center hover:shadow-lg transition cursor-pointer ${
+            filter === 'delivery' ? 'border-orange bg-orange-light' : ''
+          }`}
+        >
+          <div className="w-16 h-16 bg-orange rounded-full flex items-center justify-center mx-auto mb-3">
+            <span className="text-2xl">🚚</span>
+          </div>
+          <h3 className="font-semibold text-primary mb-2">Delivery Orders</h3>
+          <p className="text-2xl font-bold text-orange">
+            {orders.filter(order => order.serviceType === 'delivery').length}
+          </p>
+          <p className="text-sm text-secondary">Out for delivery</p>
+        </button>
+      </div>
+
       {/* Filters */}
       <div className="card mb-6">
         <div className="flex flex-col md:flex-row gap-4">
