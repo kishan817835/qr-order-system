@@ -62,12 +62,8 @@ export default function DeliveryDetailsPage() {
 
   // Mock order data - in real app, this would come from API
   useEffect(() => {
-    if (!orderId || orderId.trim() === '') {
-      return; // Early return, useEffect above will handle redirect
-    }
-
     const mockOrder: DeliveryOrder = {
-      id: orderId,
+      id: effectiveOrderId,
       items: [
         { name: 'Biryani Special', quantity: 1, price: 450 },
         { name: 'Raita', quantity: 1, price: 80 },
