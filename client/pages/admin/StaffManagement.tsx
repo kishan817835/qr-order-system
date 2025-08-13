@@ -329,7 +329,7 @@ export default function StaffManagement() {
                   </span>
                 </td>
                 <td>
-                  <div className="flex space-x-2">
+                  <div className="flex flex-wrap gap-2">
                     <button className="btn btn-secondary btn-sm">
                       <Eye className="w-3 h-3" />
                     </button>
@@ -337,16 +337,25 @@ export default function StaffManagement() {
                       <Edit className="w-3 h-3" />
                     </button>
                     <button
+                      onClick={() => changePassword(member.id)}
+                      className="btn btn-sm bg-purple-600 text-white hover:bg-purple-700"
+                      title="Change Password"
+                    >
+                      <Key className="w-3 h-3" />
+                    </button>
+                    <button
                       onClick={() => toggleStatus(member.id)}
                       className={`btn btn-sm ${
-                        member.status === 'active' ? 'bg-orange text-white' : 'btn-primary'
+                        member.status === 'active' ? 'bg-orange text-white hover:bg-orange-dark' : 'btn-primary'
                       }`}
+                      title={member.status === 'active' ? 'Deactivate Staff' : 'Activate Staff'}
                     >
                       {member.status === 'active' ? 'Deactivate' : 'Activate'}
                     </button>
-                    <button 
+                    <button
                       onClick={() => deleteStaff(member.id)}
-                      className="btn btn-sm bg-red text-white hover:bg-red"
+                      className="btn btn-sm bg-red text-white hover:bg-red-dark"
+                      title="Delete Staff"
                     >
                       <Trash2 className="w-3 h-3" />
                     </button>
