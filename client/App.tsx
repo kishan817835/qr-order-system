@@ -45,6 +45,7 @@ const App = () => (
             <Route path="/KitchenDashboard" element={<KitchenDashboard />} />
             <Route path="/delivery" element={<DeliveryDashboard />} />
             <Route path="/DeliveryDashboard" element={<DeliveryDashboard />} />
+            <Route path="/login" element={<LoginPage />} />
 
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminLayout />}>
