@@ -183,24 +183,26 @@ export default function Items() {
               </div>
             </div>
 
-            <div className="flex space-x-2 mt-4">
+            <div className="space-y-2 mt-4">
               <button
                 onClick={() => toggleItemAvailability(item.id)}
-                className={`btn btn-sm flex-1 ${
+                className={`btn btn-sm w-full text-xs ${
                   item.isAvailable ? 'btn-secondary' : 'btn-primary'
                 }`}
               >
                 {item.isAvailable ? 'Mark Unavailable' : 'Mark Available'}
               </button>
-              <button className="btn btn-secondary btn-sm">
-                <Edit className="w-4 h-4" />
-              </button>
-              <button 
-                onClick={() => deleteItem(item.id)}
-                className="btn btn-sm w-10 h-10 bg-red text-white hover:bg-red"
-              >
-                <Trash2 className="w-4 h-4" />
-              </button>
+              <div className="flex space-x-2">
+                <button className="btn btn-secondary btn-sm flex-1">
+                  <Edit className="w-3 h-3" />
+                </button>
+                <button
+                  onClick={() => deleteItem(item.id)}
+                  className="btn btn-sm flex-1 bg-red text-white hover:bg-red"
+                >
+                  <Trash2 className="w-3 h-3" />
+                </button>
+              </div>
             </div>
           </div>
         ))}
