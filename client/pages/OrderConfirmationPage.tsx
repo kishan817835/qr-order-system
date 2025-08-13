@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { useRestaurant } from '@/context/RestaurantContext';
-import { CheckCircle, Clock, ShoppingBag } from 'lucide-react';
+import { CheckCircle, Clock, ShoppingBag, CreditCard, MapPin } from 'lucide-react';
 
 export default function OrderConfirmationPage() {
   const { state, dispatch } = useRestaurant();
