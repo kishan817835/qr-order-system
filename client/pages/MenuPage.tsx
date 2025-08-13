@@ -289,6 +289,9 @@ export default function MenuPage() {
           },
         });
       }
+
+      // Always ensure loading is set to false
+      dispatch({ type: "SET_LOADING", payload: false });
     };
 
     loadRestaurantData();
