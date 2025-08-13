@@ -205,6 +205,16 @@ export default function DeliveryDashboard() {
               <p className="text-secondary">Manage home delivery orders</p>
             </div>
             <div className="flex items-center space-x-4">
+              {/* Active Delivery Alert */}
+              {(pickedUpOrders.length > 0 || onTheWayOrders.length > 0) && (
+                <div className="bg-red bg-opacity-10 border border-red text-red px-3 py-1 rounded-lg">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-2 h-2 bg-red rounded-full animate-pulse"></div>
+                    <span className="text-sm font-medium">Active Delivery</span>
+                  </div>
+                </div>
+              )}
+
               <div className="hidden md:flex items-center space-x-4">
                 <div className="text-center">
                   <div className="text-lg font-bold text-primary">{orders.length}</div>
