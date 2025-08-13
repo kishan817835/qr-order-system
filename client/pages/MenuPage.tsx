@@ -415,7 +415,7 @@ export default function MenuPage() {
       )}
 
       {/* Banner */}
-      {state.restaurant?.banner_url && (
+      {!isSearching && state.restaurant?.banner_url && (
         <div className="relative">
           <img 
             src={state.restaurant.banner_url}
