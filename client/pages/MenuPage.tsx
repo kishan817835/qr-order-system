@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useRestaurant, MenuItem, Category } from '@/context/RestaurantContext';
 import { ShoppingCart, Plus, Minus, Star, Clock } from 'lucide-react';
 import { useCartItemCount } from '@/context/RestaurantContext';
+import ItemDetailsModal from '@/components/ItemDetailsModal';
 
 // Mock data - In real app, this would come from API
 const mockRestaurantData = {
