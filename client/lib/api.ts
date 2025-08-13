@@ -74,6 +74,96 @@ class ApiService {
     }
   }
 
+  private getMockResponse(endpoint: string): any {
+    // Provide mock data fallbacks for critical endpoints
+    if (endpoint.includes('/restaurants/') && endpoint.includes('/menu')) {
+      return {
+        success: true,
+        data: [
+          {
+            id: 1,
+            name: "Crispy Paneer Tikka",
+            description: "Marinated cottage cheese grilled to perfection with spices",
+            price: 220,
+            category_id: "1",
+            image_url: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop",
+            is_veg: true,
+            is_available: true,
+          },
+          {
+            id: 2,
+            name: "Butter Chicken",
+            description: "Creamy tomato-based curry with tender chicken pieces",
+            price: 320,
+            category_id: "2",
+            image_url: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&h=300&fit=crop",
+            is_veg: false,
+            is_available: true,
+          },
+          {
+            id: 3,
+            name: "Paneer Makhani",
+            description: "Rich and creamy cottage cheese curry",
+            price: 280,
+            category_id: "2",
+            image_url: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop",
+            is_veg: true,
+            is_available: true,
+          },
+          {
+            id: 4,
+            name: "Gulab Jamun",
+            description: "Traditional Indian sweet dumplings in sugar syrup",
+            price: 120,
+            category_id: "3",
+            image_url: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop",
+            is_veg: true,
+            is_available: true,
+          },
+          {
+            id: 5,
+            name: "Masala Chai",
+            description: "Traditional Indian spiced tea",
+            price: 50,
+            category_id: "4",
+            image_url: "https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop",
+            is_veg: true,
+            is_available: true,
+          }
+        ]
+      };
+    }
+
+    if (endpoint.includes('/restaurants/')) {
+      return {
+        success: true,
+        data: {
+          id: 1,
+          name: "Spice Garden",
+          logo_url: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=100&h=100&fit=crop&crop=center",
+          address: "123 Main Street, Food District",
+          phone: "+91 12345 67890",
+          email: "admin@spicegarden.com",
+          banner_url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=300&fit=crop"
+        }
+      };
+    }
+
+    if (endpoint.includes('/categories/restaurant/')) {
+      return {
+        success: true,
+        data: [
+          { id: "1", name: "Starters", description: "Appetizers to start your meal" },
+          { id: "2", name: "Main Course", description: "Hearty main dishes" },
+          { id: "3", name: "Desserts", description: "Sweet treats" },
+          { id: "4", name: "Beverages", description: "Refreshing drinks" }
+        ]
+      };
+    }
+
+    return null;
+  }
+
   // Restaurant APIs
   async getRestaurant(restaurantId: string) {
     return this.request(`/restaurants/${restaurantId}`);
