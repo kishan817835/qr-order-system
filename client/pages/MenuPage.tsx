@@ -193,6 +193,30 @@ export default function MenuPage() {
 
   const selectedCategory = state.categories.find(cat => cat.id === state.selectedCategory);
 
+  // Search functionality
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    setIsSearching(query.length > 0);
+  };
+
+  const clearSearch = () => {
+    setSearchQuery('');
+    setIsSearching(false);
+  };
+
+  // Get filtered items based on search
+  const getFilteredItems = () => {
+    if (!isSearching) return [];
+
+    const allItems = state.categories.flatMap(cat => cat.items);
+    return allItems.filter(item =>
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  };
+
+  const filteredSearchItems = getFilteredItems();
+
   if (state.isLoading) {
     return (
       <div className="min-h-screen bg-gray flex items-center justify-center">
