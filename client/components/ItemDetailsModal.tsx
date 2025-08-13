@@ -38,7 +38,7 @@ export default function ItemDetailsModal({ item, isOpen, onClose }: ItemDetailsM
       <div className="modal-content rounded-t-3xl w-full max-w-md max-h-[90vh] overflow-hidden">
         {/* Header */}
         <div className="relative">
-          <img 
+          <img
             src={item.image_url}
             alt={item.name}
             className="w-full h-64 object-cover"
@@ -47,35 +47,35 @@ export default function ItemDetailsModal({ item, isOpen, onClose }: ItemDetailsM
             onClick={onClose}
             className="absolute top-4 right-4 w-10 h-10 bg-white bg-opacity-90 rounded-full flex items-center justify-center shadow-lg"
           >
-            <X className="w-5 h-5 text-gray-600" />
+            <X className="w-5 h-5 text-secondary" />
           </button>
         </div>
 
         {/* Content */}
         <div className="p-6">
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">{item.name}</h2>
-          <p className="text-gray-600 mb-4 leading-relaxed">{item.description}</p>
-          
+          <h2 className="text-2xl font-bold text-primary mb-2">{item.name}</h2>
+          <p className="text-secondary mb-4 leading-relaxed">{item.description}</p>
+
           {/* Price */}
           <div className="mb-6">
-            <span className="text-2xl font-bold text-gray-900">₹{item.price}</span>
+            <span className="text-2xl font-bold text-primary">₹{item.price}</span>
           </div>
 
           {/* Quantity Selector */}
           <div className="mb-6">
-            <p className="text-sm font-medium text-gray-700 mb-3">Quantity</p>
+            <p className="text-sm font-medium text-primary mb-3">Quantity</p>
             <div className="flex items-center space-x-4">
               <button
                 onClick={decrementQuantity}
-                className="w-12 h-12 rounded-full bg-gray-100 text-gray-600 flex items-center justify-center hover:bg-gray-200 transition-colors"
+                className="w-12 h-12 rounded-full bg-muted text-secondary flex items-center justify-center hover:bg-border transition"
                 disabled={quantity <= 1}
               >
                 <Minus className="w-5 h-5" />
               </button>
-              <span className="text-xl font-semibold text-gray-900 w-8 text-center">{quantity}</span>
+              <span className="text-xl font-semibold text-primary w-8 text-center">{quantity}</span>
               <button
                 onClick={incrementQuantity}
-                className="w-12 h-12 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center hover:bg-orange-200 transition-colors"
+                className="w-12 h-12 rounded-full bg-orange-light text-orange flex items-center justify-center hover:bg-orange transition"
               >
                 <Plus className="w-5 h-5" />
               </button>
@@ -85,14 +85,14 @@ export default function ItemDetailsModal({ item, isOpen, onClose }: ItemDetailsM
           {/* Add to Cart Button */}
           <button
             onClick={handleAddToCart}
-            className="w-full py-4 bg-orange-500 text-white rounded-xl font-semibold text-lg hover:bg-orange-600 transition-colors flex items-center justify-center space-x-2"
+            className="btn btn-primary btn-lg w-full"
           >
             <span>Add {quantity} to Cart • ₹{item.price * quantity}</span>
           </button>
 
           {/* Current Cart Info */}
           {currentCartQuantity > 0 && (
-            <p className="text-center text-sm text-gray-600 mt-3">
+            <p className="text-center text-sm text-secondary mt-3">
               {currentCartQuantity} already in cart
             </p>
           )}
