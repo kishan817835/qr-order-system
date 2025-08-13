@@ -16,6 +16,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import Orders from "./pages/admin/Orders";
 import Categories from "./pages/admin/Categories";
 import Items from "./pages/admin/Items";
+import Charges from "./pages/admin/Charges";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
