@@ -117,8 +117,6 @@ export default function DeliveryDashboard() {
     }
   ]);
 
-  const [currentTime, setCurrentTime] = useState(new Date());
-
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 30000);
     return () => clearInterval(timer);
