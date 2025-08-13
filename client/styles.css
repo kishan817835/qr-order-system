@@ -526,6 +526,8 @@ body {
 
 /* Additional utilities */
 .aspect-square { aspect-ratio: 1 / 1; }
+.aspect-video { aspect-ratio: 16 / 9; }
+.aspect-[4/3] { aspect-ratio: 4 / 3; }
 .whitespace-nowrap { white-space: nowrap; }
 .max-w-md { max-width: 448px; }
 .max-w-500 { max-width: 500px; }
