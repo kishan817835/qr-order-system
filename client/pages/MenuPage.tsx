@@ -274,24 +274,10 @@ export default function MenuPage() {
         }
       } catch (error) {
         console.error("Error loading restaurant data:", error);
-
-        // Fallback to mock data if API fails
-        const priorityItems = mockRestaurantData.categories
-          .flatMap((cat) => cat.items)
-          .filter((item) => item.isPriority);
-
-        dispatch({
-          type: "SET_RESTAURANT_DATA",
-          payload: {
-            restaurant: mockRestaurantData.restaurant,
-            categories: mockRestaurantData.categories,
-            priorityItems,
-          },
-        });
+        dispatch({ type: "SET_ERROR", payload: "Failed to load restaurant data" });
+      } finally {
+        dispatch({ type: "SET_LOADING", payload: false });
       }
-
-      // Always ensure loading is set to false
-      dispatch({ type: "SET_LOADING", payload: false });
     };
 
     loadRestaurantData();
