@@ -125,6 +125,18 @@ export default function MenuPage() {
   const { restaurantId } = useParams<{ restaurantId: string }>();
   const { state, dispatch } = useRestaurant();
   const cartItemCount = useCartItemCount();
+  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openItemModal = (item: MenuItem) => {
+    setSelectedItem(item);
+    setIsModalOpen(true);
+  };
+
+  const closeItemModal = () => {
+    setIsModalOpen(false);
+    setSelectedItem(null);
+  };
 
   useEffect(() => {
     // In real app, fetch data from API using restaurantId
