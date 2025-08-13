@@ -4,6 +4,7 @@ import Restaurant from "../models/Restaurant.js";
 import Category from "../models/Category.js";
 import MenuItem from "../models/MenuItem.js";
 import ExtraCharge from "../models/ExtraCharge.js";
+import { findRestaurant, findMenuItems } from "../data/mockDatabase.js";
 
 const router = express.Router();
 
