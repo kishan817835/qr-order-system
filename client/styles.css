@@ -842,3 +842,38 @@ body {
     gap: 12px;
   }
 }
+
+/* Purple Color Variants */
+.bg-purple-600 { background-color: #7c3aed; }
+.text-purple-600 { color: #7c3aed; }
+.border-purple-600 { border-color: #7c3aed; }
+.hover\:bg-purple-700:hover { background-color: #6d28d9; }
+.hover\:bg-purple-600:hover { background-color: #7c3aed; }
+
+/* Orange Dark Variants */
+.hover\:bg-orange-dark:hover { background-color: #ea580c; }
+
+/* Red Dark Variants */
+.hover\:bg-red-dark:hover { background-color: #dc2626; }
+
+/* Line Clamp Utility */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Aspect Ratio Utilities */
+.aspect-square {
+  aspect-ratio: 1 / 1;
+}
+
+/* Object Fit Utilities */
+.object-contain {
+  object-fit: contain;
+}
+
+.object-cover {
+  object-fit: cover;
+}
