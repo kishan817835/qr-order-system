@@ -1,16 +1,17 @@
 import { useState } from 'react';
-import { 
-  Plus, 
-  Edit3, 
-  Trash2, 
-  QrCode, 
-  Users, 
-  MapPin, 
+import {
+  Plus,
+  Edit3,
+  Trash2,
+  QrCode,
+  Users,
+  MapPin,
   Eye,
   Download,
   Copy,
   Check
 } from 'lucide-react';
+import QRCodeGenerator from '../../components/QRCodeGenerator';
 
 interface RestaurantTable {
   id: number;
