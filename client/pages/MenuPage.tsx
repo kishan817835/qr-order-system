@@ -619,11 +619,14 @@ export default function MenuPage() {
       )}
 
       {/* Item Details Modal */}
-      <ItemDetailsModal 
+      <ItemDetailsModal
         item={selectedItem}
         isOpen={isModalOpen}
         onClose={closeItemModal}
       />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
