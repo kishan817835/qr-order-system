@@ -286,7 +286,7 @@ export default function MenuPage() {
     };
 
     loadRestaurantData();
-  }, [restaurantId, dispatch]);
+  }, [restaurantId]);
 
   const openItemModal = (item: MenuItem) => {
     setSelectedItem(item);
@@ -626,7 +626,7 @@ export default function MenuPage() {
                         <div className="flex items-center justify-between mt-3">
                           <div className="flex items-center space-x-2">
                             <span className="font-bold text-primary">
-                              ₹{item.price}
+                              ��{item.price}
                             </span>
                             {item.discount && (
                               <span className="badge badge-orange">
