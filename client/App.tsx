@@ -155,4 +155,7 @@ const App = () => (
   </QueryClientProvider>
 );
 
+console.log("🚀 Starting React app...");
+console.log("Root element:", document.getElementById("root"));
+
 createRoot(document.getElementById("root")!).render(<App />);
