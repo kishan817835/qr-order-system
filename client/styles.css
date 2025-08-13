@@ -496,7 +496,7 @@ body {
 .w-90 { width: 90%; }
 .leading-relaxed { line-height: 1.625; }
 .transform { transform: var(--transform, none); }
-.-translate-y-1/2 { --transform: translateY(-50%); }
+.translate-y-neg-half { --transform: translateY(-50%); }
 .border-red { border-color: var(--danger-color); }
 .text-red { color: var(--danger-color); }
 .capitalize { text-transform: capitalize; }
