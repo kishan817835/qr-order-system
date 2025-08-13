@@ -10,22 +10,6 @@
   <body>
     <div id="root"></div>
 
-    <script type="module">
-      import React from 'react';
-      import { createRoot } from 'react-dom/client';
-      import TestApp from '/client/TestApp.tsx';
-
-      console.log('🚀 Loading test app...');
-      const root = document.getElementById('root');
-      console.log('Root element found:', root);
-
-      if (root) {
-        createRoot(root).render(React.createElement(TestApp));
-        console.log('✅ Test app rendered');
-      } else {
-        console.error('❌ Root element not found');
-        document.body.innerHTML = '<h1 style="color: red; text-align: center; margin-top: 50px;">❌ Root element not found</h1>';
-      }
-    </script>
+    <script type="module" src="/client/App.tsx"></script>
   </body>
 </html>
