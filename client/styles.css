@@ -208,6 +208,34 @@ body {
   background-color: #ec4899;
 }
 
+.bg-purple-600 {
+  background-color: #9333ea;
+}
+
+.bg-purple-50 {
+  background-color: #faf5ff;
+}
+
+.text-purple-600 {
+  color: #9333ea;
+}
+
+.text-purple-800 {
+  color: #6b21a8;
+}
+
+.text-blue-600 {
+  color: #2563eb;
+}
+
+.text-blue-800 {
+  color: #1e40af;
+}
+
+.bg-blue-50 {
+  background-color: #eff6ff;
+}
+
 /* Border utilities */
 .border {
   border: 1px solid var(--border-color);
