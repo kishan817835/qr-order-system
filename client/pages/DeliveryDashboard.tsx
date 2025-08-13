@@ -170,17 +170,80 @@ export default function DeliveryDashboard() {
               <p className="text-secondary">Manage home delivery orders</p>
             </div>
             <div className="flex items-center space-x-4">
-              <div className="text-center">
-                <div className="text-lg font-bold text-primary">{orders.length}</div>
-                <div className="text-xs text-secondary">Total Deliveries</div>
+              <div className="hidden md:flex items-center space-x-4">
+                <div className="text-center">
+                  <div className="text-lg font-bold text-primary">{orders.length}</div>
+                  <div className="text-xs text-secondary">Total Deliveries</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold text-orange">{readyOrders.length}</div>
+                  <div className="text-xs text-secondary">Ready for Pickup</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-lg font-bold text-blue-600">{onTheWayOrders.length}</div>
+                  <div className="text-xs text-secondary">On the Way</div>
+                </div>
               </div>
-              <div className="text-center">
-                <div className="text-lg font-bold text-orange">{readyOrders.length}</div>
-                <div className="text-xs text-secondary">Ready for Pickup</div>
-              </div>
-              <div className="text-center">
-                <div className="text-lg font-bold text-blue-600">{onTheWayOrders.length}</div>
-                <div className="text-xs text-secondary">On the Way</div>
+
+              {/* Profile Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => setShowProfileDropdown(!showProfileDropdown)}
+                  className="flex items-center space-x-3 p-2 rounded-lg border hover:bg-gray transition"
+                >
+                  <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+                    {deliveryProfile.photo ? (
+                      <img src={deliveryProfile.photo} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
+                    ) : (
+                      <User className="w-4 h-4 text-white" />
+                    )}
+                  </div>
+                  <div className="text-left hidden md:block">
+                    <p className="text-sm font-medium text-primary">{deliveryProfile.name}</p>
+                    <p className="text-xs text-secondary">Delivery Boy</p>
+                  </div>
+                  <ChevronDown className="w-4 h-4 text-secondary" />
+                </button>
+
+                {showProfileDropdown && (
+                  <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-lg border z-50">
+                    <div className="p-4">
+                      <div className="flex items-center space-x-3 mb-4">
+                        <div className="w-12 h-12 bg-blue-600 rounded-full flex items-center justify-center">
+                          {deliveryProfile.photo ? (
+                            <img src={deliveryProfile.photo} alt="Profile" className="w-12 h-12 rounded-full object-cover" />
+                          ) : (
+                            <User className="w-6 h-6 text-white" />
+                          )}
+                        </div>
+                        <div>
+                          <p className="font-medium text-primary">{deliveryProfile.name}</p>
+                          <p className="text-sm text-secondary">{deliveryProfile.email}</p>
+                        </div>
+                      </div>
+
+                      <div className="space-y-2">
+                        <button
+                          onClick={() => {
+                            setShowProfileModal(true);
+                            setShowProfileDropdown(false);
+                          }}
+                          className="w-full text-left px-3 py-2 text-sm text-primary hover:bg-gray rounded-md transition"
+                        >
+                          <User className="w-4 h-4 mr-2 inline" />
+                          View Profile
+                        </button>
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-3 py-2 text-sm text-red hover:bg-gray rounded-md transition"
+                        >
+                          <LogOut className="w-4 h-4 mr-2 inline" />
+                          Logout
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
