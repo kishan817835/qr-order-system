@@ -29,7 +29,32 @@ const navigationItems = [
 
 export default function AdminLayout() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const [adminProfile, setAdminProfile] = useState({
+    id: 1,
+    name: 'Admin User',
+    email: 'admin@spicegarden.com',
+    phone: '+91 98765 00000',
+    address: 'Restaurant Head Office, Delhi',
+    photo: null,
+    role: 'admin'
+  });
+
+  const handleLogout = () => {
+    if (window.confirm('Are you sure you want to logout?')) {
+      localStorage.removeItem('userRole');
+      navigate('/login');
+    }
+  };
+
+  const handleUpdateProfile = (updatedProfile: any) => {
+    setAdminProfile(updatedProfile);
+  };
 
   return (
     <div className="min-h-screen bg-gray">
