@@ -95,7 +95,7 @@ export default function DeliveryDetailsPage() {
 
     setOrder(mockOrder);
     setCurrentStatus(mockOrder.status);
-  }, [orderId]);
+  }, [effectiveOrderId]);
 
   // Get current location
   useEffect(() => {
