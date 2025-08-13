@@ -528,38 +528,18 @@ export default function TableManagement() {
               </button>
             </div>
 
-            <div className="text-center space-y-4">
-              {/* QR Code Placeholder */}
-              <div className="w-48 h-48 bg-muted rounded-lg flex items-center justify-center mx-auto">
-                <div className="text-center">
-                  <QrCode className="w-16 h-16 text-secondary mx-auto mb-2" />
-                  <p className="text-sm text-secondary">QR Code for Table {selectedTable.tableNumber}</p>
-                </div>
-              </div>
-
-              <div className="space-y-2">
-                <p className="text-sm font-medium text-primary">Scan to Order</p>
-                <p className="text-xs text-secondary">Customers can scan this code to order directly to this table</p>
-              </div>
-
-              <div className="bg-muted p-3 rounded-lg">
-                <p className="text-xs text-secondary break-all">{selectedTable.qrCodeUrl}</p>
-              </div>
-
-              <div className="flex space-x-3">
-                <button
-                  onClick={() => copyQRUrl(selectedTable)}
-                  className="btn btn-secondary flex-1"
-                >
-                  <Copy className="w-4 h-4 mr-2" />
-                  Copy URL
-                </button>
-                <button className="btn btn-primary flex-1">
-                  <Download className="w-4 h-4 mr-2" />
-                  Download QR
-                </button>
-              </div>
-            </div>
+            <QRCodeGenerator
+              text={selectedTable.qrCodeUrl}
+              size={192}
+              tableNumber={selectedTable.tableNumber}
+              onCopy={() => {
+                setCopiedTableId(selectedTable.id);
+                setTimeout(() => setCopiedTableId(null), 2000);
+              }}
+              onDownload={() => {
+                console.log(`Downloaded QR for Table ${selectedTable.tableNumber}`);
+              }}
+            />
           </div>
         </div>
       )}
