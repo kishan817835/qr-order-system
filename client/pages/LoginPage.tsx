@@ -253,6 +253,7 @@ export default function LoginPage() {
                 <p><strong>Admin:</strong> admin@spicegarden.com / admin123</p>
                 <p><strong>Kitchen:</strong> kitchen@spicegarden.com / kitchen123</p>
                 <p><strong>Delivery:</strong> delivery@spicegarden.com / delivery123</p>
+                <p><strong>General Staff:</strong> staff@spicegarden.com / staff123</p>
               </div>
             </div>
           </div>
