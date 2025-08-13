@@ -5,6 +5,7 @@ import MenuItem from "../models/MenuItem.js";
 import User from "../models/User.js";
 import Restaurant from "../models/Restaurant.js";
 import ExtraCharge from "../models/ExtraCharge.js";
+import { getDashboardStats, getOrders } from "../data/mockDatabase.js";
 
 const router = express.Router();
 
