@@ -9,8 +9,13 @@ export default function Index() {
     // Prevent multiple redirects
     if (!redirected) {
       setRedirected(true);
-      // Use replace instead of navigate to avoid back button issues
-      navigate("/menu/1", { replace: true });
+      // Add small delay to prevent immediate redirect loops
+      const timer = setTimeout(() => {
+        // Use replace instead of navigate to avoid back button issues
+        navigate("/menu/1", { replace: true });
+      }, 100);
+
+      return () => clearTimeout(timer);
     }
   }, [navigate, redirected]);
 
