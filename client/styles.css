@@ -365,6 +365,11 @@ body {
 /* Flex utilities */
 .flex-1 { flex: 1; }
 .flex-shrink-0 { flex-shrink: 0; }
+.items-start { align-items: flex-start; }
+.items-end { align-items: flex-end; }
+.justify-start { justify-content: flex-start; }
+.justify-end { justify-content: flex-end; }
+.self-center { align-self: center; }
 
 /* Object utilities */
 .object-cover { object-fit: cover; }
