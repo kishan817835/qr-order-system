@@ -140,12 +140,18 @@ export default function MenuPage() {
 
   useEffect(() => {
     dispatch({ type: 'SET_LOADING', payload: true });
-    
-    // Get table number from URL params if available
+
+    // Get table number and service type from URL params if available
     const urlParams = new URLSearchParams(window.location.search);
     const tableNumber = urlParams.get('table');
+    const serviceType = urlParams.get('service') as ServiceType;
+
     if (tableNumber) {
       dispatch({ type: 'SET_TABLE_NUMBER', payload: tableNumber });
+    }
+
+    if (serviceType && ['dining', 'takeaway', 'delivery'].includes(serviceType)) {
+      dispatch({ type: 'SET_SERVICE_TYPE', payload: serviceType });
     }
     
     // Simulate API call
