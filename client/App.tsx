@@ -19,6 +19,7 @@ import Items from "./pages/admin/Items";
 import Charges from "./pages/admin/Charges";
 import Settings from "./pages/admin/Settings";
 import KitchenDashboard from "./pages/KitchenDashboard";
+import DeliveryDashboard from "./pages/DeliveryDashboard";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
