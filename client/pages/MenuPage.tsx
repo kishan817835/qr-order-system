@@ -280,7 +280,10 @@ export default function MenuPage() {
 
           const priorityItems = menuItems.filter(
             (item: any) => item.isPriority,
-          );
+          ).map((item: any) => ({
+            ...item,
+            id: item.id || item._id, // Normalize id for React keys
+          }));
 
           dispatch({
             type: "SET_RESTAURANT_DATA",
