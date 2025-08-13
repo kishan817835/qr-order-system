@@ -124,9 +124,43 @@ export default function DeliveryDashboard() {
   }, []);
 
   const updateOrderStatus = (orderId: string, newStatus: DeliveryStatus) => {
-    setOrders(orders.map(order => 
+    setOrders(orders.map(order =>
       order.id === orderId ? { ...order, status: newStatus } : order
     ));
+  };
+
+  const handlePickupOrder = (orderId: string) => {
+    // Check if delivery boy already has an active delivery
+    const hasActiveDelivery = orders.some(order =>
+      (order.status === 'picked-up' || order.status === 'on-the-way')
+    );
+
+    if (hasActiveDelivery) {
+      alert('You already have an active delivery! Please complete current delivery first.');
+      return;
+    }
+
+    // Update order status to picked-up
+    updateOrderStatus(orderId, 'picked-up');
+
+    // Send notifications
+    notifyStakeholders(orderId);
+
+    // Navigate to delivery details page
+    navigate(`/delivery-details/${orderId}`);
+  };
+
+  const notifyStakeholders = (orderId: string) => {
+    const order = orders.find(o => o.id === orderId);
+    if (!order) return;
+
+    // Simulate notifications
+    console.log('📱 SMS to Customer:', `Your order ${orderId} has been picked up by ${deliveryProfile.name} (${deliveryProfile.phone}). Track: ${window.location.origin}/track/TRK${Date.now()}`);
+    console.log('🔔 Admin Notification:', `Order ${orderId} picked up by ${deliveryProfile.name}`);
+    console.log('👨‍🍳 Kitchen Notification:', `Order ${orderId} out for delivery`);
+
+    // Show visual confirmation
+    alert(`✅ Order ${orderId} picked up!\n\n📱 Customer notified with your contact: ${deliveryProfile.phone}\n🔔 Admin & Kitchen updated`);
   };
 
   const getTimeSincePrepared = (preparedAt: string) => {
