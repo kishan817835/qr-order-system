@@ -161,7 +161,7 @@ export default function Orders() {
           <div className="flex-1">
             <label className="form-label">Search Orders</label>
             <div className="relative">
-              <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary" />
+              <Search className="w-4 h-4 absolute left-3 top-1/2 transform translate-y-neg-half text-secondary" />
               <input
                 type="text"
                 placeholder="Search by order ID, customer name, or table..."
