@@ -242,13 +242,19 @@ export default function MenuPage() {
             return (
               <div key={item.id} className="bg-white rounded-xl shadow-sm border p-4">
                 <div className="flex space-x-4">
-                  <img 
+                  <img
                     src={item.image_url}
                     alt={item.name}
-                    className="w-20 h-20 rounded-lg object-cover flex-shrink-0"
+                    className="w-20 h-20 rounded-lg object-cover flex-shrink-0 cursor-pointer"
+                    onClick={() => openItemModal(item)}
                   />
                   <div className="flex-1 min-w-0">
-                    <h3 className="font-semibold text-gray-900 text-lg">{item.name}</h3>
+                    <h3
+                      className="font-semibold text-gray-900 text-lg cursor-pointer hover:text-orange-600 transition-colors"
+                      onClick={() => openItemModal(item)}
+                    >
+                      {item.name}
+                    </h3>
                     <p className="text-sm text-gray-600 mt-1 line-clamp-2">{item.description}</p>
                     <div className="flex items-center justify-between mt-3">
                       <span className="text-lg font-bold text-gray-900">₹{item.price}</span>
