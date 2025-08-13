@@ -22,6 +22,7 @@ import DeliveryManagement from "./pages/admin/DeliveryManagement";
 import StaffManagement from "./pages/admin/StaffManagement";
 import KitchenDashboard from "./pages/KitchenDashboard";
 import DeliveryDashboard from "./pages/DeliveryDashboard";
+import LoginPage from "./pages/LoginPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
