@@ -59,6 +59,30 @@ export default function KitchenDashboard() {
       status: 'ready',
       createdAt: new Date(Date.now() - 1200000).toISOString(),
       estimatedTime: 5
+    },
+    {
+      id: '#1237',
+      items: [
+        { name: 'Dal Makhani', quantity: 2 },
+        { name: 'Roti', quantity: 6 }
+      ],
+      serviceType: 'dining',
+      table: 'Table 12',
+      status: 'pending',
+      createdAt: new Date(Date.now() - 600000).toISOString(),
+      estimatedTime: 18
+    },
+    {
+      id: '#1238',
+      items: [
+        { name: 'Chicken Curry', quantity: 1 },
+        { name: 'Rice', quantity: 1 }
+      ],
+      serviceType: 'delivery',
+      customerName: 'Amit Kumar',
+      status: 'preparing',
+      createdAt: new Date(Date.now() - 800000).toISOString(),
+      estimatedTime: 12
     }
   ]);
 
