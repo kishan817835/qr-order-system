@@ -14,6 +14,15 @@ router.get("/dashboard/:restaurantId", async (req, res) => {
   try {
     const { restaurantId } = req.params;
 
+    if (!global.mongoConnected) {
+      // Use mock database
+      const stats = getDashboardStats(restaurantId);
+      return res.json({
+        success: true,
+        data: stats,
+      });
+    }
+
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const tomorrow = new Date(today);
