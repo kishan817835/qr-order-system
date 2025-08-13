@@ -148,6 +148,9 @@ export default function CartPage() {
           </button>
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
