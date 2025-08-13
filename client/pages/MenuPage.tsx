@@ -172,6 +172,9 @@ export default function MenuPage() {
       // Prevent multiple calls if already loading
       if (state.isLoading) return;
 
+      // If data already exists for this restaurant, don't reload
+      if (state.restaurant && state.categories.length > 0) return;
+
       dispatch({ type: "SET_LOADING", payload: true });
       dispatch({ type: "SET_ERROR", payload: null });
 
