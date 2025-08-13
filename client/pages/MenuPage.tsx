@@ -1,17 +1,18 @@
 import { useEffect, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { useRestaurant, MenuItem, Category } from '@/context/RestaurantContext';
-import { ShoppingCart, Plus, Minus, Star, Clock } from 'lucide-react';
+import { useRestaurant, MenuItem, Category, ServiceType } from '@/context/RestaurantContext';
+import { ShoppingCart, Plus, Minus, Star, Clock, MapPin, Phone, ArrowRight } from 'lucide-react';
 import { useCartItemCount } from '@/context/RestaurantContext';
 import ItemDetailsModal from '@/components/ItemDetailsModal';
 
-// Mock data - In real app, this would come from API
+// Enhanced mock data with new features
 const mockRestaurantData = {
   restaurant: {
     id: 1,
     name: "Spice Garden",
     logo_url: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=100&h=100&fit=crop&crop=center",
-    address: "123 Main Street, Food District"
+    address: "123 Main Street, Food District",
+    banner_url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=300&fit=crop"
   },
   categories: [
     {
@@ -24,7 +25,9 @@ const mockRestaurantData = {
           description: "Marinated cottage cheese grilled to perfection with spices",
           price: 220,
           image_url: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop",
-          category_id: 1
+          category_id: 1,
+          discount: 10,
+          isPriority: true
         },
         {
           id: 2,
@@ -40,7 +43,8 @@ const mockRestaurantData = {
           description: "Fresh vegetables wrapped in crispy pastry",
           price: 180,
           image_url: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop",
-          category_id: 1
+          category_id: 1,
+          discount: 15
         }
       ]
     },
@@ -54,7 +58,8 @@ const mockRestaurantData = {
           description: "Tender chicken in rich tomato and butter gravy",
           price: 380,
           image_url: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&h=300&fit=crop",
-          category_id: 2
+          category_id: 2,
+          isPriority: true
         },
         {
           id: 5,
@@ -70,7 +75,8 @@ const mockRestaurantData = {
           description: "Aromatic basmati rice with tender meat and spices",
           price: 450,
           image_url: "https://images.unsplash.com/photo-1563379091339-03246963d96a?w=400&h=300&fit=crop",
-          category_id: 2
+          category_id: 2,
+          discount: 20
         }
       ]
     },
@@ -106,7 +112,8 @@ const mockRestaurantData = {
           description: "Soft milk dumplings in sugar syrup",
           price: 150,
           image_url: "https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&h=300&fit=crop",
-          category_id: 4
+          category_id: 4,
+          isPriority: true
         },
         {
           id: 10,
@@ -128,6 +135,33 @@ export default function MenuPage() {
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  useEffect(() => {
+    dispatch({ type: 'SET_LOADING', payload: true });
+    
+    // Get table number from URL params if available
+    const urlParams = new URLSearchParams(window.location.search);
+    const tableNumber = urlParams.get('table');
+    if (tableNumber) {
+      dispatch({ type: 'SET_TABLE_NUMBER', payload: tableNumber });
+    }
+    
+    // Simulate API call
+    setTimeout(() => {
+      const priorityItems = mockRestaurantData.categories
+        .flatMap(cat => cat.items)
+        .filter(item => item.isPriority);
+      
+      dispatch({
+        type: 'SET_RESTAURANT_DATA',
+        payload: {
+          restaurant: mockRestaurantData.restaurant,
+          categories: mockRestaurantData.categories,
+          priorityItems
+        }
+      });
+    }, 1000);
+  }, [restaurantId, dispatch]);
+
   const openItemModal = (item: MenuItem) => {
     setSelectedItem(item);
     setIsModalOpen(true);
@@ -137,19 +171,6 @@ export default function MenuPage() {
     setIsModalOpen(false);
     setSelectedItem(null);
   };
-
-  useEffect(() => {
-    // In real app, fetch data from API using restaurantId
-    dispatch({ type: 'SET_LOADING', payload: true });
-    
-    // Simulate API call
-    setTimeout(() => {
-      dispatch({
-        type: 'SET_RESTAURANT_DATA',
-        payload: mockRestaurantData
-      });
-    }, 1000);
-  }, [restaurantId, dispatch]);
 
   const handleAddToCart = (item: MenuItem) => {
     dispatch({ type: 'ADD_TO_CART', payload: item });
@@ -164,15 +185,18 @@ export default function MenuPage() {
     dispatch({ type: 'UPDATE_CART_QUANTITY', payload: { id: itemId, quantity } });
   };
 
+  const handleServiceTypeChange = (serviceType: ServiceType) => {
+    dispatch({ type: 'SET_SERVICE_TYPE', payload: serviceType });
+  };
+
   const selectedCategory = state.categories.find(cat => cat.id === state.selectedCategory);
-  const filteredItems = selectedCategory?.items || [];
 
   if (state.isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Loading menu...</p>
+          <div className="spinner mx-auto mb-4"></div>
+          <p className="text-secondary">Loading menu...</p>
         </div>
       </div>
     );
@@ -180,133 +204,276 @@ export default function MenuPage() {
 
   if (state.error) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray flex items-center justify-center">
         <div className="text-center">
-          <p className="text-red-600">Error: {state.error}</p>
+          <p className="text-red">Error: {state.error}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Restaurant Header */}
-      <div className="bg-white shadow-sm border-b">
-        <div className="max-w-md mx-auto px-4 py-6">
-          <div className="flex items-center space-x-4">
-            <img 
-              src={state.restaurant?.logo_url} 
-              alt={state.restaurant?.name}
-              className="w-16 h-16 rounded-full object-cover"
-            />
-            <div className="flex-1">
-              <h1 className="text-2xl font-bold text-gray-900">{state.restaurant?.name}</h1>
-              <p className="text-sm text-gray-600 mt-1">{state.restaurant?.address}</p>
-              <div className="flex items-center mt-2 text-sm text-gray-500">
-                <Star className="w-4 h-4 text-yellow-400 mr-1" />
-                <span className="mr-3">4.5</span>
-                <Clock className="w-4 h-4 mr-1" />
-                <span>25-30 min</span>
+    <div className="min-h-screen bg-gray">
+      {/* Navbar */}
+      <div className="bg-white shadow border-b sticky top-0 z-10">
+        <div className="container py-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-3">
+              <img 
+                src={state.restaurant?.logo_url} 
+                alt={state.restaurant?.name}
+                className="w-12 h-12 rounded-full object-cover"
+              />
+              <div>
+                <h1 className="text-lg font-bold text-primary">{state.restaurant?.name}</h1>
+                {state.tableNumber && (
+                  <p className="text-sm text-orange">Table #{state.tableNumber}</p>
+                )}
               </div>
+            </div>
+            <div className="flex items-center space-x-2 text-sm text-secondary">
+              <Star className="w-4 h-4 text-warning" />
+              <span>4.5</span>
+              <Clock className="w-4 h-4 ml-2" />
+              <span>25-30 min</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Category Tabs */}
-      <div className="bg-white border-b sticky top-0 z-10">
-        <div className="max-w-md mx-auto">
-          <div className="flex overflow-x-auto scrollbar-hide">
-            {state.categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => dispatch({ type: 'SET_SELECTED_CATEGORY', payload: category.id })}
-                className={`px-6 py-4 whitespace-nowrap text-sm font-medium border-b-2 transition-colors ${
-                  state.selectedCategory === category.id
-                    ? 'border-orange-500 text-orange-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700'
-                }`}
-              >
-                {category.name}
-              </button>
-            ))}
+      {/* Service Type Selection */}
+      <div className="bg-white border-b">
+        <div className="container py-4">
+          <h2 className="text-base font-semibold text-primary mb-3">Choose Service Type</h2>
+          <div className="flex space-x-3">
+            <button
+              onClick={() => handleServiceTypeChange('dining')}
+              className={`service-option ${state.serviceType === 'dining' ? 'active' : ''}`}
+            >
+              <div className="w-8 h-8 bg-orange rounded-full flex items-center justify-center mb-2">
+                <span className="text-white text-sm">🍽️</span>
+              </div>
+              <span className="text-sm font-medium">Dining</span>
+            </button>
+            <button
+              onClick={() => handleServiceTypeChange('takeaway')}
+              className={`service-option ${state.serviceType === 'takeaway' ? 'active' : ''}`}
+            >
+              <div className="w-8 h-8 bg-orange rounded-full flex items-center justify-center mb-2">
+                <span className="text-white text-sm">🥡</span>
+              </div>
+              <span className="text-sm font-medium">Takeaway</span>
+            </button>
+            <button
+              onClick={() => handleServiceTypeChange('delivery')}
+              className={`service-option ${state.serviceType === 'delivery' ? 'active' : ''}`}
+            >
+              <div className="w-8 h-8 bg-orange rounded-full flex items-center justify-center mb-2">
+                <span className="text-white text-sm">🚚</span>
+              </div>
+              <span className="text-sm font-medium">Delivery</span>
+            </button>
           </div>
         </div>
       </div>
 
-      {/* Menu Items */}
-      <div className="max-w-md mx-auto px-4 py-6 pb-24">
-        <div className="space-y-4">
-          {filteredItems.map((item) => {
-            const cartQuantity = getItemCartQuantity(item.id);
-            return (
-              <div key={item.id} className="bg-white rounded-xl shadow-sm border p-4">
-                <div className="flex space-x-4">
-                  <img
-                    src={item.image_url}
-                    alt={item.name}
-                    className="w-20 h-20 rounded-lg object-cover flex-shrink-0 cursor-pointer"
-                    onClick={() => openItemModal(item)}
-                  />
-                  <div className="flex-1 min-w-0">
-                    <h3
-                      className="font-semibold text-gray-900 text-lg cursor-pointer hover:text-orange-600 transition-colors"
-                      onClick={() => openItemModal(item)}
-                    >
-                      {item.name}
-                    </h3>
-                    <p className="text-sm text-gray-600 mt-1 line-clamp-2">{item.description}</p>
-                    <div className="flex items-center justify-between mt-3">
-                      <span className="text-lg font-bold text-gray-900">₹{item.price}</span>
-                      {cartQuantity > 0 ? (
-                        <div className="flex items-center space-x-2">
-                          <button
-                            onClick={() => updateCartQuantity(item.id, cartQuantity - 1)}
-                            className="w-8 h-8 rounded-full bg-orange-100 text-orange-600 flex items-center justify-center hover:bg-orange-200 transition-colors"
-                          >
-                            <Minus className="w-4 h-4" />
-                          </button>
-                          <span className="font-semibold text-gray-900 w-8 text-center">{cartQuantity}</span>
-                          <button
-                            onClick={() => updateCartQuantity(item.id, cartQuantity + 1)}
-                            className="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center hover:bg-orange-600 transition-colors"
-                          >
-                            <Plus className="w-4 h-4" />
-                          </button>
-                        </div>
-                      ) : (
-                        <button
-                          onClick={() => handleAddToCart(item)}
-                          className="px-6 py-2 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-600 transition-colors flex items-center space-x-1"
+      {/* Banner */}
+      {state.restaurant?.banner_url && (
+        <div className="relative">
+          <img 
+            src={state.restaurant.banner_url}
+            alt="Restaurant banner"
+            className="w-full h-32 object-cover"
+          />
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <div className="text-center text-white">
+              <h2 className="text-xl font-bold">Fresh Food Daily</h2>
+              <p className="text-sm">Made with love and finest ingredients</p>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Priority Items */}
+      {state.priorityItems.length > 0 && (
+        <div className="container py-6">
+          <div className="priority-section">
+            <h2 className="text-lg font-bold text-primary mb-4">⭐ Chef's Special</h2>
+            <div className="space-y-3">
+              {state.priorityItems.slice(0, 2).map((item) => {
+                const cartQuantity = getItemCartQuantity(item.id);
+                return (
+                  <div key={item.id} className="bg-white rounded-lg shadow p-4">
+                    <div className="flex space-x-4">
+                      <img 
+                        src={item.image_url}
+                        alt={item.name}
+                        className="w-20 h-20 rounded-lg object-cover cursor-pointer"
+                        onClick={() => openItemModal(item)}
+                      />
+                      <div className="flex-1">
+                        <h3 
+                          className="font-semibold text-primary text-lg cursor-pointer"
+                          onClick={() => openItemModal(item)}
                         >
-                          <Plus className="w-4 h-4" />
-                          <span>Add</span>
-                        </button>
-                      )}
+                          {item.name}
+                        </h3>
+                        <p className="text-sm text-secondary mt-1 line-clamp-2">{item.description}</p>
+                        <div className="flex items-center justify-between mt-3">
+                          <div className="flex items-center space-x-2">
+                            <span className="font-bold text-primary">₹{item.price}</span>
+                            {item.discount && (
+                              <span className="badge badge-orange">{item.discount}% OFF</span>
+                            )}
+                          </div>
+                          {cartQuantity > 0 ? (
+                            <div className="flex items-center space-x-2">
+                              <button
+                                onClick={() => updateCartQuantity(item.id, cartQuantity - 1)}
+                                className="w-8 h-8 rounded-full bg-orange-light text-orange flex items-center justify-center"
+                              >
+                                <Minus className="w-4 h-4" />
+                              </button>
+                              <span className="font-semibold text-primary w-8 text-center">{cartQuantity}</span>
+                              <button
+                                onClick={() => updateCartQuantity(item.id, cartQuantity + 1)}
+                                className="w-8 h-8 rounded-full bg-orange text-white flex items-center justify-center"
+                              >
+                                <Plus className="w-4 h-4" />
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => handleAddToCart(item)}
+                              className="btn btn-primary btn-sm"
+                            >
+                              <Plus className="w-4 h-4 mr-1" />
+                              Add
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Categories */}
+      <div className="container py-6">
+        <h2 className="text-lg font-bold text-primary mb-4">Menu Categories</h2>
+        <div className="category-scroll">
+          {state.categories.map((category) => (
+            <div
+              key={category.id}
+              className="category-card"
+              onClick={() => dispatch({ type: 'SET_SELECTED_CATEGORY', payload: category.id })}
+            >
+              <h3 className="font-semibold text-primary mb-2">{category.name}</h3>
+              <p className="text-sm text-secondary">{category.items.length} items</p>
+              {category.items[0] && (
+                <img 
+                  src={category.items[0].image_url}
+                  alt={category.name}
+                  className="w-full h-20 object-cover rounded mt-3"
+                />
+              )}
+              <div className="flex items-center justify-between mt-3">
+                <span className="text-sm text-orange font-medium">View All</span>
+                <ArrowRight className="w-4 h-4 text-orange" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Selected Category Items */}
+      {selectedCategory && (
+        <div className="container pb-24">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-bold text-primary">{selectedCategory.name}</h2>
+            <span className="text-sm text-secondary">{selectedCategory.items.length} items</span>
+          </div>
+          <div className="space-y-4">
+            {selectedCategory.items.map((item) => {
+              const cartQuantity = getItemCartQuantity(item.id);
+              return (
+                <div key={item.id} className="card">
+                  <div className="flex space-x-4">
+                    <img 
+                      src={item.image_url}
+                      alt={item.name}
+                      className="w-20 h-20 rounded-lg object-cover cursor-pointer"
+                      onClick={() => openItemModal(item)}
+                    />
+                    <div className="flex-1">
+                      <h3 
+                        className="font-semibold text-primary text-lg cursor-pointer"
+                        onClick={() => openItemModal(item)}
+                      >
+                        {item.name}
+                      </h3>
+                      <p className="text-sm text-secondary mt-1 line-clamp-2">{item.description}</p>
+                      <div className="flex items-center justify-between mt-3">
+                        <div className="flex items-center space-x-2">
+                          <span className="font-bold text-primary">₹{item.price}</span>
+                          {item.discount && (
+                            <span className="badge badge-orange">{item.discount}% OFF</span>
+                          )}
+                        </div>
+                        {cartQuantity > 0 ? (
+                          <div className="flex items-center space-x-2">
+                            <button
+                              onClick={() => updateCartQuantity(item.id, cartQuantity - 1)}
+                              className="w-8 h-8 rounded-full bg-orange-light text-orange flex items-center justify-center"
+                            >
+                              <Minus className="w-4 h-4" />
+                            </button>
+                            <span className="font-semibold text-primary w-8 text-center">{cartQuantity}</span>
+                            <button
+                              onClick={() => updateCartQuantity(item.id, cartQuantity + 1)}
+                              className="w-8 h-8 rounded-full bg-orange text-white flex items-center justify-center"
+                            >
+                              <Plus className="w-4 h-4" />
+                            </button>
+                          </div>
+                        ) : (
+                          <button
+                            onClick={() => handleAddToCart(item)}
+                            className="btn btn-primary btn-sm"
+                          >
+                            <Plus className="w-4 h-4 mr-1" />
+                            Add
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
+              );
+            })}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Floating Cart Button */}
       {cartItemCount > 0 && (
         <Link
           to="/cart"
-          className="fixed bottom-6 right-6 bg-orange-500 text-white p-4 rounded-full shadow-lg hover:bg-orange-600 transition-colors z-20"
+          className="fixed bottom-6 right-6 bg-orange text-white p-4 rounded-full shadow-lg z-20 transition"
         >
           <ShoppingCart className="w-6 h-6" />
-          <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
+          <span className="absolute -top-2 -right-2 bg-red text-white text-xs font-bold rounded-full w-6 h-6 flex items-center justify-center">
             {cartItemCount}
           </span>
         </Link>
       )}
 
       {/* Item Details Modal */}
-      <ItemDetailsModal
+      <ItemDetailsModal 
         item={selectedItem}
         isOpen={isModalOpen}
         onClose={closeItemModal}
