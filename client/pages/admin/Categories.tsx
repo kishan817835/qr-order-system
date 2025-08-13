@@ -176,12 +176,18 @@ export default function Categories() {
             </div>
             
             <div className="flex space-x-2 mt-4">
-              <button className="btn btn-secondary btn-sm flex-1">
+              <Link
+                to={`/admin/items?category=${category.name}`}
+                className="btn btn-secondary btn-sm flex-1 text-center"
+              >
                 View Items
-              </button>
-              <button className="btn btn-primary btn-sm flex-1">
+              </Link>
+              <Link
+                to={`/admin/items?action=add&category=${category.id}`}
+                className="btn btn-primary btn-sm flex-1 text-center"
+              >
                 Add Item
-              </button>
+              </Link>
             </div>
           </div>
         ))}
