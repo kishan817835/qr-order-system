@@ -24,6 +24,7 @@ import TableManagement from "./pages/admin/TableManagement";
 import KitchenDashboard from "./pages/KitchenDashboard";
 import DeliveryDashboard from "./pages/DeliveryDashboard";
 import DeliveryDetailsPage from "./pages/DeliveryDetailsPage";
+import TrackingPage from "./pages/TrackingPage";
 import GeneralStaffDashboard from "./pages/GeneralStaffDashboard";
 import LoginPage from "./pages/LoginPage";
 import Index from "./pages/Index";
