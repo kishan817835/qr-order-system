@@ -120,16 +120,51 @@ router.post(
 
       const { email, password } = req.body;
 
+      let user;
+
       // Check if MongoDB is connected
       if (!global.mongoConnected) {
-        return res.status(503).json({
-          success: false,
-          message: "Database connection unavailable",
+        // Use mock database
+        user = findUser({ email });
+        if (!user) {
+          return res.status(401).json({
+            success: false,
+            message: "Invalid credentials",
+          });
+        }
+
+        // Check password with bcrypt
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+          return res.status(401).json({
+            success: false,
+            message: "Invalid credentials",
+          });
+        }
+
+        // Generate token
+        const token = generateToken(user._id);
+
+        res.json({
+          success: true,
+          message: "Login successful",
+          data: {
+            user: {
+              id: user._id,
+              name: user.name,
+              email: user.email,
+              phone: user.phone,
+              role: user.role,
+              restaurant_id: user.restaurant_id,
+            },
+            token,
+          },
         });
+        return;
       }
 
-      // Find user
-      const user = await User.findOne({ email }).select("+password");
+      // Find user from MongoDB
+      user = await User.findOne({ email }).select("+password");
       if (!user) {
         return res.status(401).json({
           success: false,
