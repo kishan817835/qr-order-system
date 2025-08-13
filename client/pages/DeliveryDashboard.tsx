@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { MapPin, Phone, Mail, CreditCard, Clock, CheckCircle, Truck, User } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { MapPin, Phone, Mail, CreditCard, Clock, CheckCircle, Truck, User, LogOut, ChevronDown, X } from 'lucide-react';
+import ProfileCard from '../components/ProfileCard';
 
 type DeliveryStatus = 'ready-for-pickup' | 'picked-up' | 'on-the-way' | 'delivered';
 type PaymentStatus = 'cod' | 'paid-online';
@@ -26,6 +28,31 @@ interface DeliveryOrder {
 }
 
 export default function DeliveryDashboard() {
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const navigate = useNavigate();
+
+  const [deliveryProfile, setDeliveryProfile] = useState({
+    id: 1,
+    name: 'Raj Kumar',
+    email: 'raj.kumar@spicegarden.com',
+    phone: '+91 98765 11111',
+    address: 'Delivery Staff Quarters, Delhi',
+    photo: null,
+    role: 'delivery'
+  });
+
+  const handleLogout = () => {
+    if (window.confirm('Are you sure you want to logout?')) {
+      localStorage.removeItem('userRole');
+      navigate('/login');
+    }
+  };
+
+  const handleUpdateProfile = (updatedProfile: any) => {
+    setDeliveryProfile(updatedProfile);
+  };
   const [orders, setOrders] = useState<DeliveryOrder[]>([
     {
       id: '#1236',
