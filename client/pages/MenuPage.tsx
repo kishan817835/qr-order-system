@@ -208,38 +208,31 @@ export default function MenuPage() {
             throw new Error("Failed to load categories data");
           }
 
-          if (
-            restaurantResponse.success &&
-            menuResponse.success &&
-            categoriesResponse.success
-          ) {
-            const restaurant = restaurantResponse.data;
-            const menuItems = menuResponse.data || [];
-            const categories = categoriesResponse.data || [];
+          // Process the successful responses
+          const restaurant = restaurantResponse.data;
+          const menuItems = menuResponse.data || [];
+          const categories = categoriesResponse.data || [];
 
-            // Group menu items by category
-            const categoriesWithItems = categories.map((category: any) => ({
-              ...category,
-              items: menuItems.filter(
-                (item: any) => item.category_id === category._id,
-              ),
-            }));
+          // Group menu items by category
+          const categoriesWithItems = categories.map((category: any) => ({
+            ...category,
+            items: menuItems.filter(
+              (item: any) => item.category_id === category._id || item.category_id === category.id,
+            ),
+          }));
 
-            const priorityItems = menuItems.filter(
-              (item: any) => item.isPriority,
-            );
+          const priorityItems = menuItems.filter(
+            (item: any) => item.isPriority,
+          );
 
-            dispatch({
-              type: "SET_RESTAURANT_DATA",
-              payload: {
-                restaurant,
-                categories: categoriesWithItems,
-                priorityItems,
-              },
-            });
-          } else {
-            throw new Error("Failed to load restaurant data");
-          }
+          dispatch({
+            type: "SET_RESTAURANT_DATA",
+            payload: {
+              restaurant,
+              categories: categoriesWithItems,
+              priorityItems,
+            },
+          });
         } else {
           // Fetch with provided restaurant ID
           const restaurantResponse =
