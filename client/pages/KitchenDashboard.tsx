@@ -158,6 +158,71 @@ export default function KitchenDashboard() {
         </div>
       </div>
 
+      {/* Service Type Filter */}
+      <div className="bg-white border-b">
+        <div className="container py-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+            <button
+              onClick={() => setFilter('all')}
+              className={`card p-4 text-center hover:shadow-lg transition cursor-pointer ${
+                filter === 'all' ? 'border-orange bg-orange-light' : ''
+              }`}
+            >
+              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center mx-auto mb-2">
+                <span className="text-white text-lg">📋</span>
+              </div>
+              <h3 className="font-semibold text-primary text-sm">All Orders</h3>
+              <p className="text-lg font-bold text-primary">{orders.length}</p>
+            </button>
+
+            <button
+              onClick={() => setFilter('dining')}
+              className={`card p-4 text-center hover:shadow-lg transition cursor-pointer ${
+                filter === 'dining' ? 'border-orange bg-orange-light' : ''
+              }`}
+            >
+              <div className="w-12 h-12 bg-orange rounded-full flex items-center justify-center mx-auto mb-2">
+                <span className="text-white text-lg">🍽️</span>
+              </div>
+              <h3 className="font-semibold text-primary text-sm">Dining</h3>
+              <p className="text-lg font-bold text-orange">
+                {orders.filter(order => order.serviceType === 'dining').length}
+              </p>
+            </button>
+
+            <button
+              onClick={() => setFilter('takeaway')}
+              className={`card p-4 text-center hover:shadow-lg transition cursor-pointer ${
+                filter === 'takeaway' ? 'border-orange bg-orange-light' : ''
+              }`}
+            >
+              <div className="w-12 h-12 bg-green rounded-full flex items-center justify-center mx-auto mb-2">
+                <span className="text-white text-lg">🥡</span>
+              </div>
+              <h3 className="font-semibold text-primary text-sm">Takeaway</h3>
+              <p className="text-lg font-bold text-green">
+                {orders.filter(order => order.serviceType === 'takeaway').length}
+              </p>
+            </button>
+
+            <button
+              onClick={() => setFilter('delivery')}
+              className={`card p-4 text-center hover:shadow-lg transition cursor-pointer ${
+                filter === 'delivery' ? 'border-orange bg-orange-light' : ''
+              }`}
+            >
+              <div className="w-12 h-12 bg-orange rounded-full flex items-center justify-center mx-auto mb-2">
+                <span className="text-white text-lg">🚚</span>
+              </div>
+              <h3 className="font-semibold text-primary text-sm">Delivery</h3>
+              <p className="text-lg font-bold text-orange">
+                {orders.filter(order => order.serviceType === 'delivery').length}
+              </p>
+            </button>
+          </div>
+        </div>
+      </div>
+
       <div className="container py-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Pending Orders */}
