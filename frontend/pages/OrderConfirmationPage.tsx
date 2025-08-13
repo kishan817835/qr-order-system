@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { useRestaurant } from "@/context/RestaurantContext";
 import {
@@ -12,17 +12,23 @@ import {
 export default function OrderConfirmationPage() {
   const { state, dispatch } = useRestaurant();
   const location = useLocation();
+  const [orderId, setOrderId] = useState<string | null>(null);
 
   // Get order details from location state (for delivery/takeaway) or generate for dining
   const orderData = location.state || {};
-  const orderId = orderData.orderId || Math.floor(Math.random() * 10000) + 1000;
-  const estimatedTime = Math.floor(Math.random() * 15) + 20; // 20-35 minutes
+  const orderNumber = orderData.orderNumber || `ORD${Date.now()}${Math.floor(Math.random() * 100)}`;
+  const estimatedTime = orderData.estimatedTime || Math.floor(Math.random() * 15) + 20; // 20-35 minutes
   const isDining = state.serviceType === "dining";
 
   useEffect(() => {
+    // Set order ID from location state if available
+    if (orderData.orderId) {
+      setOrderId(orderData.orderId);
+    }
+    
     // Clear cart after order is placed
     dispatch({ type: "CLEAR_CART" });
-  }, [dispatch]);
+  }, [dispatch, orderData.orderId]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -44,7 +50,7 @@ export default function OrderConfirmationPage() {
         <div className="card mb-6">
           <div className="text-center">
             <h2 className="text-xl font-semibold text-primary mb-2">
-              Order #{orderId}
+              Order {orderNumber}
             </h2>
             <div className="flex items-center justify-center text-orange mb-4">
               <Clock className="w-5 h-5 mr-2" />
@@ -206,7 +212,23 @@ export default function OrderConfirmationPage() {
 
         {/* Action Buttons */}
         <div className="space-y-3">
-          <button className="btn btn-primary w-full">Track Order</button>
+          {/* Track Order Button - Updated to work */}
+          {orderId ? (
+            <Link 
+              to={`/track-order/${orderId}`}
+              className="btn btn-primary w-full text-center"
+            >
+              Track Order
+            </Link>
+          ) : (
+            <Link 
+              to={`/track-order?orderNumber=${orderNumber}`}
+              className="btn btn-primary w-full text-center"
+            >
+              Track Order
+            </Link>
+          )}
+          
           <Link
             to={`/menu/${state.restaurant?.id || 1}`}
             className="btn btn-secondary w-full text-center"
