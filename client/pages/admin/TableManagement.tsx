@@ -332,7 +332,7 @@ export default function TableManagement() {
                 <select
                   value={table.status}
                   onChange={(e) => changeTableStatus(table.id, e.target.value as any)}
-                  className={`text-xs font-medium border-0 rounded-full px-2 py-1 ${getStatusColor(table.status)}`}
+                  className={`status-select text-xs font-medium border-0 rounded-full px-2 py-1 text-white ${getStatusColor(table.status)}`}
                   style={{ backgroundColor: getStatusColor(table.status).includes('bg-green') ? '#16a34a' :
                            getStatusColor(table.status).includes('bg-red') ? '#dc2626' :
                            getStatusColor(table.status).includes('bg-orange') ? '#ea580c' : '#6b7280' }}
