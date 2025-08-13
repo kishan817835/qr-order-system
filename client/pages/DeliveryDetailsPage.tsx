@@ -201,7 +201,10 @@ export default function DeliveryDetailsPage() {
                 Back
               </button>
               <div>
-                <h1 className="text-xl font-bold text-primary">Active Delivery - {order.id}</h1>
+                <h1 className="text-xl font-bold text-primary">
+                  Active Delivery - {order.id}
+                  {!orderId && <span className="ml-2 text-xs bg-orange text-white px-2 py-1 rounded">DEMO</span>}
+                </h1>
                 <p className="text-secondary">Delivering to {order.customer.name}</p>
               </div>
             </div>
