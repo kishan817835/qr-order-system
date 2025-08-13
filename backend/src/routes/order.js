@@ -4,6 +4,7 @@ import Order from '../models/Order.js';
 import Table from '../models/Table.js';
 import MenuItem from '../models/MenuItem.js';
 import Restaurant from '../models/Restaurant.js';
+import mongoose from 'mongoose';
 
 const router = express.Router();
 
@@ -36,6 +37,43 @@ router.get('/restaurant/:restaurantId', async (req, res) => {
           total
         }
       }
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Server error',
+      error: error.message
+    });
+  }
+});
+
+// Search order by order number
+router.get('/search', async (req, res) => {
+  try {
+    const { orderNumber } = req.query;
+
+    if (!orderNumber) {
+      return res.status(400).json({
+        success: false,
+        message: 'Order number is required'
+      });
+    }
+
+    const order = await Order.findOne({ order_number: orderNumber })
+      .populate('table_id')
+      .populate('restaurant_id')
+      .populate('items.menu_item_id');
+
+    if (!order) {
+      return res.status(404).json({
+        success: false,
+        message: 'Order not found'
+      });
+    }
+
+    res.json({
+      success: true,
+      data: { order }
     });
   } catch (error) {
     res.status(500).json({
@@ -342,7 +380,7 @@ router.get('/analytics/:restaurantId', async (req, res) => {
         break;
     }
 
-    const filter = { restaurant_id: restaurantId, ...dateFilter };
+    const filter = { restaurant_id: new mongoose.Types.ObjectId(restaurantId), ...dateFilter };
 
     const [
       totalOrders,

@@ -34,6 +34,7 @@ import GeneralStaffDashboard from "@/pages/GeneralStaffDashboard";
 import SuperAdminLayout from "@/pages/super-admin/SuperAdminLayout";
 import SuperAdminDashboard from "@/pages/super-admin/SuperAdminDashboard";
 import AdminsManagement from "@/pages/super-admin/AdminsManagement";
+import CreateAdmin from "@/pages/super-admin/CreateAdmin";
 
 import "./global.css";
 
@@ -63,7 +64,10 @@ export default function App() {
           <Route path="/super-admin" element={<SuperAdminLayout />}>
             <Route index element={<SuperAdminDashboard />} />
             <Route path="admins" element={<AdminsManagement />} />
-            {/* Add more super admin routes as needed */}
+            <Route path="create-admin" element={<CreateAdmin />} />
+            <Route path="restaurants" element={<div>Restaurants page - Coming soon</div>} />
+            <Route path="analytics" element={<div>Analytics page - Coming soon</div>} />
+            <Route path="settings" element={<div>Settings page - Coming soon</div>} />
           </Route>
 
           {/* Admin routes */}
