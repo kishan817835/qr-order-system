@@ -4,6 +4,7 @@ import { useRestaurant, MenuItem, Category, ServiceType } from '@/context/Restau
 import { ShoppingCart, Plus, Minus, Search, Clock, MapPin, Phone, ArrowRight, X } from 'lucide-react';
 import { useCartItemCount } from '@/context/RestaurantContext';
 import ItemDetailsModal from '@/components/ItemDetailsModal';
+import Footer from '@/components/Footer';
 
 // Enhanced mock data with new features
 const mockRestaurantData = {
