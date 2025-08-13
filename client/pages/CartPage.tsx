@@ -23,25 +23,25 @@ export default function CartPage() {
 
   if (state.cart.length === 0) {
     return (
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray">
         {/* Header */}
-        <div className="bg-white shadow-sm border-b">
-          <div className="max-w-md mx-auto px-4 py-4 flex items-center">
+        <div className="bg-white shadow border-b">
+          <div className="container py-4 flex items-center">
             <Link to={`/menu/${state.restaurant?.id || 1}`} className="mr-4">
-              <ArrowLeft className="w-6 h-6 text-gray-600" />
+              <ArrowLeft className="w-6 h-6 text-secondary" />
             </Link>
-            <h1 className="text-xl font-semibold text-gray-900">Cart</h1>
+            <h1 className="text-xl font-semibold text-primary">Cart</h1>
           </div>
         </div>
 
         {/* Empty Cart */}
-        <div className="max-w-md mx-auto px-4 py-16 text-center">
-          <ShoppingBag className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-gray-900 mb-2">Your cart is empty</h2>
-          <p className="text-gray-600 mb-6">Add some delicious items from the menu</p>
+        <div className="container py-16 text-center">
+          <ShoppingBag className="w-16 h-16 text-muted mx-auto mb-4" />
+          <h2 className="text-xl font-semibold text-primary mb-2">Your cart is empty</h2>
+          <p className="text-secondary mb-6">Add some delicious items from the menu</p>
           <Link
             to={`/menu/${state.restaurant?.id || 1}`}
-            className="inline-block px-6 py-3 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-600 transition-colors"
+            className="btn btn-primary"
           >
             Browse Menu
           </Link>
