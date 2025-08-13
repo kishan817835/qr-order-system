@@ -30,6 +30,7 @@ import GeneralStaffDashboard from "./pages/GeneralStaffDashboard";
 import LoginPage from "./pages/LoginPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import APITestPage from "./pages/APITestPage";
 
 // Super Admin imports
 import SuperAdminLayout from "./pages/super-admin/SuperAdminLayout";
