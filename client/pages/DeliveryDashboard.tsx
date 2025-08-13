@@ -31,6 +31,7 @@ export default function DeliveryDashboard() {
   const [showProfileDropdown, setShowProfileDropdown] = useState(false);
   const [showProfileModal, setShowProfileModal] = useState(false);
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [currentTime, setCurrentTime] = useState(new Date());
   const navigate = useNavigate();
 
   const [deliveryProfile, setDeliveryProfile] = useState({
