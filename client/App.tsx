@@ -14,6 +14,8 @@ import OrderConfirmationPage from "./pages/OrderConfirmationPage";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import Orders from "./pages/admin/Orders";
+import Categories from "./pages/admin/Categories";
+import Items from "./pages/admin/Items";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
