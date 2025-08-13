@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { User, Phone, Mail, Plus, Edit, Trash2, Eye, UserCheck } from 'lucide-react';
+import { User, Phone, Mail, Plus, Edit, Trash2, Eye, UserCheck, Lock, EyeOff, Key } from 'lucide-react';
 
 type UserRole = 'kitchen' | 'delivery' | 'staff';
 type UserStatus = 'active' | 'inactive' | 'busy';
@@ -17,6 +17,12 @@ interface StaffMember {
 }
 
 export default function StaffManagement() {
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [selectedStaffId, setSelectedStaffId] = useState<number | null>(null);
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [staff, setStaff] = useState<StaffMember[]>([
     {
       id: 1,
@@ -137,6 +143,38 @@ export default function StaffManagement() {
   const deleteStaff = (id: number) => {
     if (window.confirm('Are you sure you want to remove this staff member?')) {
       setStaff(staff.filter(member => member.id !== id));
+    }
+  };
+
+  const changePassword = (id: number) => {
+    setSelectedStaffId(id);
+    setShowPasswordModal(true);
+    setNewPassword('');
+    setConfirmPassword('');
+  };
+
+  const handlePasswordChange = () => {
+    if (!newPassword.trim()) {
+      alert('Please enter a new password!');
+      return;
+    }
+    if (newPassword.length < 6) {
+      alert('Password must be at least 6 characters long!');
+      return;
+    }
+    if (newPassword !== confirmPassword) {
+      alert('Passwords do not match!');
+      return;
+    }
+
+    const staffMember = staff.find(s => s.id === selectedStaffId);
+    if (staffMember) {
+      // Simulate password change
+      alert(`Password changed successfully for ${staffMember.name}!`);
+      setShowPasswordModal(false);
+      setSelectedStaffId(null);
+      setNewPassword('');
+      setConfirmPassword('');
     }
   };
 
