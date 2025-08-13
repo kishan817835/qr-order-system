@@ -319,7 +319,7 @@ export default function MenuPage() {
       <div className="bg-white border-b">
         <div className="container py-4">
           <div className="relative">
-            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary" />
+            <Search className="w-4 h-4 absolute left-3 top-1/2 transform translate-y-neg-half text-secondary" />
             <input
               type="text"
               placeholder="Search for dishes, cuisine..."
@@ -330,7 +330,7 @@ export default function MenuPage() {
             {searchQuery && (
               <button
                 onClick={clearSearch}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary hover:text-primary"
+                className="absolute right-3 top-1/2 transform translate-y-neg-half text-secondary hover:text-primary"
               >
                 <X className="w-4 h-4" />
               </button>
