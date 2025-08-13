@@ -318,7 +318,7 @@ export default function LoginPage() {
                   value={signupData.role}
                   onChange={(e) => setSignupData({...signupData, role: e.target.value as UserRole})}
                 >
-                  <option value="staff">Staff</option>
+                  <option value="staff">General Staff</option>
                   <option value="kitchen">Kitchen Staff</option>
                   <option value="delivery">Delivery Boy</option>
                 </select>
