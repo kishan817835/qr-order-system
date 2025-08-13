@@ -25,7 +25,7 @@ const userSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'manager', 'kitchen_staff', 'waiter', 'delivery_boy', 'customer'],
+    enum: ['super_admin', 'admin', 'manager', 'kitchen_staff', 'waiter', 'delivery_boy', 'customer'],
     default: 'customer'
   },
   restaurant_id: {
@@ -33,6 +33,11 @@ const userSchema = new mongoose.Schema({
     ref: 'Restaurant',
     default: null
   },
+  // For super admin - they can manage multiple restaurants through admin users
+  managed_restaurants: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Restaurant'
+  }],
   permissions: [{
     type: String
   }],
@@ -61,10 +66,26 @@ const userSchema = new mongoose.Schema({
   phone_verified: {
     type: Boolean,
     default: false
+  },
+  // Super admin specific fields
+  created_by: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    default: null
+  },
+  // Statistics for super admin view
+  total_restaurants_managed: {
+    type: Number,
+    default: 0
   }
 }, {
   timestamps: true
 });
+
+// Index for efficient queries
+userSchema.index({ role: 1 });
+userSchema.index({ restaurant_id: 1, role: 1 });
+userSchema.index({ created_by: 1 });
 
 // Hash password before saving
 userSchema.pre('save', async function(next) {
@@ -78,6 +99,19 @@ userSchema.pre('save', async function(next) {
 // Compare password method
 userSchema.methods.comparePassword = async function(password) {
   return await bcrypt.compare(password, this.password);
+};
+
+// Check if user has permission
+userSchema.methods.hasPermission = function(permission) {
+  if (this.role === 'super_admin') return true; // Super admin has all permissions
+  return this.permissions.includes(permission);
+};
+
+// Check if user can manage restaurant
+userSchema.methods.canManageRestaurant = function(restaurantId) {
+  if (this.role === 'super_admin') return true;
+  if (this.role === 'admin' && this.restaurant_id?.toString() === restaurantId.toString()) return true;
+  return false;
 };
 
 export default mongoose.model('User', userSchema);
