@@ -240,7 +240,12 @@ export default function KitchenDashboard() {
                     <div>
                       <h3 className="font-semibold text-primary">{order.id}</h3>
                       <p className="text-sm text-secondary">
-                        {order.table || order.customerName} • {getTimeElapsed(order.createdAt)} min ago
+                        {order.serviceType === 'dining' && order.table ? (
+                          <span className="bg-orange text-white px-2 py-1 rounded text-xs font-medium mr-2">
+                            {order.table}
+                          </span>
+                        ) : null}
+                        {order.customerName || order.table} • {getTimeElapsed(order.createdAt)} min ago
                       </p>
                     </div>
                   </div>
@@ -289,7 +294,12 @@ export default function KitchenDashboard() {
                     <div>
                       <h3 className="font-semibold text-primary">{order.id}</h3>
                       <p className="text-sm text-secondary">
-                        {order.table || order.customerName} • {getTimeElapsed(order.createdAt)} min ago
+                        {order.serviceType === 'dining' && order.table ? (
+                          <span className="bg-orange text-white px-2 py-1 rounded text-xs font-medium mr-2">
+                            {order.table}
+                          </span>
+                        ) : null}
+                        {order.customerName || order.table} • {getTimeElapsed(order.createdAt)} min ago
                       </p>
                     </div>
                   </div>
@@ -349,7 +359,12 @@ export default function KitchenDashboard() {
                     <div>
                       <h3 className="font-semibold text-primary">{order.id}</h3>
                       <p className="text-sm text-secondary">
-                        {order.table || order.customerName} • {getTimeElapsed(order.createdAt)} min ago
+                        {order.serviceType === 'dining' && order.table ? (
+                          <span className="bg-orange text-white px-2 py-1 rounded text-xs font-medium mr-2">
+                            {order.table}
+                          </span>
+                        ) : null}
+                        {order.customerName || order.table} • {getTimeElapsed(order.createdAt)} min ago
                       </p>
                     </div>
                   </div>
