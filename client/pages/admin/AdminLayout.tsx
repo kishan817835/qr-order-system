@@ -12,7 +12,8 @@ import {
   X,
   User,
   LogOut,
-  ChevronDown
+  ChevronDown,
+  MapPin
 } from 'lucide-react';
 import ProfileCard from '../../components/ProfileCard';
 
