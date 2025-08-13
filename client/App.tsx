@@ -18,6 +18,8 @@ import Categories from "./pages/admin/Categories";
 import Items from "./pages/admin/Items";
 import Charges from "./pages/admin/Charges";
 import Settings from "./pages/admin/Settings";
+import DeliveryManagement from "./pages/admin/DeliveryManagement";
+import StaffManagement from "./pages/admin/StaffManagement";
 import KitchenDashboard from "./pages/KitchenDashboard";
 import DeliveryDashboard from "./pages/DeliveryDashboard";
 import Index from "./pages/Index";
