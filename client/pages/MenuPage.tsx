@@ -309,6 +309,111 @@ export default function MenuPage() {
         </div>
       </div>
 
+      {/* Search Bar */}
+      <div className="bg-white border-b">
+        <div className="container py-4">
+          <div className="relative">
+            <Search className="w-4 h-4 absolute left-3 top-1/2 transform -translate-y-1/2 text-secondary" />
+            <input
+              type="text"
+              placeholder="Search for dishes, cuisine..."
+              className="form-input pl-10 pr-10"
+              value={searchQuery}
+              onChange={(e) => handleSearch(e.target.value)}
+            />
+            {searchQuery && (
+              <button
+                onClick={clearSearch}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-secondary hover:text-primary"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Search Results */}
+      {isSearching && (
+        <div className="container py-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-bold text-primary">
+              Search Results {filteredSearchItems.length > 0 && `(${filteredSearchItems.length})`}
+            </h2>
+            <button onClick={clearSearch} className="text-sm text-orange font-medium">
+              Clear Search
+            </button>
+          </div>
+
+          {filteredSearchItems.length > 0 ? (
+            <div className="space-y-4">
+              {filteredSearchItems.map((item) => {
+                const cartQuantity = getItemCartQuantity(item.id);
+                return (
+                  <div key={item.id} className="card">
+                    <div className="flex space-x-4">
+                      <img
+                        src={item.image_url}
+                        alt={item.name}
+                        className="w-20 h-20 rounded-lg object-cover cursor-pointer"
+                        onClick={() => openItemModal(item)}
+                      />
+                      <div className="flex-1">
+                        <h3
+                          className="font-semibold text-primary text-lg cursor-pointer"
+                          onClick={() => openItemModal(item)}
+                        >
+                          {item.name}
+                        </h3>
+                        <p className="text-sm text-secondary mt-1 line-clamp-2">{item.description}</p>
+                        <div className="flex items-center justify-between mt-3">
+                          <div className="flex items-center space-x-2">
+                            <span className="font-bold text-primary">₹{item.price}</span>
+                            {item.discount && (
+                              <span className="badge badge-orange">{item.discount}% OFF</span>
+                            )}
+                          </div>
+                          {cartQuantity > 0 ? (
+                            <div className="flex items-center space-x-2">
+                              <button
+                                onClick={() => updateCartQuantity(item.id, cartQuantity - 1)}
+                                className="w-8 h-8 rounded-full bg-orange-light text-orange flex items-center justify-center"
+                              >
+                                <Minus className="w-4 h-4" />
+                              </button>
+                              <span className="font-semibold text-primary w-8 text-center">{cartQuantity}</span>
+                              <button
+                                onClick={() => updateCartQuantity(item.id, cartQuantity + 1)}
+                                className="w-8 h-8 rounded-full bg-orange text-white flex items-center justify-center"
+                              >
+                                <Plus className="w-4 h-4" />
+                              </button>
+                            </div>
+                          ) : (
+                            <button
+                              onClick={() => handleAddToCart(item)}
+                              className="btn btn-primary btn-sm"
+                            >
+                              <Plus className="w-4 h-4 mr-1" />
+                              Add
+                            </button>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          ) : (
+            <div className="text-center py-8">
+              <p className="text-secondary">No items found for "{searchQuery}"</p>
+              <p className="text-sm text-muted mt-2">Try searching with different keywords</p>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Banner */}
       {state.restaurant?.banner_url && (
         <div className="relative">
