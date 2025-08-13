@@ -127,34 +127,36 @@ export default function OrderConfirmationPage() {
         )}
 
         {/* Order Status Steps */}
-        <div className="bg-white rounded-xl shadow-sm border p-6 mb-6">
-          <h3 className="font-semibold text-gray-900 mb-4">Order Status</h3>
+        <div className="card mb-6">
+          <h3 className="font-semibold text-primary mb-4">Order Status</h3>
           <div className="space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+              <div className="w-6 h-6 bg-green rounded-full flex items-center justify-center">
                 <CheckCircle className="w-4 h-4 text-white" />
               </div>
               <div>
-                <p className="font-medium text-gray-900">Order Placed</p>
-                <p className="text-sm text-gray-600">Your order has been confirmed</p>
+                <p className="font-medium text-primary">Order Placed</p>
+                <p className="text-sm text-secondary">Your order has been confirmed</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-orange-500 rounded-full flex items-center justify-center">
+              <div className="w-6 h-6 bg-orange rounded-full flex items-center justify-center">
                 <Clock className="w-4 h-4 text-white" />
               </div>
               <div>
-                <p className="font-medium text-gray-900">Preparing</p>
-                <p className="text-sm text-gray-600">Kitchen is preparing your order</p>
+                <p className="font-medium text-primary">Preparing</p>
+                <p className="text-sm text-secondary">Kitchen is preparing your order</p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
-              <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center">
-                <ShoppingBag className="w-4 h-4 text-gray-600" />
+              <div className="w-6 h-6 bg-muted rounded-full flex items-center justify-center">
+                <ShoppingBag className="w-4 h-4 text-secondary" />
               </div>
               <div>
-                <p className="font-medium text-gray-500">Ready for Pickup</p>
-                <p className="text-sm text-gray-500">We'll notify you when ready</p>
+                <p className="font-medium text-muted">
+                  {isDining ? 'Ready to Serve' : state.serviceType === 'delivery' ? 'Out for Delivery' : 'Ready for Pickup'}
+                </p>
+                <p className="text-sm text-muted">We'll notify you when ready</p>
               </div>
             </div>
           </div>
