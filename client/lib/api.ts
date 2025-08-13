@@ -32,14 +32,25 @@ class ApiService {
         headers,
       });
 
-      const data = await response.json();
-
+      // Check if response is ok first
       if (!response.ok) {
-        throw new Error(
-          data.message || `HTTP error! status: ${response.status}`,
-        );
+        // Try to get error message, but handle non-JSON responses
+        let errorMessage = `HTTP error! status: ${response.status}`;
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.message || errorMessage;
+        } catch {
+          // If JSON parsing fails, use the default error message
+          const text = await response.text();
+          if (text) {
+            errorMessage = text.length > 100 ? text.substring(0, 100) + "..." : text;
+          }
+        }
+        throw new Error(errorMessage);
       }
 
+      // Parse JSON response
+      const data = await response.json();
       return data;
     } catch (error) {
       console.error("API Request failed:", error);
