@@ -123,9 +123,12 @@ export default function KitchenDashboard() {
     }
   };
 
-  const pendingOrders = orders.filter(order => order.status === 'pending');
-  const preparingOrders = orders.filter(order => order.status === 'preparing');
-  const readyOrders = orders.filter(order => order.status === 'ready' || order.status === 'out-for-delivery');
+  // Filter orders by service type
+  const filteredOrders = filter === 'all' ? orders : orders.filter(order => order.serviceType === filter);
+
+  const pendingOrders = filteredOrders.filter(order => order.status === 'pending');
+  const preparingOrders = filteredOrders.filter(order => order.status === 'preparing');
+  const readyOrders = filteredOrders.filter(order => order.status === 'ready' || order.status === 'out-for-delivery');
 
   return (
     <div className="min-h-screen bg-gray">
