@@ -257,7 +257,7 @@ export default function MenuPage() {
                 )}
               </div>
             </div>
-            <div className="flex items-center space-x-2 text-sm">
+            <div className="flex items-center space-x-3 text-sm">
               {state.tableNumber ? (
                 <div className="bg-orange text-white px-3 py-1 rounded-full">
                   <span className="font-medium">Table {state.tableNumber}</span>
@@ -268,6 +268,12 @@ export default function MenuPage() {
                   <span>25-30 min</span>
                 </div>
               )}
+              <Link
+                to="/admin"
+                className="bg-muted text-secondary px-2 py-1 rounded text-xs hover:bg-orange hover:text-white transition"
+              >
+                Admin
+              </Link>
             </div>
           </div>
         </div>
