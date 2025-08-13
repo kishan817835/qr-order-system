@@ -44,17 +44,29 @@ const App = () => (
             <Route path="/menu/:restaurantId" element={<MenuPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/payment" element={<PaymentPage />} />
-            <Route path="/order/confirmation" element={<OrderConfirmationPage />} />
+            <Route
+              path="/order/confirmation"
+              element={<OrderConfirmationPage />}
+            />
             <Route path="/kitchen" element={<KitchenDashboard />} />
             <Route path="/KitchenDashboard" element={<KitchenDashboard />} />
             <Route path="/delivery" element={<DeliveryDashboard />} />
             <Route path="/DeliveryDashboard" element={<DeliveryDashboard />} />
-            <Route path="/delivery-details/:orderId" element={<DeliveryDetailsPage />} />
+            <Route
+              path="/delivery-details/:orderId"
+              element={<DeliveryDetailsPage />}
+            />
             <Route path="/delivery-details" element={<DeliveryDashboard />} />
-            <Route path="/DeliveryDetailsPage" element={<DeliveryDetailsPage />} />
+            <Route
+              path="/DeliveryDetailsPage"
+              element={<DeliveryDetailsPage />}
+            />
             <Route path="/track/:trackingCode" element={<TrackingPage />} />
             <Route path="/staff" element={<GeneralStaffDashboard />} />
-            <Route path="/GeneralStaffDashboard" element={<GeneralStaffDashboard />} />
+            <Route
+              path="/GeneralStaffDashboard"
+              element={<GeneralStaffDashboard />}
+            />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/LoginPage" element={<LoginPage />} />
 
@@ -68,7 +80,10 @@ const App = () => (
               <Route path="items" element={<Items />} />
               <Route path="tables" element={<TableManagement />} />
               <Route path="charges" element={<Charges />} />
-              <Route path="delivery-management" element={<DeliveryManagement />} />
+              <Route
+                path="delivery-management"
+                element={<DeliveryManagement />}
+              />
               <Route path="staff" element={<StaffManagement />} />
               <Route path="settings" element={<Settings />} />
             </Route>

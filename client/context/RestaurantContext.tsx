@@ -1,7 +1,7 @@
-import { createContext, useContext, useReducer, ReactNode } from 'react';
+import { createContext, useContext, useReducer, ReactNode } from "react";
 
 // Types
-export type ServiceType = 'dining' | 'takeaway' | 'delivery';
+export type ServiceType = "dining" | "takeaway" | "delivery";
 
 export interface MenuItem {
   id: number;
@@ -36,7 +36,7 @@ export interface ExtraCharge {
   id: number;
   name: string;
   amount: number;
-  type: 'fixed' | 'percentage';
+  type: "fixed" | "percentage";
 }
 
 export interface RestaurantState {
@@ -54,17 +54,24 @@ export interface RestaurantState {
 
 // Actions
 type RestaurantAction =
-  | { type: 'SET_LOADING'; payload: boolean }
-  | { type: 'SET_ERROR'; payload: string | null }
-  | { type: 'SET_RESTAURANT_DATA'; payload: { restaurant: Restaurant; categories: Category[]; priorityItems: MenuItem[] } }
-  | { type: 'SET_SELECTED_CATEGORY'; payload: number }
-  | { type: 'SET_SERVICE_TYPE'; payload: ServiceType }
-  | { type: 'SET_TABLE_NUMBER'; payload: string }
-  | { type: 'SET_EXTRA_CHARGES'; payload: ExtraCharge[] }
-  | { type: 'ADD_TO_CART'; payload: MenuItem }
-  | { type: 'REMOVE_FROM_CART'; payload: number }
-  | { type: 'UPDATE_CART_QUANTITY'; payload: { id: number; quantity: number } }
-  | { type: 'CLEAR_CART' };
+  | { type: "SET_LOADING"; payload: boolean }
+  | { type: "SET_ERROR"; payload: string | null }
+  | {
+      type: "SET_RESTAURANT_DATA";
+      payload: {
+        restaurant: Restaurant;
+        categories: Category[];
+        priorityItems: MenuItem[];
+      };
+    }
+  | { type: "SET_SELECTED_CATEGORY"; payload: number }
+  | { type: "SET_SERVICE_TYPE"; payload: ServiceType }
+  | { type: "SET_TABLE_NUMBER"; payload: string }
+  | { type: "SET_EXTRA_CHARGES"; payload: ExtraCharge[] }
+  | { type: "ADD_TO_CART"; payload: MenuItem }
+  | { type: "REMOVE_FROM_CART"; payload: number }
+  | { type: "UPDATE_CART_QUANTITY"; payload: { id: number; quantity: number } }
+  | { type: "CLEAR_CART" };
 
 // Initial state
 const initialState: RestaurantState = {
@@ -72,7 +79,7 @@ const initialState: RestaurantState = {
   categories: [],
   cart: [],
   selectedCategory: null,
-  serviceType: 'dining',
+  serviceType: "dining",
   tableNumber: null,
   extraCharges: [],
   priorityItems: [],
@@ -81,15 +88,18 @@ const initialState: RestaurantState = {
 };
 
 // Reducer
-function restaurantReducer(state: RestaurantState, action: RestaurantAction): RestaurantState {
+function restaurantReducer(
+  state: RestaurantState,
+  action: RestaurantAction,
+): RestaurantState {
   switch (action.type) {
-    case 'SET_LOADING':
+    case "SET_LOADING":
       return { ...state, isLoading: action.payload };
-    
-    case 'SET_ERROR':
+
+    case "SET_ERROR":
       return { ...state, error: action.payload, isLoading: false };
-    
-    case 'SET_RESTAURANT_DATA':
+
+    case "SET_RESTAURANT_DATA":
       return {
         ...state,
         restaurant: action.payload.restaurant,
@@ -100,27 +110,29 @@ function restaurantReducer(state: RestaurantState, action: RestaurantAction): Re
         error: null,
       };
 
-    case 'SET_SELECTED_CATEGORY':
+    case "SET_SELECTED_CATEGORY":
       return { ...state, selectedCategory: action.payload };
 
-    case 'SET_SERVICE_TYPE':
+    case "SET_SERVICE_TYPE":
       return { ...state, serviceType: action.payload };
 
-    case 'SET_TABLE_NUMBER':
+    case "SET_TABLE_NUMBER":
       return { ...state, tableNumber: action.payload };
 
-    case 'SET_EXTRA_CHARGES':
+    case "SET_EXTRA_CHARGES":
       return { ...state, extraCharges: action.payload };
-    
-    case 'ADD_TO_CART':
-      const existingItem = state.cart.find(item => item.id === action.payload.id);
+
+    case "ADD_TO_CART":
+      const existingItem = state.cart.find(
+        (item) => item.id === action.payload.id,
+      );
       if (existingItem) {
         return {
           ...state,
-          cart: state.cart.map(item =>
+          cart: state.cart.map((item) =>
             item.id === action.payload.id
               ? { ...item, quantity: item.quantity + 1 }
-              : item
+              : item,
           ),
         };
       } else {
@@ -129,32 +141,32 @@ function restaurantReducer(state: RestaurantState, action: RestaurantAction): Re
           cart: [...state.cart, { ...action.payload, quantity: 1 }],
         };
       }
-    
-    case 'REMOVE_FROM_CART':
+
+    case "REMOVE_FROM_CART":
       return {
         ...state,
-        cart: state.cart.filter(item => item.id !== action.payload),
+        cart: state.cart.filter((item) => item.id !== action.payload),
       };
-    
-    case 'UPDATE_CART_QUANTITY':
+
+    case "UPDATE_CART_QUANTITY":
       if (action.payload.quantity <= 0) {
         return {
           ...state,
-          cart: state.cart.filter(item => item.id !== action.payload.id),
+          cart: state.cart.filter((item) => item.id !== action.payload.id),
         };
       }
       return {
         ...state,
-        cart: state.cart.map(item =>
+        cart: state.cart.map((item) =>
           item.id === action.payload.id
             ? { ...item, quantity: action.payload.quantity }
-            : item
+            : item,
         ),
       };
-    
-    case 'CLEAR_CART':
+
+    case "CLEAR_CART":
       return { ...state, cart: [] };
-    
+
     default:
       return state;
   }
@@ -181,7 +193,7 @@ export function RestaurantProvider({ children }: { children: ReactNode }) {
 export function useRestaurant() {
   const context = useContext(RestaurantContext);
   if (!context) {
-    throw new Error('useRestaurant must be used within a RestaurantProvider');
+    throw new Error("useRestaurant must be used within a RestaurantProvider");
   }
   return context;
 }
@@ -189,7 +201,10 @@ export function useRestaurant() {
 // Computed values
 export function useCartTotal() {
   const { state } = useRestaurant();
-  return state.cart.reduce((total, item) => total + item.price * item.quantity, 0);
+  return state.cart.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0,
+  );
 }
 
 export function useCartItemCount() {

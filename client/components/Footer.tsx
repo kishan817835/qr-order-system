@@ -1,4 +1,4 @@
-import { Phone, Mail, MapPin, Clock, MessageCircle } from 'lucide-react';
+import { Phone, Mail, MapPin, Clock, MessageCircle } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -16,7 +16,8 @@ export default function Footer() {
               <h3 className="text-xl font-bold">Spice Garden</h3>
             </div>
             <p className="text-sm opacity-80 mb-4">
-              Experience authentic Indian cuisine with the finest ingredients and traditional cooking methods.
+              Experience authentic Indian cuisine with the finest ingredients
+              and traditional cooking methods.
             </p>
             <div className="space-y-2 text-sm">
               <div className="flex items-center space-x-2">
@@ -38,11 +39,46 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2 text-sm">
-              <li><a href="/menu/1" className="opacity-80 hover:opacity-100 transition">Menu</a></li>
-              <li><a href="/menu/1?service=delivery" className="opacity-80 hover:opacity-100 transition">Order Online</a></li>
-              <li><a href="/menu/1?service=takeaway" className="opacity-80 hover:opacity-100 transition">Takeaway</a></li>
-              <li><a href="/admin" className="opacity-80 hover:opacity-100 transition">Admin Panel</a></li>
-              <li><a href="/kitchen" className="opacity-80 hover:opacity-100 transition">Kitchen Dashboard</a></li>
+              <li>
+                <a
+                  href="/menu/1"
+                  className="opacity-80 hover:opacity-100 transition"
+                >
+                  Menu
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/menu/1?service=delivery"
+                  className="opacity-80 hover:opacity-100 transition"
+                >
+                  Order Online
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/menu/1?service=takeaway"
+                  className="opacity-80 hover:opacity-100 transition"
+                >
+                  Takeaway
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/admin"
+                  className="opacity-80 hover:opacity-100 transition"
+                >
+                  Admin Panel
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/kitchen"
+                  className="opacity-80 hover:opacity-100 transition"
+                >
+                  Kitchen Dashboard
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -72,33 +108,33 @@ export default function Footer() {
           <div>
             <h4 className="font-semibold mb-4">Connect With Us</h4>
             <div className="flex space-x-4 mb-4">
-              <a 
-                href="https://wa.me/911234567890" 
-                target="_blank" 
+              <a
+                href="https://wa.me/911234567890"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-green rounded-full flex items-center justify-center hover:bg-opacity-80 transition"
               >
                 <MessageCircle className="w-5 h-5" />
               </a>
-              <a 
-                href="https://linkedin.com/company/spice-garden" 
-                target="_blank" 
+              <a
+                href="https://linkedin.com/company/spice-garden"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-opacity-80 transition"
               >
                 <span className="text-sm font-bold">in</span>
               </a>
-              <a 
-                href="https://facebook.com/spice-garden" 
-                target="_blank" 
+              <a
+                href="https://facebook.com/spice-garden"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center hover:bg-opacity-80 transition"
               >
                 <span className="text-sm font-bold">f</span>
               </a>
-              <a 
-                href="https://instagram.com/spice-garden" 
-                target="_blank" 
+              <a
+                href="https://instagram.com/spice-garden"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center hover:bg-opacity-80 transition"
               >
@@ -117,9 +153,15 @@ export default function Footer() {
             © {currentYear} Spice Garden. All rights reserved.
           </p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <a href="#" className="opacity-80 hover:opacity-100 transition">Privacy Policy</a>
-            <a href="#" className="opacity-80 hover:opacity-100 transition">Terms of Service</a>
-            <a href="#" className="opacity-80 hover:opacity-100 transition">Contact Us</a>
+            <a href="#" className="opacity-80 hover:opacity-100 transition">
+              Privacy Policy
+            </a>
+            <a href="#" className="opacity-80 hover:opacity-100 transition">
+              Terms of Service
+            </a>
+            <a href="#" className="opacity-80 hover:opacity-100 transition">
+              Contact Us
+            </a>
           </div>
         </div>
       </div>

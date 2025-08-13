@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { X, Minus, Plus } from 'lucide-react';
-import { MenuItem, useRestaurant } from '@/context/RestaurantContext';
+import { useState } from "react";
+import { X, Minus, Plus } from "lucide-react";
+import { MenuItem, useRestaurant } from "@/context/RestaurantContext";
 
 interface ItemDetailsModalProps {
   item: MenuItem | null;
@@ -8,29 +8,33 @@ interface ItemDetailsModalProps {
   onClose: () => void;
 }
 
-export default function ItemDetailsModal({ item, isOpen, onClose }: ItemDetailsModalProps) {
+export default function ItemDetailsModal({
+  item,
+  isOpen,
+  onClose,
+}: ItemDetailsModalProps) {
   const { state, dispatch } = useRestaurant();
   const [quantity, setQuantity] = useState(1);
 
   if (!isOpen || !item) return null;
 
-  const cartItem = state.cart.find(cartItem => cartItem.id === item.id);
+  const cartItem = state.cart.find((cartItem) => cartItem.id === item.id);
   const currentCartQuantity = cartItem?.quantity || 0;
 
   const handleAddToCart = () => {
     for (let i = 0; i < quantity; i++) {
-      dispatch({ type: 'ADD_TO_CART', payload: item });
+      dispatch({ type: "ADD_TO_CART", payload: item });
     }
     onClose();
     setQuantity(1);
   };
 
   const incrementQuantity = () => {
-    setQuantity(prev => prev + 1);
+    setQuantity((prev) => prev + 1);
   };
 
   const decrementQuantity = () => {
-    setQuantity(prev => prev > 1 ? prev - 1 : 1);
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   };
 
   return (
@@ -54,11 +58,15 @@ export default function ItemDetailsModal({ item, isOpen, onClose }: ItemDetailsM
         {/* Content */}
         <div className="p-6">
           <h2 className="text-2xl font-bold text-primary mb-2">{item.name}</h2>
-          <p className="text-secondary mb-4 leading-relaxed">{item.description}</p>
+          <p className="text-secondary mb-4 leading-relaxed">
+            {item.description}
+          </p>
 
           {/* Price */}
           <div className="mb-6">
-            <span className="text-2xl font-bold text-primary">₹{item.price}</span>
+            <span className="text-2xl font-bold text-primary">
+              ₹{item.price}
+            </span>
           </div>
 
           {/* Quantity Selector */}
@@ -72,7 +80,9 @@ export default function ItemDetailsModal({ item, isOpen, onClose }: ItemDetailsM
               >
                 <Minus className="w-5 h-5" />
               </button>
-              <span className="text-xl font-semibold text-primary w-8 text-center">{quantity}</span>
+              <span className="text-xl font-semibold text-primary w-8 text-center">
+                {quantity}
+              </span>
               <button
                 onClick={incrementQuantity}
                 className="w-12 h-12 rounded-full bg-orange-light text-orange flex items-center justify-center hover:bg-orange transition"
@@ -87,7 +97,9 @@ export default function ItemDetailsModal({ item, isOpen, onClose }: ItemDetailsM
             onClick={handleAddToCart}
             className="btn btn-primary btn-lg w-full"
           >
-            <span>Add {quantity} to Cart • ₹{item.price * quantity}</span>
+            <span>
+              Add {quantity} to Cart • ₹{item.price * quantity}
+            </span>
           </button>
 
           {/* Current Cart Info */}

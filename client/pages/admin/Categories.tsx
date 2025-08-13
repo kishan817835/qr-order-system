@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Plus, Edit, Trash2, Save, X, List } from 'lucide-react';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Plus, Edit, Trash2, Save, X, List } from "lucide-react";
 
 interface Category {
   id: number;
@@ -10,26 +10,26 @@ interface Category {
 
 export default function Categories() {
   const [categories, setCategories] = useState<Category[]>([
-    { id: 1, name: 'Starters', itemCount: 8 },
-    { id: 2, name: 'Main Course', itemCount: 15 },
-    { id: 3, name: 'Drinks', itemCount: 12 },
-    { id: 4, name: 'Desserts', itemCount: 6 }
+    { id: 1, name: "Starters", itemCount: 8 },
+    { id: 2, name: "Main Course", itemCount: 15 },
+    { id: 3, name: "Drinks", itemCount: 12 },
+    { id: 4, name: "Desserts", itemCount: 6 },
   ]);
 
   const [isAddingNew, setIsAddingNew] = useState(false);
   const [editingId, setEditingId] = useState<number | null>(null);
-  const [newCategoryName, setNewCategoryName] = useState('');
-  const [editCategoryName, setEditCategoryName] = useState('');
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [editCategoryName, setEditCategoryName] = useState("");
 
   const handleAddNew = () => {
     if (newCategoryName.trim()) {
       const newCategory: Category = {
-        id: Math.max(...categories.map(c => c.id)) + 1,
+        id: Math.max(...categories.map((c) => c.id)) + 1,
         name: newCategoryName.trim(),
-        itemCount: 0
+        itemCount: 0,
       };
       setCategories([...categories, newCategory]);
-      setNewCategoryName('');
+      setNewCategoryName("");
       setIsAddingNew(false);
     }
   };
@@ -41,24 +41,30 @@ export default function Categories() {
 
   const handleSaveEdit = () => {
     if (editCategoryName.trim() && editingId) {
-      setCategories(categories.map(cat => 
-        cat.id === editingId 
-          ? { ...cat, name: editCategoryName.trim() }
-          : cat
-      ));
+      setCategories(
+        categories.map((cat) =>
+          cat.id === editingId
+            ? { ...cat, name: editCategoryName.trim() }
+            : cat,
+        ),
+      );
       setEditingId(null);
-      setEditCategoryName('');
+      setEditCategoryName("");
     }
   };
 
   const handleCancelEdit = () => {
     setEditingId(null);
-    setEditCategoryName('');
+    setEditCategoryName("");
   };
 
   const handleDelete = (id: number) => {
-    if (window.confirm('Are you sure you want to delete this category? All items in this category will also be deleted.')) {
-      setCategories(categories.filter(cat => cat.id !== id));
+    if (
+      window.confirm(
+        "Are you sure you want to delete this category? All items in this category will also be deleted.",
+      )
+    ) {
+      setCategories(categories.filter((cat) => cat.id !== id));
     }
   };
 
@@ -69,7 +75,7 @@ export default function Categories() {
           <h1 className="text-2xl font-bold text-primary">Categories</h1>
           <p className="text-secondary">Manage menu categories</p>
         </div>
-        <button 
+        <button
           onClick={() => setIsAddingNew(true)}
           className="btn btn-primary"
           disabled={isAddingNew}
@@ -90,10 +96,10 @@ export default function Categories() {
               className="form-input flex-1"
               value={newCategoryName}
               onChange={(e) => setNewCategoryName(e.target.value)}
-              onKeyPress={(e) => e.key === 'Enter' && handleAddNew()}
+              onKeyPress={(e) => e.key === "Enter" && handleAddNew()}
               autoFocus
             />
-            <button 
+            <button
               onClick={handleAddNew}
               className="btn btn-primary"
               disabled={!newCategoryName.trim()}
@@ -101,10 +107,10 @@ export default function Categories() {
               <Save className="w-4 h-4 mr-1" />
               Save
             </button>
-            <button 
+            <button
               onClick={() => {
                 setIsAddingNew(false);
-                setNewCategoryName('');
+                setNewCategoryName("");
               }}
               className="btn btn-secondary"
             >
@@ -126,13 +132,15 @@ export default function Categories() {
                   className="form-input text-lg font-semibold"
                   value={editCategoryName}
                   onChange={(e) => setEditCategoryName(e.target.value)}
-                  onKeyPress={(e) => e.key === 'Enter' && handleSaveEdit()}
+                  onKeyPress={(e) => e.key === "Enter" && handleSaveEdit()}
                   autoFocus
                 />
               ) : (
-                <h3 className="text-lg font-semibold text-primary">{category.name}</h3>
+                <h3 className="text-lg font-semibold text-primary">
+                  {category.name}
+                </h3>
               )}
-              
+
               <div className="flex space-x-2">
                 {editingId === category.id ? (
                   <>
@@ -167,14 +175,16 @@ export default function Categories() {
                 )}
               </div>
             </div>
-            
+
             <div className="text-center py-4">
               <div className="w-16 h-16 bg-orange rounded-full flex items-center justify-center mx-auto mb-3">
-                <span className="text-2xl font-bold text-white">{category.itemCount}</span>
+                <span className="text-2xl font-bold text-white">
+                  {category.itemCount}
+                </span>
               </div>
               <p className="text-sm text-secondary">Items in this category</p>
             </div>
-            
+
             <div className="flex space-x-2 mt-4">
               <Link
                 to={`/admin/items?category=${category.name}`}
@@ -199,9 +209,13 @@ export default function Categories() {
           <div className="w-24 h-24 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
             <List className="w-12 h-12 text-secondary" />
           </div>
-          <h3 className="text-lg font-semibold text-primary mb-2">No Categories Yet</h3>
-          <p className="text-secondary mb-4">Create your first menu category to get started</p>
-          <button 
+          <h3 className="text-lg font-semibold text-primary mb-2">
+            No Categories Yet
+          </h3>
+          <p className="text-secondary mb-4">
+            Create your first menu category to get started
+          </p>
+          <button
             onClick={() => setIsAddingNew(true)}
             className="btn btn-primary"
           >

@@ -1,8 +1,20 @@
-import { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { useRestaurant, useCartTotal, useCartItemCount } from '@/context/RestaurantContext';
-import { ArrowLeft, CreditCard, Truck, MapPin, Phone, User, Mail } from 'lucide-react';
-import Footer from '@/components/Footer';
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  useRestaurant,
+  useCartTotal,
+  useCartItemCount,
+} from "@/context/RestaurantContext";
+import {
+  ArrowLeft,
+  CreditCard,
+  Truck,
+  MapPin,
+  Phone,
+  User,
+  Mail,
+} from "lucide-react";
+import Footer from "@/components/Footer";
 
 interface CustomerForm {
   name: string;
@@ -17,43 +29,45 @@ export default function PaymentPage() {
   const total = useCartTotal();
   const itemCount = useCartItemCount();
   const navigate = useNavigate();
-  
-  const [paymentMethod, setPaymentMethod] = useState<'cod' | 'gateway' | null>(null);
+
+  const [paymentMethod, setPaymentMethod] = useState<"cod" | "gateway" | null>(
+    null,
+  );
   const [showForm, setShowForm] = useState(false);
   const [customerForm, setCustomerForm] = useState<CustomerForm>({
-    name: '',
-    email: '',
-    phone: '',
-    alternatePhone: '',
-    address: ''
+    name: "",
+    email: "",
+    phone: "",
+    alternatePhone: "",
+    address: "",
   });
   const [errors, setErrors] = useState<Partial<CustomerForm>>({});
 
-  const isDelivery = state.serviceType === 'delivery';
-  const isTakeaway = state.serviceType === 'takeaway';
+  const isDelivery = state.serviceType === "delivery";
+  const isTakeaway = state.serviceType === "takeaway";
 
-  const handlePaymentMethodSelect = (method: 'cod' | 'gateway') => {
+  const handlePaymentMethodSelect = (method: "cod" | "gateway") => {
     setPaymentMethod(method);
     setShowForm(true);
   };
 
   const validateForm = (): boolean => {
     const newErrors: Partial<CustomerForm> = {};
-    
-    if (!customerForm.name.trim()) newErrors.name = 'Name is required';
+
+    if (!customerForm.name.trim()) newErrors.name = "Name is required";
     if (!customerForm.email.trim()) {
-      newErrors.email = 'Email is required';
+      newErrors.email = "Email is required";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerForm.email)) {
-      newErrors.email = 'Invalid email format';
+      newErrors.email = "Invalid email format";
     }
     if (!customerForm.phone.trim()) {
-      newErrors.phone = 'Phone number is required';
+      newErrors.phone = "Phone number is required";
     } else if (!/^[6-9]\d{9}$/.test(customerForm.phone)) {
-      newErrors.phone = 'Invalid phone number';
+      newErrors.phone = "Invalid phone number";
     }
-    
+
     if (isDelivery && !customerForm.address.trim()) {
-      newErrors.address = 'Address is required for delivery';
+      newErrors.address = "Address is required for delivery";
     }
 
     setErrors(newErrors);
@@ -62,15 +76,15 @@ export default function PaymentPage() {
 
   const handleFormSubmit = () => {
     if (!validateForm()) return;
-    
+
     // Simulate order placement
-    navigate('/order/confirmation', {
+    navigate("/order/confirmation", {
       state: {
         orderId: Math.floor(Math.random() * 10000) + 1000,
         paymentMethod,
         customerDetails: customerForm,
-        serviceType: state.serviceType
-      }
+        serviceType: state.serviceType,
+      },
     });
   };
 
@@ -86,7 +100,10 @@ export default function PaymentPage() {
       <div className="min-h-screen bg-gray flex items-center justify-center">
         <div className="text-center">
           <p className="text-secondary mb-4">Your cart is empty</p>
-          <Link to={`/menu/${state.restaurant?.id || 1}`} className="btn btn-primary">
+          <Link
+            to={`/menu/${state.restaurant?.id || 1}`}
+            className="btn btn-primary"
+          >
             Browse Menu
           </Link>
         </div>
@@ -103,7 +120,7 @@ export default function PaymentPage() {
             <ArrowLeft className="w-6 h-6 text-secondary" />
           </Link>
           <h1 className="text-xl font-semibold text-primary">
-            {showForm ? 'Order Details' : 'Payment Method'}
+            {showForm ? "Order Details" : "Payment Method"}
           </h1>
         </div>
       </div>
@@ -115,19 +132,24 @@ export default function PaymentPage() {
             <div className="card mb-6">
               <div className="flex items-center space-x-3 mb-4">
                 <div className="w-10 h-10 bg-orange rounded-full flex items-center justify-center">
-                  {isDelivery ? '🚚' : '🥡'}
+                  {isDelivery ? "🚚" : "🥡"}
                 </div>
                 <div>
-                  <h2 className="font-semibold text-primary capitalize">{state.serviceType}</h2>
+                  <h2 className="font-semibold text-primary capitalize">
+                    {state.serviceType}
+                  </h2>
                   <p className="text-sm text-secondary">
-                    {isDelivery ? 'Delivered to your address' : 'Pick up from restaurant'}
+                    {isDelivery
+                      ? "Delivered to your address"
+                      : "Pick up from restaurant"}
                   </p>
                 </div>
               </div>
               {isDelivery && (
                 <div className="bg-orange-light p-3 rounded-lg">
                   <p className="text-sm text-orange font-medium">
-                    📍 Please provide accurate delivery address for timely delivery
+                    📍 Please provide accurate delivery address for timely
+                    delivery
                   </p>
                 </div>
               )}
@@ -155,7 +177,9 @@ export default function PaymentPage() {
                 )}
                 <div className="flex justify-between">
                   <span className="text-secondary">Taxes & Fees</span>
-                  <span className="text-primary">₹{Math.round(total * 0.1)}</span>
+                  <span className="text-primary">
+                    ₹{Math.round(total * 0.1)}
+                  </span>
                 </div>
                 <div className="border-t pt-2">
                   <div className="flex justify-between font-bold text-lg">
@@ -168,10 +192,12 @@ export default function PaymentPage() {
 
             {/* Payment Methods */}
             <div className="card">
-              <h3 className="font-semibold text-primary mb-4">Choose Payment Method</h3>
+              <h3 className="font-semibold text-primary mb-4">
+                Choose Payment Method
+              </h3>
               <div className="space-y-3">
                 <button
-                  onClick={() => handlePaymentMethodSelect('cod')}
+                  onClick={() => handlePaymentMethodSelect("cod")}
                   className="w-full p-4 border-2 border-border rounded-lg hover:border-orange transition text-left"
                 >
                   <div className="flex items-center space-x-3">
@@ -179,14 +205,18 @@ export default function PaymentPage() {
                       <span className="text-white">💵</span>
                     </div>
                     <div>
-                      <h4 className="font-medium text-primary">Cash on {isDelivery ? 'Delivery' : 'Pickup'}</h4>
-                      <p className="text-sm text-secondary">Pay when you receive your order</p>
+                      <h4 className="font-medium text-primary">
+                        Cash on {isDelivery ? "Delivery" : "Pickup"}
+                      </h4>
+                      <p className="text-sm text-secondary">
+                        Pay when you receive your order
+                      </p>
                     </div>
                   </div>
                 </button>
-                
+
                 <button
-                  onClick={() => handlePaymentMethodSelect('gateway')}
+                  onClick={() => handlePaymentMethodSelect("gateway")}
                   className="w-full p-4 border-2 border-border rounded-lg hover:border-orange transition text-left"
                 >
                   <div className="flex items-center space-x-3">
@@ -195,7 +225,9 @@ export default function PaymentPage() {
                     </div>
                     <div>
                       <h4 className="font-medium text-primary">Pay Online</h4>
-                      <p className="text-sm text-secondary">Credit/Debit Card, UPI, Net Banking</p>
+                      <p className="text-sm text-secondary">
+                        Credit/Debit Card, UPI, Net Banking
+                      </p>
                     </div>
                   </div>
                 </button>
@@ -206,7 +238,9 @@ export default function PaymentPage() {
           /* Customer Form */
           <div className="space-y-6">
             <div className="card">
-              <h3 className="font-semibold text-primary mb-4">Customer Details</h3>
+              <h3 className="font-semibold text-primary mb-4">
+                Customer Details
+              </h3>
               <div className="space-y-4">
                 <div>
                   <label className="form-label flex items-center">
@@ -215,12 +249,16 @@ export default function PaymentPage() {
                   </label>
                   <input
                     type="text"
-                    className={`form-input ${errors.name ? 'border-red' : ''}`}
+                    className={`form-input ${errors.name ? "border-red" : ""}`}
                     placeholder="Enter your full name"
                     value={customerForm.name}
-                    onChange={(e) => setCustomerForm({...customerForm, name: e.target.value})}
+                    onChange={(e) =>
+                      setCustomerForm({ ...customerForm, name: e.target.value })
+                    }
                   />
-                  {errors.name && <p className="text-red text-sm mt-1">{errors.name}</p>}
+                  {errors.name && (
+                    <p className="text-red text-sm mt-1">{errors.name}</p>
+                  )}
                 </div>
 
                 <div>
@@ -230,12 +268,19 @@ export default function PaymentPage() {
                   </label>
                   <input
                     type="email"
-                    className={`form-input ${errors.email ? 'border-red' : ''}`}
+                    className={`form-input ${errors.email ? "border-red" : ""}`}
                     placeholder="Enter your email"
                     value={customerForm.email}
-                    onChange={(e) => setCustomerForm({...customerForm, email: e.target.value})}
+                    onChange={(e) =>
+                      setCustomerForm({
+                        ...customerForm,
+                        email: e.target.value,
+                      })
+                    }
                   />
-                  {errors.email && <p className="text-red text-sm mt-1">{errors.email}</p>}
+                  {errors.email && (
+                    <p className="text-red text-sm mt-1">{errors.email}</p>
+                  )}
                 </div>
 
                 <div>
@@ -245,12 +290,19 @@ export default function PaymentPage() {
                   </label>
                   <input
                     type="tel"
-                    className={`form-input ${errors.phone ? 'border-red' : ''}`}
+                    className={`form-input ${errors.phone ? "border-red" : ""}`}
                     placeholder="Enter 10-digit mobile number"
                     value={customerForm.phone}
-                    onChange={(e) => setCustomerForm({...customerForm, phone: e.target.value})}
+                    onChange={(e) =>
+                      setCustomerForm({
+                        ...customerForm,
+                        phone: e.target.value,
+                      })
+                    }
                   />
-                  {errors.phone && <p className="text-red text-sm mt-1">{errors.phone}</p>}
+                  {errors.phone && (
+                    <p className="text-red text-sm mt-1">{errors.phone}</p>
+                  )}
                 </div>
 
                 <div>
@@ -263,7 +315,12 @@ export default function PaymentPage() {
                     className="form-input"
                     placeholder="Alternate contact (optional)"
                     value={customerForm.alternatePhone}
-                    onChange={(e) => setCustomerForm({...customerForm, alternatePhone: e.target.value})}
+                    onChange={(e) =>
+                      setCustomerForm({
+                        ...customerForm,
+                        alternatePhone: e.target.value,
+                      })
+                    }
                   />
                 </div>
 
@@ -274,13 +331,20 @@ export default function PaymentPage() {
                       Delivery Address *
                     </label>
                     <textarea
-                      className={`form-input min-h-20 ${errors.address ? 'border-red' : ''}`}
+                      className={`form-input min-h-20 ${errors.address ? "border-red" : ""}`}
                       placeholder="Enter complete delivery address with landmarks"
                       rows={3}
                       value={customerForm.address}
-                      onChange={(e) => setCustomerForm({...customerForm, address: e.target.value})}
+                      onChange={(e) =>
+                        setCustomerForm({
+                          ...customerForm,
+                          address: e.target.value,
+                        })
+                      }
                     />
-                    {errors.address && <p className="text-red text-sm mt-1">{errors.address}</p>}
+                    {errors.address && (
+                      <p className="text-red text-sm mt-1">{errors.address}</p>
+                    )}
                   </div>
                 )}
               </div>
@@ -288,13 +352,17 @@ export default function PaymentPage() {
 
             {/* Payment Method Selected */}
             <div className="card">
-              <h3 className="font-semibold text-primary mb-3">Payment Method</h3>
+              <h3 className="font-semibold text-primary mb-3">
+                Payment Method
+              </h3>
               <div className="flex items-center space-x-3 p-3 bg-muted rounded-lg">
                 <div className="w-8 h-8 bg-orange rounded-full flex items-center justify-center">
-                  {paymentMethod === 'cod' ? '💵' : '💳'}
+                  {paymentMethod === "cod" ? "💵" : "💳"}
                 </div>
                 <span className="font-medium text-primary">
-                  {paymentMethod === 'cod' ? `Cash on ${isDelivery ? 'Delivery' : 'Pickup'}` : 'Pay Online'}
+                  {paymentMethod === "cod"
+                    ? `Cash on ${isDelivery ? "Delivery" : "Pickup"}`
+                    : "Pay Online"}
                 </span>
               </div>
             </div>
@@ -302,8 +370,12 @@ export default function PaymentPage() {
             {/* Order Total */}
             <div className="card">
               <div className="flex justify-between items-center">
-                <span className="text-lg font-semibold text-primary">Total Amount</span>
-                <span className="text-xl font-bold text-orange">₹{calculateTotal()}</span>
+                <span className="text-lg font-semibold text-primary">
+                  Total Amount
+                </span>
+                <span className="text-xl font-bold text-orange">
+                  ₹{calculateTotal()}
+                </span>
               </div>
             </div>
           </div>
@@ -318,12 +390,17 @@ export default function PaymentPage() {
               onClick={handleFormSubmit}
               className="btn btn-primary btn-lg w-full"
             >
-              {paymentMethod === 'cod' ? 'Place Order' : 'Proceed to Payment'} • ₹{calculateTotal()}
+              {paymentMethod === "cod" ? "Place Order" : "Proceed to Payment"} •
+              ₹{calculateTotal()}
             </button>
           ) : (
             <div className="text-center">
-              <p className="text-sm text-secondary mb-2">Choose a payment method to continue</p>
-              <div className="text-lg font-bold text-primary">Total: ₹{calculateTotal()}</div>
+              <p className="text-sm text-secondary mb-2">
+                Choose a payment method to continue
+              </p>
+              <div className="text-lg font-bold text-primary">
+                Total: ₹{calculateTotal()}
+              </div>
             </div>
           )}
         </div>

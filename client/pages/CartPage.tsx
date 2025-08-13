@@ -1,7 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom';
-import { useRestaurant, useCartTotal, useCartItemCount } from '@/context/RestaurantContext';
-import { ArrowLeft, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
-import Footer from '@/components/Footer';
+import { Link, useNavigate } from "react-router-dom";
+import {
+  useRestaurant,
+  useCartTotal,
+  useCartItemCount,
+} from "@/context/RestaurantContext";
+import { ArrowLeft, Minus, Plus, Trash2, ShoppingBag } from "lucide-react";
+import Footer from "@/components/Footer";
 
 export default function CartPage() {
   const { state, dispatch } = useRestaurant();
@@ -10,20 +14,23 @@ export default function CartPage() {
   const navigate = useNavigate();
 
   const updateQuantity = (itemId: number, quantity: number) => {
-    dispatch({ type: 'UPDATE_CART_QUANTITY', payload: { id: itemId, quantity } });
+    dispatch({
+      type: "UPDATE_CART_QUANTITY",
+      payload: { id: itemId, quantity },
+    });
   };
 
   const removeItem = (itemId: number) => {
-    dispatch({ type: 'REMOVE_FROM_CART', payload: itemId });
+    dispatch({ type: "REMOVE_FROM_CART", payload: itemId });
   };
 
   const handlePlaceOrder = () => {
-    if (state.serviceType === 'dining') {
+    if (state.serviceType === "dining") {
       // For dining, go directly to order confirmation with "pay on table" option
-      navigate('/order/confirmation');
+      navigate("/order/confirmation");
     } else {
       // For delivery and takeaway, go to payment page first
-      navigate('/payment');
+      navigate("/payment");
     }
   };
 
@@ -43,8 +50,12 @@ export default function CartPage() {
         {/* Empty Cart */}
         <div className="container py-16 text-center">
           <ShoppingBag className="w-16 h-16 text-muted mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-primary mb-2">Your cart is empty</h2>
-          <p className="text-secondary mb-6">Add some delicious items from the menu</p>
+          <h2 className="text-xl font-semibold text-primary mb-2">
+            Your cart is empty
+          </h2>
+          <p className="text-secondary mb-6">
+            Add some delicious items from the menu
+          </p>
           <Link
             to={`/menu/${state.restaurant?.id || 1}`}
             className="btn btn-primary"
@@ -64,7 +75,9 @@ export default function CartPage() {
           <Link to={`/menu/${state.restaurant?.id || 1}`} className="mr-4">
             <ArrowLeft className="w-6 h-6 text-secondary" />
           </Link>
-          <h1 className="text-xl font-semibold text-primary">Cart ({itemCount} items)</h1>
+          <h1 className="text-xl font-semibold text-primary">
+            Cart ({itemCount} items)
+          </h1>
         </div>
       </div>
 
@@ -89,25 +102,35 @@ export default function CartPage() {
                       <Trash2 className="w-4 h-4" />
                     </button>
                   </div>
-                  <p className="text-sm text-secondary mt-1">₹{item.price} each</p>
+                  <p className="text-sm text-secondary mt-1">
+                    ₹{item.price} each
+                  </p>
 
                   <div className="flex items-center justify-between mt-3">
                     <div className="flex items-center space-x-2">
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity - 1)
+                        }
                         className="w-8 h-8 rounded-full bg-orange-light text-orange flex items-center justify-center hover:bg-orange transition"
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="font-semibold text-primary w-8 text-center">{item.quantity}</span>
+                      <span className="font-semibold text-primary w-8 text-center">
+                        {item.quantity}
+                      </span>
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        onClick={() =>
+                          updateQuantity(item.id, item.quantity + 1)
+                        }
                         className="w-8 h-8 rounded-full bg-orange text-white flex items-center justify-center hover:bg-orange transition"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
-                    <span className="font-bold text-primary">₹{item.price * item.quantity}</span>
+                    <span className="font-bold text-primary">
+                      ₹{item.price * item.quantity}
+                    </span>
                   </div>
                 </div>
               </div>

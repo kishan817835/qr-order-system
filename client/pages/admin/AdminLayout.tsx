@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { Link, useLocation, Outlet, useNavigate } from "react-router-dom";
 import {
   Home,
   ShoppingBag,
@@ -13,20 +13,24 @@ import {
   User,
   LogOut,
   ChevronDown,
-  MapPin
-} from 'lucide-react';
-import ProfileCard from '../../components/ProfileCard';
+  MapPin,
+} from "lucide-react";
+import ProfileCard from "../../components/ProfileCard";
 
 const navigationItems = [
-  { name: 'Dashboard', href: '/admin', icon: Home },
-  { name: 'Orders', href: '/admin/orders', icon: ShoppingBag },
-  { name: 'Categories', href: '/admin/categories', icon: List },
-  { name: 'Menu Items', href: '/admin/items', icon: MenuIcon },
-  { name: 'Table Management', href: '/admin/tables', icon: MapPin },
-  { name: 'Extra Charges', href: '/admin/charges', icon: DollarSign },
-  { name: 'Delivery Management', href: '/admin/delivery-management', icon: BarChart3 },
-  { name: 'Staff Management', href: '/admin/staff', icon: Users },
-  { name: 'Settings', href: '/admin/settings', icon: Settings },
+  { name: "Dashboard", href: "/admin", icon: Home },
+  { name: "Orders", href: "/admin/orders", icon: ShoppingBag },
+  { name: "Categories", href: "/admin/categories", icon: List },
+  { name: "Menu Items", href: "/admin/items", icon: MenuIcon },
+  { name: "Table Management", href: "/admin/tables", icon: MapPin },
+  { name: "Extra Charges", href: "/admin/charges", icon: DollarSign },
+  {
+    name: "Delivery Management",
+    href: "/admin/delivery-management",
+    icon: BarChart3,
+  },
+  { name: "Staff Management", href: "/admin/staff", icon: Users },
+  { name: "Settings", href: "/admin/settings", icon: Settings },
 ];
 
 export default function AdminLayout() {
@@ -39,18 +43,18 @@ export default function AdminLayout() {
 
   const [adminProfile, setAdminProfile] = useState({
     id: 1,
-    name: 'Admin User',
-    email: 'admin@spicegarden.com',
-    phone: '+91 98765 00000',
-    address: 'Restaurant Head Office, Delhi',
+    name: "Admin User",
+    email: "admin@spicegarden.com",
+    phone: "+91 98765 00000",
+    address: "Restaurant Head Office, Delhi",
     photo: null,
-    role: 'admin'
+    role: "admin",
   });
 
   const handleLogout = () => {
-    if (window.confirm('Are you sure you want to logout?')) {
-      localStorage.removeItem('userRole');
-      navigate('/login');
+    if (window.confirm("Are you sure you want to logout?")) {
+      localStorage.removeItem("userRole");
+      navigate("/login");
     }
   };
 
@@ -62,14 +66,16 @@ export default function AdminLayout() {
     <div className="min-h-screen bg-gray">
       {/* Mobile sidebar overlay */}
       {sidebarOpen && (
-        <div 
+        <div
           className="fixed inset-0 z-50 bg-black bg-opacity-50 md:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
       {/* Sidebar */}
-      <div className={`admin-sidebar ${sidebarOpen ? 'open' : ''} md:translate-x-0`}>
+      <div
+        className={`admin-sidebar ${sidebarOpen ? "open" : ""} md:translate-x-0`}
+      >
         <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-orange rounded-lg flex items-center justify-center">
@@ -96,7 +102,7 @@ export default function AdminLayout() {
               <Link
                 key={item.name}
                 to={item.href}
-                className={`admin-nav-item ${isActive ? 'active' : ''}`}
+                className={`admin-nav-item ${isActive ? "active" : ""}`}
                 onClick={() => setSidebarOpen(false)}
               >
                 <Icon className="w-5 h-5 mr-3" />
@@ -135,7 +141,7 @@ export default function AdminLayout() {
           >
             <MenuIcon className="w-4 h-4" />
           </button>
-          
+
           <div className="flex items-center space-x-4">
             <Link to="/menu/1" className="btn btn-secondary btn-sm">
               View Menu
@@ -149,13 +155,19 @@ export default function AdminLayout() {
               >
                 <div className="w-8 h-8 bg-orange rounded-full flex items-center justify-center">
                   {adminProfile.photo ? (
-                    <img src={adminProfile.photo} alt="Profile" className="w-8 h-8 rounded-full object-cover" />
+                    <img
+                      src={adminProfile.photo}
+                      alt="Profile"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
                   ) : (
                     <User className="w-4 h-4 text-white" />
                   )}
                 </div>
                 <div className="text-left hidden md:block">
-                  <p className="text-sm font-medium text-primary">{adminProfile.name}</p>
+                  <p className="text-sm font-medium text-primary">
+                    {adminProfile.name}
+                  </p>
                   <p className="text-xs text-secondary">Administrator</p>
                 </div>
                 <ChevronDown className="w-4 h-4 text-secondary" />
@@ -167,14 +179,22 @@ export default function AdminLayout() {
                     <div className="flex items-center space-x-3 mb-4">
                       <div className="w-12 h-12 bg-orange rounded-full flex items-center justify-center">
                         {adminProfile.photo ? (
-                          <img src={adminProfile.photo} alt="Profile" className="w-12 h-12 rounded-full object-cover" />
+                          <img
+                            src={adminProfile.photo}
+                            alt="Profile"
+                            className="w-12 h-12 rounded-full object-cover"
+                          />
                         ) : (
                           <User className="w-6 h-6 text-white" />
                         )}
                       </div>
                       <div>
-                        <p className="font-medium text-primary">{adminProfile.name}</p>
-                        <p className="text-sm text-secondary">{adminProfile.email}</p>
+                        <p className="font-medium text-primary">
+                          {adminProfile.name}
+                        </p>
+                        <p className="text-sm text-secondary">
+                          {adminProfile.email}
+                        </p>
                       </div>
                     </div>
 
@@ -213,7 +233,9 @@ export default function AdminLayout() {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 w-full max-w-2xl max-h-screen overflow-y-auto">
             <div className="flex items-center justify-between mb-6">
-              <h3 className="text-2xl font-semibold text-primary">Admin Profile</h3>
+              <h3 className="text-2xl font-semibold text-primary">
+                Admin Profile
+              </h3>
               <button
                 onClick={() => {
                   setShowProfileModal(false);

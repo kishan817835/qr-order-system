@@ -1,19 +1,36 @@
-import { useEffect, useState } from 'react';
-import { useParams, Link, useSearchParams } from 'react-router-dom';
-import { useRestaurant, MenuItem, Category, ServiceType } from '@/context/RestaurantContext';
-import { ShoppingCart, Plus, Minus, Search, Clock, MapPin, Phone, ArrowRight, X } from 'lucide-react';
-import { useCartItemCount } from '@/context/RestaurantContext';
-import ItemDetailsModal from '@/components/ItemDetailsModal';
-import Footer from '@/components/Footer';
+import { useEffect, useState } from "react";
+import { useParams, Link, useSearchParams } from "react-router-dom";
+import {
+  useRestaurant,
+  MenuItem,
+  Category,
+  ServiceType,
+} from "@/context/RestaurantContext";
+import {
+  ShoppingCart,
+  Plus,
+  Minus,
+  Search,
+  Clock,
+  MapPin,
+  Phone,
+  ArrowRight,
+  X,
+} from "lucide-react";
+import { useCartItemCount } from "@/context/RestaurantContext";
+import ItemDetailsModal from "@/components/ItemDetailsModal";
+import Footer from "@/components/Footer";
 
 // Enhanced mock data with new features
 const mockRestaurantData = {
   restaurant: {
     id: 1,
     name: "Spice Garden",
-    logo_url: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=100&h=100&fit=crop&crop=center",
+    logo_url:
+      "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=100&h=100&fit=crop&crop=center",
     address: "123 Main Street, Food District",
-    banner_url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=300&fit=crop"
+    banner_url:
+      "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=300&fit=crop",
   },
   categories: [
     {
@@ -23,31 +40,35 @@ const mockRestaurantData = {
         {
           id: 1,
           name: "Crispy Paneer Tikka",
-          description: "Marinated cottage cheese grilled to perfection with spices",
+          description:
+            "Marinated cottage cheese grilled to perfection with spices",
           price: 220,
-          image_url: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop",
+          image_url:
+            "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop",
           category_id: 1,
           discount: 10,
-          isPriority: true
+          isPriority: true,
         },
         {
           id: 2,
           name: "Chicken Wings",
           description: "Spicy buffalo wings served with mint chutney",
           price: 280,
-          image_url: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop",
-          category_id: 1
+          image_url:
+            "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop",
+          category_id: 1,
         },
         {
           id: 3,
           name: "Vegetable Spring Rolls",
           description: "Fresh vegetables wrapped in crispy pastry",
           price: 180,
-          image_url: "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop",
+          image_url:
+            "https://images.unsplash.com/photo-1544025162-d76694265947?w=400&h=300&fit=crop",
           category_id: 1,
-          discount: 15
-        }
-      ]
+          discount: 15,
+        },
+      ],
     },
     {
       id: 2,
@@ -58,28 +79,31 @@ const mockRestaurantData = {
           name: "Butter Chicken",
           description: "Tender chicken in rich tomato and butter gravy",
           price: 380,
-          image_url: "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&h=300&fit=crop",
+          image_url:
+            "https://images.unsplash.com/photo-1603894584373-5ac82b2ae398?w=400&h=300&fit=crop",
           category_id: 2,
-          isPriority: true
+          isPriority: true,
         },
         {
           id: 5,
           name: "Paneer Makhani",
           description: "Cottage cheese cubes in creamy tomato curry",
           price: 320,
-          image_url: "https://images.unsplash.com/photo-1631452180539-96aca7d48617?w=400&h=300&fit=crop",
-          category_id: 2
+          image_url:
+            "https://images.unsplash.com/photo-1631452180539-96aca7d48617?w=400&h=300&fit=crop",
+          category_id: 2,
         },
         {
           id: 6,
           name: "Biryani Special",
           description: "Aromatic basmati rice with tender meat and spices",
           price: 450,
-          image_url: "https://images.unsplash.com/photo-1563379091339-03246963d96a?w=400&h=300&fit=crop",
+          image_url:
+            "https://images.unsplash.com/photo-1563379091339-03246963d96a?w=400&h=300&fit=crop",
           category_id: 2,
-          discount: 20
-        }
-      ]
+          discount: 20,
+        },
+      ],
     },
     {
       id: 3,
@@ -90,18 +114,20 @@ const mockRestaurantData = {
           name: "Mango Lassi",
           description: "Creamy yogurt drink with fresh mango",
           price: 120,
-          image_url: "https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=400&h=300&fit=crop",
-          category_id: 3
+          image_url:
+            "https://images.unsplash.com/photo-1553909489-cd47e0ef937f?w=400&h=300&fit=crop",
+          category_id: 3,
         },
         {
           id: 8,
           name: "Fresh Lime Water",
           description: "Refreshing lime water with mint",
           price: 80,
-          image_url: "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400&h=300&fit=crop",
-          category_id: 3
-        }
-      ]
+          image_url:
+            "https://images.unsplash.com/photo-1621263764928-df1444c5e859?w=400&h=300&fit=crop",
+          category_id: 3,
+        },
+      ],
     },
     {
       id: 4,
@@ -112,21 +138,23 @@ const mockRestaurantData = {
           name: "Gulab Jamun",
           description: "Soft milk dumplings in sugar syrup",
           price: 150,
-          image_url: "https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&h=300&fit=crop",
+          image_url:
+            "https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=400&h=300&fit=crop",
           category_id: 4,
-          isPriority: true
+          isPriority: true,
         },
         {
           id: 10,
           name: "Kulfi",
           description: "Traditional Indian ice cream with cardamom",
           price: 120,
-          image_url: "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=300&fit=crop",
-          category_id: 4
-        }
-      ]
-    }
-  ]
+          image_url:
+            "https://images.unsplash.com/photo-1570197788417-0e82375c9371?w=400&h=300&fit=crop",
+          category_id: 4,
+        },
+      ],
+    },
+  ],
 };
 
 export default function MenuPage() {
@@ -135,38 +163,41 @@ export default function MenuPage() {
   const cartItemCount = useCartItemCount();
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
-    dispatch({ type: 'SET_LOADING', payload: true });
+    dispatch({ type: "SET_LOADING", payload: true });
 
     // Get table number and service type from URL params if available
     const urlParams = new URLSearchParams(window.location.search);
-    const tableNumber = urlParams.get('table');
-    const serviceType = urlParams.get('service') as ServiceType;
+    const tableNumber = urlParams.get("table");
+    const serviceType = urlParams.get("service") as ServiceType;
 
     if (tableNumber) {
-      dispatch({ type: 'SET_TABLE_NUMBER', payload: tableNumber });
+      dispatch({ type: "SET_TABLE_NUMBER", payload: tableNumber });
     }
 
-    if (serviceType && ['dining', 'takeaway', 'delivery'].includes(serviceType)) {
-      dispatch({ type: 'SET_SERVICE_TYPE', payload: serviceType });
+    if (
+      serviceType &&
+      ["dining", "takeaway", "delivery"].includes(serviceType)
+    ) {
+      dispatch({ type: "SET_SERVICE_TYPE", payload: serviceType });
     }
-    
+
     // Simulate API call
     setTimeout(() => {
       const priorityItems = mockRestaurantData.categories
-        .flatMap(cat => cat.items)
-        .filter(item => item.isPriority);
-      
+        .flatMap((cat) => cat.items)
+        .filter((item) => item.isPriority);
+
       dispatch({
-        type: 'SET_RESTAURANT_DATA',
+        type: "SET_RESTAURANT_DATA",
         payload: {
           restaurant: mockRestaurantData.restaurant,
           categories: mockRestaurantData.categories,
-          priorityItems
-        }
+          priorityItems,
+        },
       });
     }, 1000);
   }, [restaurantId, dispatch]);
@@ -182,23 +213,28 @@ export default function MenuPage() {
   };
 
   const handleAddToCart = (item: MenuItem) => {
-    dispatch({ type: 'ADD_TO_CART', payload: item });
+    dispatch({ type: "ADD_TO_CART", payload: item });
   };
 
   const getItemCartQuantity = (itemId: number) => {
-    const cartItem = state.cart.find(item => item.id === itemId);
+    const cartItem = state.cart.find((item) => item.id === itemId);
     return cartItem?.quantity || 0;
   };
 
   const updateCartQuantity = (itemId: number, quantity: number) => {
-    dispatch({ type: 'UPDATE_CART_QUANTITY', payload: { id: itemId, quantity } });
+    dispatch({
+      type: "UPDATE_CART_QUANTITY",
+      payload: { id: itemId, quantity },
+    });
   };
 
   const handleServiceTypeChange = (serviceType: ServiceType) => {
-    dispatch({ type: 'SET_SERVICE_TYPE', payload: serviceType });
+    dispatch({ type: "SET_SERVICE_TYPE", payload: serviceType });
   };
 
-  const selectedCategory = state.categories.find(cat => cat.id === state.selectedCategory);
+  const selectedCategory = state.categories.find(
+    (cat) => cat.id === state.selectedCategory,
+  );
 
   // Search functionality
   const handleSearch = (query: string) => {
@@ -207,7 +243,7 @@ export default function MenuPage() {
   };
 
   const clearSearch = () => {
-    setSearchQuery('');
+    setSearchQuery("");
     setIsSearching(false);
   };
 
@@ -215,10 +251,11 @@ export default function MenuPage() {
   const getFilteredItems = () => {
     if (!isSearching) return [];
 
-    const allItems = state.categories.flatMap(cat => cat.items);
-    return allItems.filter(item =>
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.description.toLowerCase().includes(searchQuery.toLowerCase())
+    const allItems = state.categories.flatMap((cat) => cat.items);
+    return allItems.filter(
+      (item) =>
+        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        item.description.toLowerCase().includes(searchQuery.toLowerCase()),
     );
   };
 
@@ -252,15 +289,19 @@ export default function MenuPage() {
         <div className="container py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3">
-              <img 
-                src={state.restaurant?.logo_url} 
+              <img
+                src={state.restaurant?.logo_url}
                 alt={state.restaurant?.name}
                 className="w-12 h-12 rounded-full object-cover"
               />
               <div>
-                <h1 className="text-lg font-bold text-primary">{state.restaurant?.name}</h1>
+                <h1 className="text-lg font-bold text-primary">
+                  {state.restaurant?.name}
+                </h1>
                 {state.tableNumber && (
-                  <p className="text-sm text-orange">Table #{state.tableNumber}</p>
+                  <p className="text-sm text-orange">
+                    Table #{state.tableNumber}
+                  </p>
                 )}
               </div>
             </div>
@@ -289,11 +330,13 @@ export default function MenuPage() {
       {/* Service Type Selection */}
       <div className="bg-white border-b">
         <div className="container py-4">
-          <h2 className="text-base font-semibold text-primary mb-3">Choose Service Type</h2>
+          <h2 className="text-base font-semibold text-primary mb-3">
+            Choose Service Type
+          </h2>
           <div className="flex space-x-3">
             <button
-              onClick={() => handleServiceTypeChange('dining')}
-              className={`service-option ${state.serviceType === 'dining' ? 'active' : ''}`}
+              onClick={() => handleServiceTypeChange("dining")}
+              className={`service-option ${state.serviceType === "dining" ? "active" : ""}`}
             >
               <div className="w-8 h-8 bg-orange rounded-full flex items-center justify-center mb-2">
                 <span className="text-white text-sm">🍽️</span>
@@ -301,8 +344,8 @@ export default function MenuPage() {
               <span className="text-sm font-medium">Dining</span>
             </button>
             <button
-              onClick={() => handleServiceTypeChange('takeaway')}
-              className={`service-option ${state.serviceType === 'takeaway' ? 'active' : ''}`}
+              onClick={() => handleServiceTypeChange("takeaway")}
+              className={`service-option ${state.serviceType === "takeaway" ? "active" : ""}`}
             >
               <div className="w-8 h-8 bg-orange rounded-full flex items-center justify-center mb-2">
                 <span className="text-white text-sm">🥡</span>
@@ -310,8 +353,8 @@ export default function MenuPage() {
               <span className="text-sm font-medium">Takeaway</span>
             </button>
             <button
-              onClick={() => handleServiceTypeChange('delivery')}
-              className={`service-option ${state.serviceType === 'delivery' ? 'active' : ''}`}
+              onClick={() => handleServiceTypeChange("delivery")}
+              className={`service-option ${state.serviceType === "delivery" ? "active" : ""}`}
             >
               <div className="w-8 h-8 bg-orange rounded-full flex items-center justify-center mb-2">
                 <span className="text-white text-sm">🚚</span>
@@ -351,9 +394,14 @@ export default function MenuPage() {
         <div className="container py-6">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-primary">
-              Search Results {filteredSearchItems.length > 0 && `(${filteredSearchItems.length})`}
+              Search Results{" "}
+              {filteredSearchItems.length > 0 &&
+                `(${filteredSearchItems.length})`}
             </h2>
-            <button onClick={clearSearch} className="text-sm text-orange font-medium">
+            <button
+              onClick={clearSearch}
+              className="text-sm text-orange font-medium"
+            >
               Clear Search
             </button>
           </div>
@@ -378,25 +426,37 @@ export default function MenuPage() {
                         >
                           {item.name}
                         </h3>
-                        <p className="text-sm text-secondary mt-1 line-clamp-2">{item.description}</p>
+                        <p className="text-sm text-secondary mt-1 line-clamp-2">
+                          {item.description}
+                        </p>
                         <div className="flex items-center justify-between mt-3">
                           <div className="flex items-center space-x-2">
-                            <span className="font-bold text-primary">₹{item.price}</span>
+                            <span className="font-bold text-primary">
+                              ₹{item.price}
+                            </span>
                             {item.discount && (
-                              <span className="badge badge-orange">{item.discount}% OFF</span>
+                              <span className="badge badge-orange">
+                                {item.discount}% OFF
+                              </span>
                             )}
                           </div>
                           {cartQuantity > 0 ? (
                             <div className="flex items-center space-x-2">
                               <button
-                                onClick={() => updateCartQuantity(item.id, cartQuantity - 1)}
+                                onClick={() =>
+                                  updateCartQuantity(item.id, cartQuantity - 1)
+                                }
                                 className="w-8 h-8 rounded-full bg-orange-light text-orange flex items-center justify-center"
                               >
                                 <Minus className="w-4 h-4" />
                               </button>
-                              <span className="font-semibold text-primary w-8 text-center">{cartQuantity}</span>
+                              <span className="font-semibold text-primary w-8 text-center">
+                                {cartQuantity}
+                              </span>
                               <button
-                                onClick={() => updateCartQuantity(item.id, cartQuantity + 1)}
+                                onClick={() =>
+                                  updateCartQuantity(item.id, cartQuantity + 1)
+                                }
                                 className="w-8 h-8 rounded-full bg-orange text-white flex items-center justify-center"
                               >
                                 <Plus className="w-4 h-4" />
@@ -420,8 +480,12 @@ export default function MenuPage() {
             </div>
           ) : (
             <div className="text-center py-8">
-              <p className="text-secondary">No items found for "{searchQuery}"</p>
-              <p className="text-sm text-muted mt-2">Try searching with different keywords</p>
+              <p className="text-secondary">
+                No items found for "{searchQuery}"
+              </p>
+              <p className="text-sm text-muted mt-2">
+                Try searching with different keywords
+              </p>
             </div>
           )}
         </div>
@@ -430,7 +494,7 @@ export default function MenuPage() {
       {/* Banner */}
       {!isSearching && state.restaurant?.banner_url && (
         <div className="relative">
-          <img 
+          <img
             src={state.restaurant.banner_url}
             alt="Restaurant banner"
             className="w-full h-32 object-cover"
@@ -448,45 +512,59 @@ export default function MenuPage() {
       {!isSearching && state.priorityItems.length > 0 && (
         <div className="container py-6">
           <div className="priority-section">
-            <h2 className="text-lg font-bold text-primary mb-4">⭐ Chef's Special</h2>
+            <h2 className="text-lg font-bold text-primary mb-4">
+              ⭐ Chef's Special
+            </h2>
             <div className="space-y-3">
               {state.priorityItems.slice(0, 2).map((item) => {
                 const cartQuantity = getItemCartQuantity(item.id);
                 return (
                   <div key={item.id} className="bg-white rounded-lg shadow p-4">
                     <div className="flex space-x-4">
-                      <img 
+                      <img
                         src={item.image_url}
                         alt={item.name}
                         className="w-20 h-20 rounded-lg object-cover cursor-pointer"
                         onClick={() => openItemModal(item)}
                       />
                       <div className="flex-1">
-                        <h3 
+                        <h3
                           className="font-semibold text-primary text-lg cursor-pointer"
                           onClick={() => openItemModal(item)}
                         >
                           {item.name}
                         </h3>
-                        <p className="text-sm text-secondary mt-1 line-clamp-2">{item.description}</p>
+                        <p className="text-sm text-secondary mt-1 line-clamp-2">
+                          {item.description}
+                        </p>
                         <div className="flex items-center justify-between mt-3">
                           <div className="flex items-center space-x-2">
-                            <span className="font-bold text-primary">₹{item.price}</span>
+                            <span className="font-bold text-primary">
+                              ₹{item.price}
+                            </span>
                             {item.discount && (
-                              <span className="badge badge-orange">{item.discount}% OFF</span>
+                              <span className="badge badge-orange">
+                                {item.discount}% OFF
+                              </span>
                             )}
                           </div>
                           {cartQuantity > 0 ? (
                             <div className="flex items-center space-x-2">
                               <button
-                                onClick={() => updateCartQuantity(item.id, cartQuantity - 1)}
+                                onClick={() =>
+                                  updateCartQuantity(item.id, cartQuantity - 1)
+                                }
                                 className="w-8 h-8 rounded-full bg-orange-light text-orange flex items-center justify-center"
                               >
                                 <Minus className="w-4 h-4" />
                               </button>
-                              <span className="font-semibold text-primary w-8 text-center">{cartQuantity}</span>
+                              <span className="font-semibold text-primary w-8 text-center">
+                                {cartQuantity}
+                              </span>
                               <button
-                                onClick={() => updateCartQuantity(item.id, cartQuantity + 1)}
+                                onClick={() =>
+                                  updateCartQuantity(item.id, cartQuantity + 1)
+                                }
                                 className="w-8 h-8 rounded-full bg-orange text-white flex items-center justify-center"
                               >
                                 <Plus className="w-4 h-4" />
@@ -515,16 +593,27 @@ export default function MenuPage() {
       {/* Categories */}
       {!isSearching && (
         <div className="container py-6">
-          <h2 className="text-lg font-bold text-primary mb-4">Menu Categories</h2>
+          <h2 className="text-lg font-bold text-primary mb-4">
+            Menu Categories
+          </h2>
           <div className="category-scroll">
             {state.categories.map((category) => (
               <div
                 key={category.id}
                 className="category-card"
-                onClick={() => dispatch({ type: 'SET_SELECTED_CATEGORY', payload: category.id })}
+                onClick={() =>
+                  dispatch({
+                    type: "SET_SELECTED_CATEGORY",
+                    payload: category.id,
+                  })
+                }
               >
-                <h3 className="font-semibold text-primary mb-2">{category.name}</h3>
-                <p className="text-sm text-secondary">{category.items.length} items</p>
+                <h3 className="font-semibold text-primary mb-2">
+                  {category.name}
+                </h3>
+                <p className="text-sm text-secondary">
+                  {category.items.length} items
+                </p>
                 {category.items[0] && (
                   <img
                     src={category.items[0].image_url}
@@ -533,7 +622,9 @@ export default function MenuPage() {
                   />
                 )}
                 <div className="flex items-center justify-between mt-3">
-                  <span className="text-sm text-orange font-medium">View All</span>
+                  <span className="text-sm text-orange font-medium">
+                    View All
+                  </span>
                   <ArrowRight className="w-4 h-4 text-orange" />
                 </div>
               </div>
@@ -546,8 +637,12 @@ export default function MenuPage() {
       {!isSearching && selectedCategory && (
         <div className="container pb-24">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-bold text-primary">{selectedCategory.name}</h2>
-            <span className="text-sm text-secondary">{selectedCategory.items.length} items</span>
+            <h2 className="text-lg font-bold text-primary">
+              {selectedCategory.name}
+            </h2>
+            <span className="text-sm text-secondary">
+              {selectedCategory.items.length} items
+            </span>
           </div>
           <div className="space-y-4">
             {selectedCategory.items.map((item) => {
@@ -555,38 +650,50 @@ export default function MenuPage() {
               return (
                 <div key={item.id} className="card">
                   <div className="flex space-x-4">
-                    <img 
+                    <img
                       src={item.image_url}
                       alt={item.name}
                       className="w-20 h-20 rounded-lg object-cover cursor-pointer"
                       onClick={() => openItemModal(item)}
                     />
                     <div className="flex-1">
-                      <h3 
+                      <h3
                         className="font-semibold text-primary text-lg cursor-pointer"
                         onClick={() => openItemModal(item)}
                       >
                         {item.name}
                       </h3>
-                      <p className="text-sm text-secondary mt-1 line-clamp-2">{item.description}</p>
+                      <p className="text-sm text-secondary mt-1 line-clamp-2">
+                        {item.description}
+                      </p>
                       <div className="flex items-center justify-between mt-3">
                         <div className="flex items-center space-x-2">
-                          <span className="font-bold text-primary">₹{item.price}</span>
+                          <span className="font-bold text-primary">
+                            ₹{item.price}
+                          </span>
                           {item.discount && (
-                            <span className="badge badge-orange">{item.discount}% OFF</span>
+                            <span className="badge badge-orange">
+                              {item.discount}% OFF
+                            </span>
                           )}
                         </div>
                         {cartQuantity > 0 ? (
                           <div className="flex items-center space-x-2">
                             <button
-                              onClick={() => updateCartQuantity(item.id, cartQuantity - 1)}
+                              onClick={() =>
+                                updateCartQuantity(item.id, cartQuantity - 1)
+                              }
                               className="w-8 h-8 rounded-full bg-orange-light text-orange flex items-center justify-center"
                             >
                               <Minus className="w-4 h-4" />
                             </button>
-                            <span className="font-semibold text-primary w-8 text-center">{cartQuantity}</span>
+                            <span className="font-semibold text-primary w-8 text-center">
+                              {cartQuantity}
+                            </span>
                             <button
-                              onClick={() => updateCartQuantity(item.id, cartQuantity + 1)}
+                              onClick={() =>
+                                updateCartQuantity(item.id, cartQuantity + 1)
+                              }
                               className="w-8 h-8 rounded-full bg-orange text-white flex items-center justify-center"
                             >
                               <Plus className="w-4 h-4" />

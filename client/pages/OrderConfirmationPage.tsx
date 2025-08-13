@@ -1,7 +1,13 @@
-import { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import { useRestaurant } from '@/context/RestaurantContext';
-import { CheckCircle, Clock, ShoppingBag, CreditCard, MapPin } from 'lucide-react';
+import { useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { useRestaurant } from "@/context/RestaurantContext";
+import {
+  CheckCircle,
+  Clock,
+  ShoppingBag,
+  CreditCard,
+  MapPin,
+} from "lucide-react";
 
 export default function OrderConfirmationPage() {
   const { state, dispatch } = useRestaurant();
@@ -11,11 +17,11 @@ export default function OrderConfirmationPage() {
   const orderData = location.state || {};
   const orderId = orderData.orderId || Math.floor(Math.random() * 10000) + 1000;
   const estimatedTime = Math.floor(Math.random() * 15) + 20; // 20-35 minutes
-  const isDining = state.serviceType === 'dining';
+  const isDining = state.serviceType === "dining";
 
   useEffect(() => {
     // Clear cart after order is placed
-    dispatch({ type: 'CLEAR_CART' });
+    dispatch({ type: "CLEAR_CART" });
   }, [dispatch]);
 
   return (
@@ -26,26 +32,39 @@ export default function OrderConfirmationPage() {
           <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle className="w-12 h-12 text-green-500" />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Order Confirmed!</h1>
-          <p className="text-gray-600">Your order has been placed successfully</p>
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">
+            Order Confirmed!
+          </h1>
+          <p className="text-gray-600">
+            Your order has been placed successfully
+          </p>
         </div>
 
         {/* Order Details */}
         <div className="card mb-6">
           <div className="text-center">
-            <h2 className="text-xl font-semibold text-primary mb-2">Order #{orderId}</h2>
+            <h2 className="text-xl font-semibold text-primary mb-2">
+              Order #{orderId}
+            </h2>
             <div className="flex items-center justify-center text-orange mb-4">
               <Clock className="w-5 h-5 mr-2" />
-              <span className="font-medium">Estimated time: {estimatedTime} minutes</span>
+              <span className="font-medium">
+                Estimated time: {estimatedTime} minutes
+              </span>
             </div>
             {isDining && state.tableNumber && (
               <div className="bg-orange-light p-3 rounded-lg mb-4">
-                <p className="font-medium text-orange">Table #{state.tableNumber}</p>
-                <p className="text-sm text-secondary">Please remain seated, we'll serve you</p>
+                <p className="font-medium text-orange">
+                  Table #{state.tableNumber}
+                </p>
+                <p className="text-sm text-secondary">
+                  Please remain seated, we'll serve you
+                </p>
               </div>
             )}
             <p className="text-secondary">
-              We're preparing your delicious meal. You'll receive updates about your order status.
+              We're preparing your delicious meal. You'll receive updates about
+              your order status.
             </p>
           </div>
         </div>
@@ -57,20 +76,30 @@ export default function OrderConfirmationPage() {
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
                 <span className="text-secondary">Customer:</span>
-                <span className="text-primary font-medium">{orderData.customerDetails.name}</span>
+                <span className="text-primary font-medium">
+                  {orderData.customerDetails.name}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-secondary">Phone:</span>
-                <span className="text-primary">{orderData.customerDetails.phone}</span>
+                <span className="text-primary">
+                  {orderData.customerDetails.phone}
+                </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-secondary">Email:</span>
-                <span className="text-primary">{orderData.customerDetails.email}</span>
+                <span className="text-primary">
+                  {orderData.customerDetails.email}
+                </span>
               </div>
               {orderData.customerDetails.address && (
                 <div className="pt-2 border-t">
-                  <p className="text-secondary text-xs mb-1">Delivery Address:</p>
-                  <p className="text-primary">{orderData.customerDetails.address}</p>
+                  <p className="text-secondary text-xs mb-1">
+                    Delivery Address:
+                  </p>
+                  <p className="text-primary">
+                    {orderData.customerDetails.address}
+                  </p>
                 </div>
               )}
             </div>
@@ -83,13 +112,12 @@ export default function OrderConfirmationPage() {
             <h3 className="font-semibold text-primary mb-3">Payment Method</h3>
             <div className="flex items-center space-x-3">
               <div className="w-8 h-8 bg-orange rounded-full flex items-center justify-center">
-                {orderData.paymentMethod === 'cod' ? '💵' : '💳'}
+                {orderData.paymentMethod === "cod" ? "💵" : "💳"}
               </div>
               <span className="text-primary">
-                {orderData.paymentMethod === 'cod'
-                  ? `Cash on ${state.serviceType === 'delivery' ? 'Delivery' : 'Pickup'}`
-                  : 'Paid Online'
-                }
+                {orderData.paymentMethod === "cod"
+                  ? `Cash on ${state.serviceType === "delivery" ? "Delivery" : "Pickup"}`
+                  : "Paid Online"}
               </span>
             </div>
           </div>
@@ -119,8 +147,12 @@ export default function OrderConfirmationPage() {
                 className="w-12 h-12 rounded-full object-cover"
               />
               <div>
-                <h3 className="font-semibold text-primary">{state.restaurant.name}</h3>
-                <p className="text-sm text-secondary">{state.restaurant.address}</p>
+                <h3 className="font-semibold text-primary">
+                  {state.restaurant.name}
+                </h3>
+                <p className="text-sm text-secondary">
+                  {state.restaurant.address}
+                </p>
               </div>
             </div>
           </div>
@@ -136,7 +168,9 @@ export default function OrderConfirmationPage() {
               </div>
               <div>
                 <p className="font-medium text-primary">Order Placed</p>
-                <p className="text-sm text-secondary">Your order has been confirmed</p>
+                <p className="text-sm text-secondary">
+                  Your order has been confirmed
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
@@ -145,7 +179,9 @@ export default function OrderConfirmationPage() {
               </div>
               <div>
                 <p className="font-medium text-primary">Preparing</p>
-                <p className="text-sm text-secondary">Kitchen is preparing your order</p>
+                <p className="text-sm text-secondary">
+                  Kitchen is preparing your order
+                </p>
               </div>
             </div>
             <div className="flex items-center space-x-3">
@@ -154,9 +190,15 @@ export default function OrderConfirmationPage() {
               </div>
               <div>
                 <p className="font-medium text-muted">
-                  {isDining ? 'Ready to Serve' : state.serviceType === 'delivery' ? 'Out for Delivery' : 'Ready for Pickup'}
+                  {isDining
+                    ? "Ready to Serve"
+                    : state.serviceType === "delivery"
+                      ? "Out for Delivery"
+                      : "Ready for Pickup"}
                 </p>
-                <p className="text-sm text-muted">We'll notify you when ready</p>
+                <p className="text-sm text-muted">
+                  We'll notify you when ready
+                </p>
               </div>
             </div>
           </div>
@@ -164,9 +206,7 @@ export default function OrderConfirmationPage() {
 
         {/* Action Buttons */}
         <div className="space-y-3">
-          <button className="btn btn-primary w-full">
-            Track Order
-          </button>
+          <button className="btn btn-primary w-full">Track Order</button>
           <Link
             to={`/menu/${state.restaurant?.id || 1}`}
             className="btn btn-secondary w-full text-center"
