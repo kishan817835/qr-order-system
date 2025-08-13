@@ -52,13 +52,8 @@ export default function DeliveryDetailsPage() {
   const { orderId } = useParams();
   const navigate = useNavigate();
 
-  // Redirect to delivery dashboard if no orderId
-  useEffect(() => {
-    if (!orderId || orderId.trim() === '') {
-      navigate('/delivery');
-      return;
-    }
-  }, [orderId, navigate]);
+  // Handle missing orderId by using default demo order
+  const effectiveOrderId = orderId || '#DEMO1236';
   const [order, setOrder] = useState<DeliveryOrder | null>(null);
   const [currentStatus, setCurrentStatus] = useState<'picked-up' | 'on-the-way' | 'delivered'>('picked-up');
   const [showQRModal, setShowQRModal] = useState(false);
