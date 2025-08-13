@@ -1,4 +1,5 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_BASE_URL =
+  import.meta.env.VITE_API_URL || "http://localhost:5000/api";
 
 class ApiService {
   private baseURL = API_BASE_URL;
@@ -6,19 +7,19 @@ class ApiService {
 
   constructor() {
     // Get token from localStorage on initialization
-    if (typeof window !== 'undefined') {
-      this.token = localStorage.getItem('auth_token');
+    if (typeof window !== "undefined") {
+      this.token = localStorage.getItem("auth_token");
     }
   }
 
   private async request<T>(
     endpoint: string,
-    options: RequestInit = {}
+    options: RequestInit = {},
   ): Promise<{ success: boolean; data?: T; message?: string; error?: string }> {
     const url = `${this.baseURL}${endpoint}`;
-    
+
     const headers: HeadersInit = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...options.headers,
     };
 
@@ -35,15 +36,18 @@ class ApiService {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || `HTTP error! status: ${response.status}`);
+        throw new Error(
+          data.message || `HTTP error! status: ${response.status}`,
+        );
       }
 
       return data;
     } catch (error) {
-      console.error('API Request failed:', error);
+      console.error("API Request failed:", error);
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error occurred'
+        error:
+          error instanceof Error ? error.message : "Unknown error occurred",
       };
     }
   }
@@ -51,15 +55,15 @@ class ApiService {
   // Auth methods
   setToken(token: string) {
     this.token = token;
-    if (typeof window !== 'undefined') {
-      localStorage.setItem('auth_token', token);
+    if (typeof window !== "undefined") {
+      localStorage.setItem("auth_token", token);
     }
   }
 
   clearToken() {
     this.token = null;
-    if (typeof window !== 'undefined') {
-      localStorage.removeItem('auth_token');
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("auth_token");
     }
   }
 
@@ -78,29 +82,29 @@ class ApiService {
   }
 
   async createTable(tableData: any) {
-    return this.request('/tables', {
-      method: 'POST',
+    return this.request("/tables", {
+      method: "POST",
       body: JSON.stringify(tableData),
     });
   }
 
   async updateTable(tableId: string, updateData: any) {
     return this.request(`/tables/${tableId}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(updateData),
     });
   }
 
   async updateTableStatus(tableId: string, status: string) {
     return this.request(`/tables/${tableId}/status`, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify({ status }),
     });
   }
 
   async deleteTable(tableId: string) {
     return this.request(`/tables/${tableId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
@@ -115,14 +119,14 @@ class ApiService {
 
   async regenerateTableQR(tableId: string) {
     return this.request(`/qr/table/${tableId}/regenerate`, {
-      method: 'POST',
+      method: "POST",
     });
   }
 
   // Order APIs
   async getOrders(restaurantId: string, filters?: any) {
     const queryParams = new URLSearchParams(filters).toString();
-    const endpoint = `/orders/restaurant/${restaurantId}${queryParams ? `?${queryParams}` : ''}`;
+    const endpoint = `/orders/restaurant/${restaurantId}${queryParams ? `?${queryParams}` : ""}`;
     return this.request(endpoint);
   }
 
@@ -135,20 +139,20 @@ class ApiService {
   }
 
   async createOrder(orderData: any) {
-    return this.request('/orders', {
-      method: 'POST',
+    return this.request("/orders", {
+      method: "POST",
       body: JSON.stringify(orderData),
     });
   }
 
   async updateOrderStatus(orderId: string, status: string) {
     return this.request(`/orders/${orderId}/status`, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify({ status }),
     });
   }
 
-  async getOrderAnalytics(restaurantId: string, period = 'today') {
+  async getOrderAnalytics(restaurantId: string, period = "today") {
     return this.request(`/orders/analytics/${restaurantId}?period=${period}`);
   }
 
@@ -158,22 +162,22 @@ class ApiService {
   }
 
   async createCategory(categoryData: any) {
-    return this.request('/menu/categories', {
-      method: 'POST',
+    return this.request("/menu/categories", {
+      method: "POST",
       body: JSON.stringify(categoryData),
     });
   }
 
   async updateCategory(categoryId: string, updateData: any) {
     return this.request(`/menu/categories/${categoryId}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(updateData),
     });
   }
 
   async deleteCategory(categoryId: string) {
     return this.request(`/menu/categories/${categoryId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
@@ -186,29 +190,29 @@ class ApiService {
   }
 
   async createMenuItem(itemData: any) {
-    return this.request('/menu/items', {
-      method: 'POST',
+    return this.request("/menu/items", {
+      method: "POST",
       body: JSON.stringify(itemData),
     });
   }
 
   async updateMenuItem(itemId: string, updateData: any) {
     return this.request(`/menu/items/${itemId}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(updateData),
     });
   }
 
   async updateItemAvailability(itemId: string, availability: string) {
     return this.request(`/menu/items/${itemId}/availability`, {
-      method: 'PATCH',
+      method: "PATCH",
       body: JSON.stringify({ availability }),
     });
   }
 
   async deleteMenuItem(itemId: string) {
     return this.request(`/menu/items/${itemId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
@@ -222,8 +226,8 @@ class ApiService {
   }
 
   async createStaff(staffData: any) {
-    return this.request('/admin/staff', {
-      method: 'POST',
+    return this.request("/admin/staff", {
+      method: "POST",
       body: JSON.stringify(staffData),
     });
   }
@@ -233,22 +237,22 @@ class ApiService {
   }
 
   async createExtraCharge(chargeData: any) {
-    return this.request('/admin/charges', {
-      method: 'POST',
+    return this.request("/admin/charges", {
+      method: "POST",
       body: JSON.stringify(chargeData),
     });
   }
 
   async updateExtraCharge(chargeId: string, updateData: any) {
     return this.request(`/admin/charges/${chargeId}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(updateData),
     });
   }
 
   async deleteExtraCharge(chargeId: string) {
     return this.request(`/admin/charges/${chargeId}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
@@ -259,66 +263,82 @@ class ApiService {
 
   // Super Admin APIs
   async getSuperAdminDashboard() {
-    return this.request('/super-admin/dashboard');
+    return this.request("/super-admin/dashboard");
   }
 
-  async getSuperAdminAdmins(params?: { page?: number; search?: string; limit?: number }) {
-    const queryParams = params ? new URLSearchParams({
-      page: params.page?.toString() || '1',
-      search: params.search || '',
-      limit: params.limit?.toString() || '20'
-    }).toString() : '';
-    return this.request(`/super-admin/admins${queryParams ? `?${queryParams}` : ''}`);
+  async getSuperAdminAdmins(params?: {
+    page?: number;
+    search?: string;
+    limit?: number;
+  }) {
+    const queryParams = params
+      ? new URLSearchParams({
+          page: params.page?.toString() || "1",
+          search: params.search || "",
+          limit: params.limit?.toString() || "20",
+        }).toString()
+      : "";
+    return this.request(
+      `/super-admin/admins${queryParams ? `?${queryParams}` : ""}`,
+    );
   }
 
   async createSuperAdminAdmin(adminData: any) {
-    return this.request('/super-admin/admins', {
-      method: 'POST',
+    return this.request("/super-admin/admins", {
+      method: "POST",
       body: JSON.stringify(adminData),
     });
   }
 
   async updateSuperAdminAdmin(adminId: string, updateData: any) {
     return this.request(`/super-admin/admins/${adminId}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(updateData),
     });
   }
 
-  async getSuperAdminRestaurants(params?: { page?: number; search?: string; limit?: number }) {
-    const queryParams = params ? new URLSearchParams({
-      page: params.page?.toString() || '1',
-      search: params.search || '',
-      limit: params.limit?.toString() || '20'
-    }).toString() : '';
-    return this.request(`/super-admin/restaurants${queryParams ? `?${queryParams}` : ''}`);
+  async getSuperAdminRestaurants(params?: {
+    page?: number;
+    search?: string;
+    limit?: number;
+  }) {
+    const queryParams = params
+      ? new URLSearchParams({
+          page: params.page?.toString() || "1",
+          search: params.search || "",
+          limit: params.limit?.toString() || "20",
+        }).toString()
+      : "";
+    return this.request(
+      `/super-admin/restaurants${queryParams ? `?${queryParams}` : ""}`,
+    );
   }
 
   async getSuperAdminRestaurantDetails(restaurantId: string) {
     return this.request(`/super-admin/restaurants/${restaurantId}/details`);
   }
 
-  async getSuperAdminAnalytics(period = 'week') {
+  async getSuperAdminAnalytics(period = "week") {
     return this.request(`/super-admin/analytics?period=${period}`);
   }
 
   // Auth APIs
   async login(email: string, password: string) {
-    return this.request('/auth/login', {
-      method: 'POST',
+    return this.request("/auth/login", {
+      method: "POST",
       body: JSON.stringify({ email, password }),
     });
   }
 
   async register(userData: any) {
-    return this.request('/auth/register', {
-      method: 'POST',
+    return this.request("/auth/register", {
+      method: "POST",
       body: JSON.stringify(userData),
     });
   }
 
   async getProfile() {
-    return this.request('/auth/profile');
+    return this.request("/auth/profile");
   }
 }
 

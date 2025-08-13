@@ -95,7 +95,9 @@ const App = () => (
                 path="restaurants"
                 element={
                   <div className="p-8 text-center">
-                    <h2 className="text-xl font-bold mb-4">Restaurants Management</h2>
+                    <h2 className="text-xl font-bold mb-4">
+                      Restaurants Management
+                    </h2>
                     <p>Coming Soon - View and manage all restaurants</p>
                   </div>
                 }
@@ -104,7 +106,9 @@ const App = () => (
                 path="analytics"
                 element={
                   <div className="p-8 text-center">
-                    <h2 className="text-xl font-bold mb-4">Analytics Dashboard</h2>
+                    <h2 className="text-xl font-bold mb-4">
+                      Analytics Dashboard
+                    </h2>
                     <p>Coming Soon - Platform-wide analytics and insights</p>
                   </div>
                 }
@@ -113,7 +117,9 @@ const App = () => (
                 path="settings"
                 element={
                   <div className="p-8 text-center">
-                    <h2 className="text-xl font-bold mb-4">Super Admin Settings</h2>
+                    <h2 className="text-xl font-bold mb-4">
+                      Super Admin Settings
+                    </h2>
                     <p>Coming Soon - Platform configuration and settings</p>
                   </div>
                 }
