@@ -56,8 +56,11 @@ export interface RestaurantState {
 type RestaurantAction =
   | { type: 'SET_LOADING'; payload: boolean }
   | { type: 'SET_ERROR'; payload: string | null }
-  | { type: 'SET_RESTAURANT_DATA'; payload: { restaurant: Restaurant; categories: Category[] } }
+  | { type: 'SET_RESTAURANT_DATA'; payload: { restaurant: Restaurant; categories: Category[]; priorityItems: MenuItem[] } }
   | { type: 'SET_SELECTED_CATEGORY'; payload: number }
+  | { type: 'SET_SERVICE_TYPE'; payload: ServiceType }
+  | { type: 'SET_TABLE_NUMBER'; payload: string }
+  | { type: 'SET_EXTRA_CHARGES'; payload: ExtraCharge[] }
   | { type: 'ADD_TO_CART'; payload: MenuItem }
   | { type: 'REMOVE_FROM_CART'; payload: number }
   | { type: 'UPDATE_CART_QUANTITY'; payload: { id: number; quantity: number } }
