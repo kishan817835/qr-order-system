@@ -17,8 +17,13 @@ export default function CartPage() {
   };
 
   const handlePlaceOrder = () => {
-    // Navigate to order confirmation
-    navigate('/order/confirmation');
+    if (state.serviceType === 'dining') {
+      // For dining, go directly to order confirmation with "pay on table" option
+      navigate('/order/confirmation');
+    } else {
+      // For delivery and takeaway, go to payment page first
+      navigate('/payment');
+    }
   };
 
   if (state.cart.length === 0) {
