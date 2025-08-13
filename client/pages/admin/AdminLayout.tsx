@@ -1,16 +1,20 @@
 import { useState } from 'react';
-import { Link, useLocation, Outlet } from 'react-router-dom';
-import { 
-  Home, 
-  ShoppingBag, 
-  List, 
-  DollarSign, 
-  Settings, 
-  Users, 
-  BarChart3, 
+import { Link, useLocation, Outlet, useNavigate } from 'react-router-dom';
+import {
+  Home,
+  ShoppingBag,
+  List,
+  DollarSign,
+  Settings,
+  Users,
+  BarChart3,
   Menu as MenuIcon,
-  X
+  X,
+  User,
+  LogOut,
+  ChevronDown
 } from 'lucide-react';
+import ProfileCard from '../../components/ProfileCard';
 
 const navigationItems = [
   { name: 'Dashboard', href: '/admin', icon: Home },
