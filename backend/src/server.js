@@ -14,6 +14,7 @@ import menuRoutes from './routes/menu.js';
 import tableRoutes from './routes/table.js';
 import orderRoutes from './routes/order.js';
 import adminRoutes from './routes/admin.js';
+import superAdminRoutes from './routes/superAdmin.js';
 import qrRoutes from './routes/qr.js';
 
 dotenv.config();
@@ -23,7 +24,7 @@ const server = createServer(app);
 const io = new Server(server, {
   cors: {
     origin: process.env.FRONTEND_URL || "http://localhost:3000",
-    methods: ["GET", "POST", "PUT", "DELETE"]
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"]
   }
 });
 
@@ -59,6 +60,10 @@ io.on('connection', (socket) => {
     socket.join(`kitchen_${restaurantId}`);
   });
 
+  socket.on('join_super_admin', () => {
+    socket.join('super_admin');
+  });
+
   socket.on('disconnect', () => {
     console.log('Client disconnected:', socket.id);
   });
@@ -74,6 +79,7 @@ app.use('/api/menu', menuRoutes);
 app.use('/api/tables', tableRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/super-admin', superAdminRoutes);
 app.use('/api/qr', qrRoutes);
 
 // Health check
