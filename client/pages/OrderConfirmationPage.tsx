@@ -111,16 +111,16 @@ export default function OrderConfirmationPage() {
 
         {/* Restaurant Info */}
         {state.restaurant && (
-          <div className="bg-white rounded-xl shadow-sm border p-4 mb-6">
+          <div className="card mb-6">
             <div className="flex items-center space-x-3">
-              <img 
-                src={state.restaurant.logo_url} 
+              <img
+                src={state.restaurant.logo_url}
                 alt={state.restaurant.name}
                 className="w-12 h-12 rounded-full object-cover"
               />
               <div>
-                <h3 className="font-semibold text-gray-900">{state.restaurant.name}</h3>
-                <p className="text-sm text-gray-600">{state.restaurant.address}</p>
+                <h3 className="font-semibold text-primary">{state.restaurant.name}</h3>
+                <p className="text-sm text-secondary">{state.restaurant.address}</p>
               </div>
             </div>
           </div>
