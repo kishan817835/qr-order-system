@@ -355,7 +355,7 @@ export default function DeliveryDashboard() {
                 </div>
 
                 <button
-                  onClick={() => updateOrderStatus(order.id, 'picked-up')}
+                  onClick={() => handlePickupOrder(order.id)}
                   className="btn btn-primary w-full"
                 >
                   Pick Up Order
