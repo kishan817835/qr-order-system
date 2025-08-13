@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Plus, Edit, Trash2, Save, X, List } from 'lucide-react';
 
 interface Category {
