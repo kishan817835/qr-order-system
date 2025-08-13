@@ -328,6 +328,9 @@ export default function PaymentPage() {
           )}
         </div>
       </div>
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
