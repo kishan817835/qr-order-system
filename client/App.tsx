@@ -34,6 +34,8 @@ import NotFound from "./pages/NotFound";
 // Super Admin imports
 import SuperAdminLayout from "./pages/super-admin/SuperAdminLayout";
 import SuperAdminDashboard from "./pages/super-admin/SuperAdminDashboard";
+import AdminsManagement from "./pages/super-admin/AdminsManagement";
+import CreateAdmin from "./pages/super-admin/CreateAdmin";
 
 const queryClient = new QueryClient();
 
@@ -87,40 +89,33 @@ const App = () => (
             {/* Super Admin Routes */}
             <Route path="/super-admin" element={<SuperAdminLayout />}>
               <Route index element={<SuperAdminDashboard />} />
-              <Route
-                path="admins"
-                element={
-                  <div className="p-8 text-center">
-                    Admins Management - Coming Soon
-                  </div>
-                }
-              />
-              <Route
-                path="create-admin"
-                element={
-                  <div className="p-8 text-center">
-                    Create Admin - Coming Soon
-                  </div>
-                }
-              />
+              <Route path="admins" element={<AdminsManagement />} />
+              <Route path="create-admin" element={<CreateAdmin />} />
               <Route
                 path="restaurants"
                 element={
                   <div className="p-8 text-center">
-                    Restaurants - Coming Soon
+                    <h2 className="text-xl font-bold mb-4">Restaurants Management</h2>
+                    <p>Coming Soon - View and manage all restaurants</p>
                   </div>
                 }
               />
               <Route
                 path="analytics"
                 element={
-                  <div className="p-8 text-center">Analytics - Coming Soon</div>
+                  <div className="p-8 text-center">
+                    <h2 className="text-xl font-bold mb-4">Analytics Dashboard</h2>
+                    <p>Coming Soon - Platform-wide analytics and insights</p>
+                  </div>
                 }
               />
               <Route
                 path="settings"
                 element={
-                  <div className="p-8 text-center">Settings - Coming Soon</div>
+                  <div className="p-8 text-center">
+                    <h2 className="text-xl font-bold mb-4">Super Admin Settings</h2>
+                    <p>Coming Soon - Platform configuration and settings</p>
+                  </div>
                 }
               />
             </Route>
