@@ -5,10 +5,13 @@ import { CheckCircle, Clock, ShoppingBag, CreditCard, MapPin } from 'lucide-reac
 
 export default function OrderConfirmationPage() {
   const { state, dispatch } = useRestaurant();
-  
-  // Generate a random order ID for demo
-  const orderId = Math.floor(Math.random() * 10000) + 1000;
+  const location = useLocation();
+
+  // Get order details from location state (for delivery/takeaway) or generate for dining
+  const orderData = location.state || {};
+  const orderId = orderData.orderId || Math.floor(Math.random() * 10000) + 1000;
   const estimatedTime = Math.floor(Math.random() * 15) + 20; // 20-35 minutes
+  const isDining = state.serviceType === 'dining';
 
   useEffect(() => {
     // Clear cart after order is placed
