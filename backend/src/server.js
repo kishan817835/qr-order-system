@@ -38,15 +38,22 @@ app.set('trust proxy', 1);
 app.use(helmet());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:3000",
+    origin: [
+      process.env.FRONTEND_URL || "http://localhost:8080",
+      "http://localhost:3000",
+      "http://localhost:8080",
+      /\.fly\.dev$/
+    ],
     credentials: true,
   }),
 );
 
-// Rate limiting
+// Rate limiting - more permissive for development
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // limit each IP to 100 requests per windowMs
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 1000, // much higher limit for development
+  standardHeaders: true,
+  legacyHeaders: false,
 });
 app.use(limiter);
 
