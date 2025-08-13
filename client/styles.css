@@ -473,11 +473,24 @@ body {
   -webkit-line-clamp: 2;
 }
 
+/* Additional utilities */
+.aspect-square { aspect-ratio: 1 / 1; }
+.whitespace-nowrap { white-space: nowrap; }
+.max-w-md { max-width: 448px; }
+.max-h-90vh { max-height: 90vh; }
+.rounded-t-3xl { border-top-left-radius: 24px; border-top-right-radius: 24px; }
+.line-height-relaxed { line-height: 1.625; }
+.min-w-0 { min-width: 0; }
+
 /* Responsive utilities */
 @media (max-width: 640px) {
   .container {
     padding: 0 12px;
   }
+}
+
+@media (min-width: 768px) {
+  .md\\:flex-row { flex-direction: row; }
 }
 
 /* Loading spinner */
