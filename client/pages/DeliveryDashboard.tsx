@@ -145,7 +145,13 @@ export default function DeliveryDashboard() {
     // Send notifications
     notifyStakeholders(orderId);
 
-    // Navigate to delivery details page
+    // Immediately navigate to delivery details page for complete workflow
+    navigate(`/delivery-details/${orderId}`);
+  };
+
+  const handleStartDelivery = (orderId: string) => {
+    // Update status to on-the-way and navigate to delivery details
+    updateOrderStatus(orderId, 'on-the-way');
     navigate(`/delivery-details/${orderId}`);
   };
 
