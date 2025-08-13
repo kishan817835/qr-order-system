@@ -108,6 +108,9 @@ export default function LoginPage() {
     } else if (loginData.email === 'delivery@spicegarden.com' && loginData.password === 'delivery123') {
       localStorage.setItem('userRole', 'delivery');
       navigate('/delivery');
+    } else if (loginData.email === 'staff@spicegarden.com' && loginData.password === 'staff123') {
+      localStorage.setItem('userRole', 'staff');
+      navigate('/staff');
     } else {
       setErrors({ general: 'Invalid email or password' });
     }
