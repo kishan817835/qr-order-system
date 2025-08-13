@@ -22,6 +22,7 @@ const navigationItems = [
   { name: 'Orders', href: '/admin/orders', icon: ShoppingBag },
   { name: 'Categories', href: '/admin/categories', icon: List },
   { name: 'Menu Items', href: '/admin/items', icon: MenuIcon },
+  { name: 'Table Management', href: '/admin/tables', icon: MapPin },
   { name: 'Extra Charges', href: '/admin/charges', icon: DollarSign },
   { name: 'Delivery Management', href: '/admin/delivery-management', icon: BarChart3 },
   { name: 'Staff Management', href: '/admin/staff', icon: Users },
