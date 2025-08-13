@@ -1,6 +1,8 @@
 import { createContext, useContext, useReducer, ReactNode } from 'react';
 
 // Types
+export type ServiceType = 'dining' | 'takeaway' | 'delivery';
+
 export interface MenuItem {
   id: number;
   name: string;
@@ -8,6 +10,8 @@ export interface MenuItem {
   price: number;
   image_url: string;
   category_id: number;
+  discount?: number;
+  isPriority?: boolean;
 }
 
 export interface Category {
@@ -21,10 +25,18 @@ export interface Restaurant {
   name: string;
   logo_url: string;
   address: string;
+  banner_url?: string;
 }
 
 export interface CartItem extends MenuItem {
   quantity: number;
+}
+
+export interface ExtraCharge {
+  id: number;
+  name: string;
+  amount: number;
+  type: 'fixed' | 'percentage';
 }
 
 export interface RestaurantState {
@@ -32,6 +44,10 @@ export interface RestaurantState {
   categories: Category[];
   cart: CartItem[];
   selectedCategory: number | null;
+  serviceType: ServiceType;
+  tableNumber: string | null;
+  extraCharges: ExtraCharge[];
+  priorityItems: MenuItem[];
   isLoading: boolean;
   error: string | null;
 }
