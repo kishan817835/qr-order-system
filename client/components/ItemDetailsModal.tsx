@@ -34,8 +34,8 @@ export default function ItemDetailsModal({ item, isOpen, onClose }: ItemDetailsM
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-end justify-center">
-      <div className="bg-white rounded-t-3xl w-full max-w-md max-h-[90vh] overflow-hidden">
+    <div className="modal-overlay">
+      <div className="modal-content rounded-t-3xl w-full max-w-md max-h-[90vh] overflow-hidden">
         {/* Header */}
         <div className="relative">
           <img 
