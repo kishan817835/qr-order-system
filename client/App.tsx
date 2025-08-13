@@ -46,6 +46,7 @@ const App = () => (
               <Route path="categories" element={<Categories />} />
               <Route path="items" element={<Items />} />
               <Route path="charges" element={<Charges />} />
+              <Route path="settings" element={<Settings />} />
             </Route>
 
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
