@@ -31,6 +31,9 @@ const io = new Server(server, {
 // Connect to MongoDB
 connectDB();
 
+// Trust proxy (for rate limiting with proxy)
+app.set('trust proxy', 1);
+
 // Middleware
 app.use(helmet());
 app.use(
