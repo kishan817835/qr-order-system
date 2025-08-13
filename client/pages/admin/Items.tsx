@@ -128,10 +128,10 @@ export default function Items() {
         {filteredItems.map((item) => (
           <div key={item.id} className={`card ${!item.isAvailable ? 'opacity-50' : ''}`}>
             <div className="relative mb-4">
-              <img 
+              <img
                 src={item.image_url}
                 alt={item.name}
-                className="w-full h-48 object-cover rounded-lg"
+                className="w-full h-32 object-cover rounded-lg"
               />
               {item.discount && (
                 <div className="absolute top-2 left-2 bg-orange text-white px-2 py-1 rounded-full text-xs font-bold">
