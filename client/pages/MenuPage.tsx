@@ -432,7 +432,7 @@ export default function MenuPage() {
       )}
 
       {/* Priority Items */}
-      {state.priorityItems.length > 0 && (
+      {!isSearching && state.priorityItems.length > 0 && (
         <div className="container py-6">
           <div className="priority-section">
             <h2 className="text-lg font-bold text-primary mb-4">⭐ Chef's Special</h2>
