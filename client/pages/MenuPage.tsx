@@ -168,39 +168,109 @@ export default function MenuPage() {
   const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
-    dispatch({ type: "SET_LOADING", payload: true });
+    const loadRestaurantData = async () => {
+      dispatch({ type: "SET_LOADING", payload: true });
 
-    // Get table number and service type from URL params if available
-    const urlParams = new URLSearchParams(window.location.search);
-    const tableNumber = urlParams.get("table");
-    const serviceType = urlParams.get("service") as ServiceType;
+      // Get table number and service type from URL params if available
+      const urlParams = new URLSearchParams(window.location.search);
+      const tableNumber = urlParams.get("table");
+      const serviceType = urlParams.get("service") as ServiceType;
 
-    if (tableNumber) {
-      dispatch({ type: "SET_TABLE_NUMBER", payload: tableNumber });
-    }
+      if (tableNumber) {
+        dispatch({ type: "SET_TABLE_NUMBER", payload: tableNumber });
+      }
 
-    if (
-      serviceType &&
-      ["dining", "takeaway", "delivery"].includes(serviceType)
-    ) {
-      dispatch({ type: "SET_SERVICE_TYPE", payload: serviceType });
-    }
+      if (
+        serviceType &&
+        ["dining", "takeaway", "delivery"].includes(serviceType)
+      ) {
+        dispatch({ type: "SET_SERVICE_TYPE", payload: serviceType });
+      }
 
-    // Simulate API call
-    setTimeout(() => {
-      const priorityItems = mockRestaurantData.categories
-        .flatMap((cat) => cat.items)
-        .filter((item) => item.isPriority);
+      try {
+        if (!restaurantId) {
+          // Use default restaurant ID if none provided
+          const defaultRestaurantId = "1";
 
-      dispatch({
-        type: "SET_RESTAURANT_DATA",
-        payload: {
-          restaurant: mockRestaurantData.restaurant,
-          categories: mockRestaurantData.categories,
-          priorityItems,
-        },
-      });
-    }, 1000);
+          // Fetch restaurant data
+          const restaurantResponse = await apiService.getRestaurant(defaultRestaurantId);
+          const menuResponse = await apiService.getRestaurantMenu(defaultRestaurantId);
+          const categoriesResponse = await apiService.getCategories(defaultRestaurantId);
+
+          if (restaurantResponse.success && menuResponse.success && categoriesResponse.success) {
+            const restaurant = restaurantResponse.data;
+            const menuItems = menuResponse.data || [];
+            const categories = categoriesResponse.data || [];
+
+            // Group menu items by category
+            const categoriesWithItems = categories.map((category: any) => ({
+              ...category,
+              items: menuItems.filter((item: any) => item.category_id === category._id)
+            }));
+
+            const priorityItems = menuItems.filter((item: any) => item.isPriority);
+
+            dispatch({
+              type: "SET_RESTAURANT_DATA",
+              payload: {
+                restaurant,
+                categories: categoriesWithItems,
+                priorityItems,
+              },
+            });
+          } else {
+            throw new Error("Failed to load restaurant data");
+          }
+        } else {
+          // Fetch with provided restaurant ID
+          const restaurantResponse = await apiService.getRestaurant(restaurantId);
+          const menuResponse = await apiService.getRestaurantMenu(restaurantId);
+          const categoriesResponse = await apiService.getCategories(restaurantId);
+
+          if (restaurantResponse.success && menuResponse.success && categoriesResponse.success) {
+            const restaurant = restaurantResponse.data;
+            const menuItems = menuResponse.data || [];
+            const categories = categoriesResponse.data || [];
+
+            const categoriesWithItems = categories.map((category: any) => ({
+              ...category,
+              items: menuItems.filter((item: any) => item.category_id === category._id)
+            }));
+
+            const priorityItems = menuItems.filter((item: any) => item.isPriority);
+
+            dispatch({
+              type: "SET_RESTAURANT_DATA",
+              payload: {
+                restaurant,
+                categories: categoriesWithItems,
+                priorityItems,
+              },
+            });
+          } else {
+            throw new Error("Failed to load restaurant data");
+          }
+        }
+      } catch (error) {
+        console.error("Error loading restaurant data:", error);
+
+        // Fallback to mock data if API fails
+        const priorityItems = mockRestaurantData.categories
+          .flatMap((cat) => cat.items)
+          .filter((item) => item.isPriority);
+
+        dispatch({
+          type: "SET_RESTAURANT_DATA",
+          payload: {
+            restaurant: mockRestaurantData.restaurant,
+            categories: mockRestaurantData.categories,
+            priorityItems,
+          },
+        });
+      }
+    };
+
+    loadRestaurantData();
   }, [restaurantId, dispatch]);
 
   const openItemModal = (item: MenuItem) => {
