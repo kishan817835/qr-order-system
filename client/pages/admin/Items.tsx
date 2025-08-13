@@ -154,27 +154,32 @@ export default function Items() {
               </div>
             </div>
 
-            <div className="space-y-2">
-              <div className="flex items-start justify-between">
-                <h3 className="font-semibold text-primary">{item.name}</h3>
-                <span className="font-bold text-orange">₹{item.price}</span>
+            <div className="space-y-3">
+              <div>
+                <h3 className="font-semibold text-primary text-base leading-tight">{item.name}</h3>
+                <p className="text-xs text-secondary line-clamp-2 mt-1">{item.description}</p>
               </div>
-              
-              <p className="text-sm text-secondary line-clamp-2">{item.description}</p>
-              
-              <div className="flex items-center justify-between text-xs">
-                <span className="badge badge-orange">{item.category}</span>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => togglePriority(item.id)}
-                    className={`w-6 h-6 rounded-full flex items-center justify-center ${
-                      item.isPriority ? 'bg-orange text-white' : 'bg-muted text-secondary'
-                    }`}
-                    title="Toggle Priority"
-                  >
-                    <Star className="w-3 h-3" />
-                  </button>
-                </div>
+
+              <div className="flex items-center justify-between">
+                <span className="font-bold text-orange text-lg">₹{item.price}</span>
+                <button
+                  onClick={() => togglePriority(item.id)}
+                  className={`w-7 h-7 rounded-full flex items-center justify-center ${
+                    item.isPriority ? 'bg-orange text-white' : 'bg-muted text-secondary'
+                  }`}
+                  title="Toggle Priority"
+                >
+                  <Star className="w-3 h-3" />
+                </button>
+              </div>
+
+              <div className="flex items-center justify-between">
+                <span className="badge badge-orange text-xs">{item.category}</span>
+                <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                  item.isAvailable ? 'bg-green text-white' : 'bg-red text-white'
+                }`}>
+                  {item.isAvailable ? 'Available' : 'Unavailable'}
+                </span>
               </div>
             </div>
 
