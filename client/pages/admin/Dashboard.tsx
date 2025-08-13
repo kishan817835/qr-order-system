@@ -57,7 +57,7 @@ export default function Dashboard() {
 
         // Fetch dashboard stats
         const statsResponse = await apiService.getDashboardStats(restaurantId);
-        
+
         if (statsResponse.success && statsResponse.data) {
           setStats(statsResponse.data);
         } else {
@@ -74,7 +74,7 @@ export default function Dashboard() {
         const ordersResponse = await apiService.getOrders(restaurantId, {
           limit: 4,
           sort: "created_at",
-          order: "desc"
+          order: "desc",
         });
 
         if (ordersResponse.success && ordersResponse.data) {
@@ -122,11 +122,10 @@ export default function Dashboard() {
             },
           ]);
         }
-
       } catch (error) {
         console.error("Error loading dashboard data:", error);
         setError("Failed to load dashboard data");
-        
+
         // Set fallback data
         setStats({
           totalOrders: 24,
@@ -160,13 +159,15 @@ export default function Dashboard() {
   const getTimeAgo = (dateString: string) => {
     const now = new Date();
     const orderTime = new Date(dateString);
-    const diffInMinutes = Math.floor((now.getTime() - orderTime.getTime()) / (1000 * 60));
-    
+    const diffInMinutes = Math.floor(
+      (now.getTime() - orderTime.getTime()) / (1000 * 60),
+    );
+
     if (diffInMinutes < 60) {
       return `${diffInMinutes} mins ago`;
     } else {
       const hours = Math.floor(diffInMinutes / 60);
-      return `${hours} ${hours === 1 ? 'hour' : 'hours'} ago`;
+      return `${hours} ${hours === 1 ? "hour" : "hours"} ago`;
     }
   };
 
@@ -284,14 +285,18 @@ export default function Dashboard() {
                         : "🚚"}
                   </div>
                   <div>
-                    <p className="font-medium text-primary">{order.order_number}</p>
+                    <p className="font-medium text-primary">
+                      {order.order_number}
+                    </p>
                     <p className="text-sm text-secondary">
                       {getDisplayTable(order)} • {order.items.length} items
                     </p>
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold text-primary">₹{order.total_amount}</p>
+                  <p className="font-semibold text-primary">
+                    ₹{order.total_amount}
+                  </p>
                   <div className="flex items-center space-x-2 mt-1">
                     <span className={getStatusBadge(order.status)}>
                       {order.status.replace("-", " ")}
@@ -312,7 +317,9 @@ export default function Dashboard() {
             <h2 className="text-lg font-semibold text-primary">
               Active Tables
             </h2>
-            <span className="text-sm text-secondary">{stats.activeTables} of 15 occupied</span>
+            <span className="text-sm text-secondary">
+              {stats.activeTables} of 15 occupied
+            </span>
           </div>
           <div className="grid grid-cols-5 gap-2">
             {Array.from({ length: 15 }, (_, i) => i + 1).map((tableNum) => {
@@ -344,14 +351,18 @@ export default function Dashboard() {
             <div className="w-16 h-16 bg-orange rounded-full flex items-center justify-center mx-auto mb-3">
               <ShoppingBag className="w-8 h-8 text-white" />
             </div>
-            <p className="text-2xl font-bold text-primary">{stats.totalOrders}</p>
+            <p className="text-2xl font-bold text-primary">
+              {stats.totalOrders}
+            </p>
             <p className="text-sm text-secondary">Total Orders</p>
           </div>
           <div className="text-center">
             <div className="w-16 h-16 bg-green rounded-full flex items-center justify-center mx-auto mb-3">
               <DollarSign className="w-8 h-8 text-white" />
             </div>
-            <p className="text-2xl font-bold text-primary">₹{stats.revenue.toLocaleString()}</p>
+            <p className="text-2xl font-bold text-primary">
+              ₹{stats.revenue.toLocaleString()}
+            </p>
             <p className="text-sm text-secondary">Revenue</p>
           </div>
           <div className="text-center">

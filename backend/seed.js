@@ -1,13 +1,13 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+import { fileURLToPath } from "url";
+import { dirname, join } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-dotenv.config({ path: join(__dirname, '.env') });
+dotenv.config({ path: join(__dirname, ".env") });
 
 // Import models
 import User from "./src/models/User.js";
@@ -16,12 +16,13 @@ import Category from "./src/models/Category.js";
 import MenuItem from "./src/models/MenuItem.js";
 import Table from "./src/models/Table.js";
 
-const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017/restaurant_management";
+const MONGODB_URI =
+  process.env.MONGODB_URI || "mongodb://localhost:27017/restaurant_management";
 
 const seedData = async () => {
   try {
     console.log("🌱 Starting database seeding...");
-    
+
     // Connect to MongoDB
     await mongoose.connect(MONGODB_URI);
     console.log("✅ Connected to MongoDB");
@@ -152,11 +153,13 @@ const seedData = async () => {
       // Starters
       {
         name: "Crispy Paneer Tikka",
-        description: "Marinated cottage cheese grilled to perfection with spices",
+        description:
+          "Marinated cottage cheese grilled to perfection with spices",
         price: 220,
         category_id: startersCategory._id,
         restaurant_id: restaurant._id,
-        image_url: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop",
+        image_url:
+          "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop",
         is_veg: true,
         is_available: true,
         preparation_time: 15,
@@ -168,7 +171,8 @@ const seedData = async () => {
         price: 280,
         category_id: startersCategory._id,
         restaurant_id: restaurant._id,
-        image_url: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop",
+        image_url:
+          "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop",
         is_veg: false,
         is_available: true,
         preparation_time: 20,
@@ -181,7 +185,8 @@ const seedData = async () => {
         price: 320,
         category_id: mainCourseCategory._id,
         restaurant_id: restaurant._id,
-        image_url: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&h=300&fit=crop",
+        image_url:
+          "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&h=300&fit=crop",
         is_veg: false,
         is_available: true,
         preparation_time: 25,
@@ -193,7 +198,8 @@ const seedData = async () => {
         price: 280,
         category_id: mainCourseCategory._id,
         restaurant_id: restaurant._id,
-        image_url: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop",
+        image_url:
+          "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop",
         is_veg: true,
         is_available: true,
         preparation_time: 20,
@@ -206,7 +212,8 @@ const seedData = async () => {
         price: 120,
         category_id: desertsCategory._id,
         restaurant_id: restaurant._id,
-        image_url: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop",
+        image_url:
+          "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop",
         is_veg: true,
         is_available: true,
         preparation_time: 5,
@@ -219,7 +226,8 @@ const seedData = async () => {
         price: 50,
         category_id: beveragesCategory._id,
         restaurant_id: restaurant._id,
-        image_url: "https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop",
+        image_url:
+          "https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop",
         is_veg: true,
         is_available: true,
         preparation_time: 5,
@@ -251,7 +259,6 @@ const seedData = async () => {
     console.log("Kitchen: kitchen@spicegarden.com / kitchen123");
     console.log("Delivery: delivery@spicegarden.com / delivery123");
     console.log("Waiter: waiter@spicegarden.com / waiter123");
-
   } catch (error) {
     console.error("❌ Error seeding database:", error);
   } finally {

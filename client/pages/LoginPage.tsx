@@ -3,7 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { User, Mail, Phone, Lock, Eye, EyeOff, UserCheck } from "lucide-react";
 import { apiService } from "../lib/api";
 
-type UserRole = "admin" | "kitchen_staff" | "delivery_boy" | "waiter" | "manager" | "customer";
+type UserRole =
+  | "admin"
+  | "kitchen_staff"
+  | "delivery_boy"
+  | "waiter"
+  | "manager"
+  | "customer";
 
 interface LoginData {
   email: string;
@@ -100,14 +106,17 @@ export default function LoginPage() {
     setErrors({});
 
     try {
-      const response = await apiService.login(loginData.email, loginData.password);
-      
+      const response = await apiService.login(
+        loginData.email,
+        loginData.password,
+      );
+
       if (response.success && response.data) {
         // Store token and user info
         apiService.setToken(response.data.token);
         localStorage.setItem("user", JSON.stringify(response.data.user));
         localStorage.setItem("userRole", response.data.user.role);
-        
+
         // Redirect based on role
         const role = response.data.user.role;
         switch (role) {
@@ -158,9 +167,11 @@ export default function LoginPage() {
       };
 
       const response = await apiService.register(userData);
-      
+
       if (response.success) {
-        alert("Account created successfully! Please login with your credentials.");
+        alert(
+          "Account created successfully! Please login with your credentials.",
+        );
         setIsLogin(true);
         setSignupData({
           name: "",
@@ -323,8 +334,8 @@ export default function LoginPage() {
                 )}
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="btn btn-primary w-full"
                 disabled={loading}
               >
@@ -339,7 +350,8 @@ export default function LoginPage() {
               </h3>
               <div className="space-y-1 text-sm text-secondary">
                 <p>
-                  <strong>Super Admin:</strong> superadmin@spicegarden.com / super123
+                  <strong>Super Admin:</strong> superadmin@spicegarden.com /
+                  super123
                 </p>
                 <p>
                   <strong>Admin:</strong> admin@spicegarden.com / admin123
@@ -348,7 +360,8 @@ export default function LoginPage() {
                   <strong>Kitchen:</strong> kitchen@spicegarden.com / kitchen123
                 </p>
                 <p>
-                  <strong>Delivery:</strong> delivery@spicegarden.com / delivery123
+                  <strong>Delivery:</strong> delivery@spicegarden.com /
+                  delivery123
                 </p>
               </div>
             </div>
@@ -528,8 +541,8 @@ export default function LoginPage() {
                 )}
               </div>
 
-              <button 
-                type="submit" 
+              <button
+                type="submit"
                 className="btn btn-primary w-full"
                 disabled={loading}
               >

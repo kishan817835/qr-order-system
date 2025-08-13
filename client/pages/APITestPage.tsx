@@ -20,7 +20,10 @@ export default function APITestPage() {
 
     // Test 2: API Service Login
     try {
-      const loginResponse = await apiService.login("admin@spicegarden.com", "admin123");
+      const loginResponse = await apiService.login(
+        "admin@spicegarden.com",
+        "admin123",
+      );
       results.login = loginResponse;
     } catch (error) {
       results.login = { success: false, error: error.message };
@@ -53,9 +56,9 @@ export default function APITestPage() {
   return (
     <div className="container mx-auto p-8">
       <h1 className="text-2xl font-bold mb-6">API Connection Test</h1>
-      
-      <button 
-        onClick={runTests} 
+
+      <button
+        onClick={runTests}
         disabled={loading}
         className="btn btn-primary mb-6"
       >
@@ -65,8 +68,12 @@ export default function APITestPage() {
       <div className="space-y-4">
         {Object.entries(testResults).map(([test, result]: [string, any]) => (
           <div key={test} className="card">
-            <h3 className="font-semibold text-lg mb-2 capitalize">{test} Test</h3>
-            <div className={`p-3 rounded ${result.success ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+            <h3 className="font-semibold text-lg mb-2 capitalize">
+              {test} Test
+            </h3>
+            <div
+              className={`p-3 rounded ${result.success ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+            >
               <p className="font-medium">
                 Status: {result.success ? "✅ Success" : "❌ Failed"}
               </p>
@@ -75,7 +82,9 @@ export default function APITestPage() {
               )}
               {result.data && (
                 <details className="mt-2">
-                  <summary className="cursor-pointer text-sm">View Data</summary>
+                  <summary className="cursor-pointer text-sm">
+                    View Data
+                  </summary>
                   <pre className="text-xs mt-2 overflow-auto">
                     {JSON.stringify(result.data, null, 2)}
                   </pre>
@@ -89,10 +98,12 @@ export default function APITestPage() {
       <div className="mt-8 p-4 bg-blue-100 rounded-lg">
         <h3 className="font-semibold text-blue-900 mb-2">Backend Status</h3>
         <p className="text-blue-800 text-sm">
-          The backend server should be running on port 5000. The frontend proxy is configured to forward /api requests to the backend.
+          The backend server should be running on port 5000. The frontend proxy
+          is configured to forward /api requests to the backend.
         </p>
         <p className="text-blue-800 text-sm mt-2">
-          If tests are failing, ensure the backend server is running with: <code>cd backend && npm start</code>
+          If tests are failing, ensure the backend server is running with:{" "}
+          <code>cd backend && npm start</code>
         </p>
       </div>
     </div>

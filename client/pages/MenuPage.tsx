@@ -193,11 +193,18 @@ export default function MenuPage() {
           const defaultRestaurantId = "1";
 
           // Fetch restaurant data
-          const restaurantResponse = await apiService.getRestaurant(defaultRestaurantId);
-          const menuResponse = await apiService.getRestaurantMenu(defaultRestaurantId);
-          const categoriesResponse = await apiService.getCategories(defaultRestaurantId);
+          const restaurantResponse =
+            await apiService.getRestaurant(defaultRestaurantId);
+          const menuResponse =
+            await apiService.getRestaurantMenu(defaultRestaurantId);
+          const categoriesResponse =
+            await apiService.getCategories(defaultRestaurantId);
 
-          if (restaurantResponse.success && menuResponse.success && categoriesResponse.success) {
+          if (
+            restaurantResponse.success &&
+            menuResponse.success &&
+            categoriesResponse.success
+          ) {
             const restaurant = restaurantResponse.data;
             const menuItems = menuResponse.data || [];
             const categories = categoriesResponse.data || [];
@@ -205,10 +212,14 @@ export default function MenuPage() {
             // Group menu items by category
             const categoriesWithItems = categories.map((category: any) => ({
               ...category,
-              items: menuItems.filter((item: any) => item.category_id === category._id)
+              items: menuItems.filter(
+                (item: any) => item.category_id === category._id,
+              ),
             }));
 
-            const priorityItems = menuItems.filter((item: any) => item.isPriority);
+            const priorityItems = menuItems.filter(
+              (item: any) => item.isPriority,
+            );
 
             dispatch({
               type: "SET_RESTAURANT_DATA",
@@ -223,21 +234,31 @@ export default function MenuPage() {
           }
         } else {
           // Fetch with provided restaurant ID
-          const restaurantResponse = await apiService.getRestaurant(restaurantId);
+          const restaurantResponse =
+            await apiService.getRestaurant(restaurantId);
           const menuResponse = await apiService.getRestaurantMenu(restaurantId);
-          const categoriesResponse = await apiService.getCategories(restaurantId);
+          const categoriesResponse =
+            await apiService.getCategories(restaurantId);
 
-          if (restaurantResponse.success && menuResponse.success && categoriesResponse.success) {
+          if (
+            restaurantResponse.success &&
+            menuResponse.success &&
+            categoriesResponse.success
+          ) {
             const restaurant = restaurantResponse.data;
             const menuItems = menuResponse.data || [];
             const categories = categoriesResponse.data || [];
 
             const categoriesWithItems = categories.map((category: any) => ({
               ...category,
-              items: menuItems.filter((item: any) => item.category_id === category._id)
+              items: menuItems.filter(
+                (item: any) => item.category_id === category._id,
+              ),
             }));
 
-            const priorityItems = menuItems.filter((item: any) => item.isPriority);
+            const priorityItems = menuItems.filter(
+              (item: any) => item.isPriority,
+            );
 
             dispatch({
               type: "SET_RESTAURANT_DATA",
