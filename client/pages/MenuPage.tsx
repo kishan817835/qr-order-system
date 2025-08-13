@@ -257,11 +257,17 @@ export default function MenuPage() {
                 )}
               </div>
             </div>
-            <div className="flex items-center space-x-2 text-sm text-secondary">
-              <Star className="w-4 h-4 text-warning" />
-              <span>4.5</span>
-              <Clock className="w-4 h-4 ml-2" />
-              <span>25-30 min</span>
+            <div className="flex items-center space-x-2 text-sm">
+              {state.tableNumber ? (
+                <div className="bg-orange text-white px-3 py-1 rounded-full">
+                  <span className="font-medium">Table {state.tableNumber}</span>
+                </div>
+              ) : (
+                <div className="flex items-center space-x-2 text-secondary">
+                  <Clock className="w-4 h-4" />
+                  <span>25-30 min</span>
+                </div>
+              )}
             </div>
           </div>
         </div>
