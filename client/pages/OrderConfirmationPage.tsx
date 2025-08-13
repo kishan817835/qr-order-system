@@ -164,21 +164,21 @@ export default function OrderConfirmationPage() {
 
         {/* Action Buttons */}
         <div className="space-y-3">
-          <button className="w-full py-3 bg-orange-500 text-white rounded-lg font-medium hover:bg-orange-600 transition-colors">
+          <button className="btn btn-primary w-full">
             Track Order
           </button>
-          <Link 
+          <Link
             to={`/menu/${state.restaurant?.id || 1}`}
-            className="block w-full py-3 bg-gray-100 text-gray-700 text-center rounded-lg font-medium hover:bg-gray-200 transition-colors"
+            className="btn btn-secondary w-full text-center"
           >
             Order Again
           </Link>
         </div>
 
         {/* Contact Info */}
-        <div className="mt-8 text-center text-sm text-gray-600">
+        <div className="mt-8 text-center text-sm text-secondary">
           <p>Need help? Contact restaurant directly</p>
-          <p className="font-medium text-orange-600 mt-1">+91 12345 67890</p>
+          <p className="font-medium text-orange mt-1">+91 12345 67890</p>
         </div>
       </div>
     </div>
