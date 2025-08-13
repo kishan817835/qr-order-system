@@ -43,7 +43,8 @@ class ApiService {
           // If JSON parsing fails, use the default error message
           const text = await response.text();
           if (text) {
-            errorMessage = text.length > 100 ? text.substring(0, 100) + "..." : text;
+            errorMessage =
+              text.length > 100 ? text.substring(0, 100) + "..." : text;
           }
         }
         throw new Error(errorMessage);
@@ -76,7 +77,6 @@ class ApiService {
       localStorage.removeItem("auth_token");
     }
   }
-
 
   // Restaurant APIs
   async getRestaurant(restaurantId: string) {

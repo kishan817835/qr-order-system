@@ -68,8 +68,10 @@ let mockData = {
       address: "123 Main Street, Food District",
       phone: "9876543200",
       email: "info@spicegarden.com",
-      logo_url: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=100&h=100&fit=crop&crop=center",
-      banner_url: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=300&fit=crop",
+      logo_url:
+        "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=100&h=100&fit=crop&crop=center",
+      banner_url:
+        "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&h=300&fit=crop",
       opening_hours: {
         monday: { open: "09:00", close: "22:00", is_open: true },
         tuesday: { open: "09:00", close: "22:00", is_open: true },
@@ -129,7 +131,8 @@ let mockData = {
       price: 220,
       category_id: "category_1",
       restaurant_id: "restaurant_1",
-      image_url: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop",
+      image_url:
+        "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop",
       is_veg: true,
       is_available: true,
       preparation_time: 15,
@@ -144,7 +147,8 @@ let mockData = {
       price: 280,
       category_id: "category_1",
       restaurant_id: "restaurant_1",
-      image_url: "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop",
+      image_url:
+        "https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&h=300&fit=crop",
       is_veg: false,
       is_available: true,
       preparation_time: 20,
@@ -158,7 +162,8 @@ let mockData = {
       price: 320,
       category_id: "category_2",
       restaurant_id: "restaurant_1",
-      image_url: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&h=300&fit=crop",
+      image_url:
+        "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&h=300&fit=crop",
       is_veg: false,
       is_available: true,
       preparation_time: 25,
@@ -173,7 +178,8 @@ let mockData = {
       price: 280,
       category_id: "category_2",
       restaurant_id: "restaurant_1",
-      image_url: "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop",
+      image_url:
+        "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?w=400&h=300&fit=crop",
       is_veg: true,
       is_available: true,
       preparation_time: 20,
@@ -187,7 +193,8 @@ let mockData = {
       price: 120,
       category_id: "category_3",
       restaurant_id: "restaurant_1",
-      image_url: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop",
+      image_url:
+        "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=400&h=300&fit=crop",
       is_veg: true,
       is_available: true,
       preparation_time: 5,
@@ -201,7 +208,8 @@ let mockData = {
       price: 50,
       category_id: "category_4",
       restaurant_id: "restaurant_1",
-      image_url: "https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop",
+      image_url:
+        "https://images.unsplash.com/photo-1571091655789-405eb7a3a3a8?w=400&h=300&fit=crop",
       is_veg: true,
       is_available: true,
       preparation_time: 5,
@@ -216,28 +224,32 @@ let mockData = {
 // Helper functions to simulate database operations
 export const findUser = (query) => {
   if (query.email) {
-    return mockData.users.find(user => user.email === query.email);
+    return mockData.users.find((user) => user.email === query.email);
   }
   if (query._id) {
-    return mockData.users.find(user => user._id === query._id);
+    return mockData.users.find((user) => user._id === query._id);
   }
   return null;
 };
 
 export const findRestaurant = (id) => {
-  return mockData.restaurants.find(restaurant => restaurant._id === id);
+  return mockData.restaurants.find((restaurant) => restaurant._id === id);
 };
 
 export const findCategories = (restaurantId) => {
-  return mockData.categories.filter(category => category.restaurant_id === restaurantId);
+  return mockData.categories.filter(
+    (category) => category.restaurant_id === restaurantId,
+  );
 };
 
 export const findMenuItems = (restaurantId) => {
-  return mockData.menuItems.filter(item => item.restaurant_id === restaurantId);
+  return mockData.menuItems.filter(
+    (item) => item.restaurant_id === restaurantId,
+  );
 };
 
 export const findMenuItemsByCategory = (categoryId) => {
-  return mockData.menuItems.filter(item => item.category_id === categoryId);
+  return mockData.menuItems.filter((item) => item.category_id === categoryId);
 };
 
 export const getDashboardStats = (restaurantId) => {

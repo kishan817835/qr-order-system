@@ -16,7 +16,7 @@ export function createServer() {
     res.json({
       status: "OK",
       timestamp: new Date().toISOString(),
-      mode: "mock"
+      mode: "mock",
     });
   });
 
@@ -26,11 +26,31 @@ export function createServer() {
 
     // Mock users for demo
     const mockUsers = {
-      "admin@spicegarden.com": { password: "admin123", role: "admin", name: "Restaurant Admin" },
-      "superadmin@spicegarden.com": { password: "super123", role: "super_admin", name: "Super Admin" },
-      "kitchen@spicegarden.com": { password: "kitchen123", role: "kitchen_staff", name: "Kitchen Staff" },
-      "delivery@spicegarden.com": { password: "delivery123", role: "delivery_boy", name: "Delivery Boy" },
-      "waiter@spicegarden.com": { password: "waiter123", role: "waiter", name: "Waiter" },
+      "admin@spicegarden.com": {
+        password: "admin123",
+        role: "admin",
+        name: "Restaurant Admin",
+      },
+      "superadmin@spicegarden.com": {
+        password: "super123",
+        role: "super_admin",
+        name: "Super Admin",
+      },
+      "kitchen@spicegarden.com": {
+        password: "kitchen123",
+        role: "kitchen_staff",
+        name: "Kitchen Staff",
+      },
+      "delivery@spicegarden.com": {
+        password: "delivery123",
+        role: "delivery_boy",
+        name: "Delivery Boy",
+      },
+      "waiter@spicegarden.com": {
+        password: "waiter123",
+        role: "waiter",
+        name: "Waiter",
+      },
     };
 
     const mockUser = mockUsers[email as keyof typeof mockUsers];
@@ -64,11 +84,12 @@ export function createServer() {
       data: {
         id: 1,
         name: "Spice Garden",
-        logo_url: "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=100&h=100&fit=crop&crop=center",
+        logo_url:
+          "https://images.unsplash.com/photo-1571091718767-18b5b1457add?w=100&h=100&fit=crop&crop=center",
         address: "123 Main Street, Food District",
         phone: "+91 12345 67890",
-        email: "admin@spicegarden.com"
-      }
+        email: "admin@spicegarden.com",
+      },
     });
   });
 
@@ -80,10 +101,12 @@ export function createServer() {
         {
           id: 1,
           name: "Crispy Paneer Tikka",
-          description: "Marinated cottage cheese grilled to perfection with spices",
+          description:
+            "Marinated cottage cheese grilled to perfection with spices",
           price: 220,
           category_id: "1",
-          image_url: "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop",
+          image_url:
+            "https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=400&h=300&fit=crop",
           is_veg: true,
           is_available: true,
         },
@@ -93,11 +116,12 @@ export function createServer() {
           description: "Creamy tomato-based curry with tender chicken pieces",
           price: 320,
           category_id: "2",
-          image_url: "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&h=300&fit=crop",
+          image_url:
+            "https://images.unsplash.com/photo-1588166524941-3bf61a9c41db?w=400&h=300&fit=crop",
           is_veg: false,
           is_available: true,
-        }
-      ]
+        },
+      ],
     });
   });
 
@@ -109,8 +133,8 @@ export function createServer() {
         { id: "1", name: "Starters", description: "Appetizers" },
         { id: "2", name: "Main Course", description: "Main dishes" },
         { id: "3", name: "Desserts", description: "Sweet treats" },
-        { id: "4", name: "Beverages", description: "Drinks" }
-      ]
+        { id: "4", name: "Beverages", description: "Drinks" },
+      ],
     });
   });
 
@@ -122,8 +146,8 @@ export function createServer() {
         totalOrders: 24,
         revenue: 12450,
         activeTables: 8,
-        avgOrderValue: 520
-      }
+        avgOrderValue: 520,
+      },
     });
   });
 
@@ -141,8 +165,8 @@ export function createServer() {
           total_amount: 850,
           status: "preparing",
           created_at: new Date(Date.now() - 10 * 60 * 1000).toISOString(),
-        }
-      ]
+        },
+      ],
     });
   });
 

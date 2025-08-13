@@ -2,7 +2,11 @@ import express from "express";
 import { body, validationResult } from "express-validator";
 import Category from "../models/Category.js";
 import MenuItem from "../models/MenuItem.js";
-import { findCategories, findMenuItems, findMenuItemsByCategory } from "../data/mockDatabase.js";
+import {
+  findCategories,
+  findMenuItems,
+  findMenuItemsByCategory,
+} from "../data/mockDatabase.js";
 
 const router = express.Router();
 

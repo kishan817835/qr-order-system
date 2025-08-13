@@ -32,7 +32,7 @@ const io = new Server(server, {
 connectDB();
 
 // Trust proxy (for rate limiting with proxy)
-app.set('trust proxy', 1);
+app.set("trust proxy", 1);
 
 // Middleware
 app.use(helmet());
@@ -42,7 +42,7 @@ app.use(
       process.env.FRONTEND_URL || "http://localhost:8080",
       "http://localhost:3000",
       "http://localhost:8080",
-      /\.fly\.dev$/
+      /\.fly\.dev$/,
     ],
     credentials: true,
   }),

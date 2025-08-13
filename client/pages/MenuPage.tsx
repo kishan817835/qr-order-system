@@ -200,17 +200,20 @@ export default function MenuPage() {
           const defaultRestaurantId = "restaurant_1";
 
           // Fetch restaurant data sequentially to avoid race conditions
-          const restaurantResponse = await apiService.getRestaurant(defaultRestaurantId);
+          const restaurantResponse =
+            await apiService.getRestaurant(defaultRestaurantId);
           if (!restaurantResponse.success) {
             throw new Error("Failed to load restaurant data");
           }
 
-          const menuResponse = await apiService.getRestaurantMenu(defaultRestaurantId);
+          const menuResponse =
+            await apiService.getRestaurantMenu(defaultRestaurantId);
           if (!menuResponse.success) {
             throw new Error("Failed to load menu data");
           }
 
-          const categoriesResponse = await apiService.getCategories(defaultRestaurantId);
+          const categoriesResponse =
+            await apiService.getCategories(defaultRestaurantId);
           if (!categoriesResponse.success) {
             throw new Error("Failed to load categories data");
           }
@@ -224,20 +227,24 @@ export default function MenuPage() {
           const categoriesWithItems = categories.map((category: any) => ({
             ...category,
             id: category.id || category._id, // Normalize id for React keys
-            items: menuItems.filter(
-              (item: any) => item.category_id === category._id || item.category_id === category.id,
-            ).map((item: any) => ({
-              ...item,
-              id: item.id || item._id, // Normalize id for React keys
-            })),
+            items: menuItems
+              .filter(
+                (item: any) =>
+                  item.category_id === category._id ||
+                  item.category_id === category.id,
+              )
+              .map((item: any) => ({
+                ...item,
+                id: item.id || item._id, // Normalize id for React keys
+              })),
           }));
 
-          const priorityItems = menuItems.filter(
-            (item: any) => item.isPriority,
-          ).map((item: any) => ({
-            ...item,
-            id: item.id || item._id, // Normalize id for React keys
-          }));
+          const priorityItems = menuItems
+            .filter((item: any) => item.isPriority)
+            .map((item: any) => ({
+              ...item,
+              id: item.id || item._id, // Normalize id for React keys
+            }));
 
           dispatch({
             type: "SET_RESTAURANT_DATA",
@@ -249,19 +256,23 @@ export default function MenuPage() {
           });
         } else {
           // Fetch with provided restaurant ID, but use restaurant_1 format
-          const actualRestaurantId = restaurantId === "1" ? "restaurant_1" : restaurantId;
+          const actualRestaurantId =
+            restaurantId === "1" ? "restaurant_1" : restaurantId;
 
-          const restaurantResponse = await apiService.getRestaurant(actualRestaurantId);
+          const restaurantResponse =
+            await apiService.getRestaurant(actualRestaurantId);
           if (!restaurantResponse.success) {
             throw new Error("Failed to load restaurant data");
           }
 
-          const menuResponse = await apiService.getRestaurantMenu(actualRestaurantId);
+          const menuResponse =
+            await apiService.getRestaurantMenu(actualRestaurantId);
           if (!menuResponse.success) {
             throw new Error("Failed to load menu data");
           }
 
-          const categoriesResponse = await apiService.getCategories(actualRestaurantId);
+          const categoriesResponse =
+            await apiService.getCategories(actualRestaurantId);
           if (!categoriesResponse.success) {
             throw new Error("Failed to load categories data");
           }
@@ -274,20 +285,24 @@ export default function MenuPage() {
           const categoriesWithItems = categories.map((category: any) => ({
             ...category,
             id: category.id || category._id, // Normalize id for React keys
-            items: menuItems.filter(
-              (item: any) => item.category_id === category._id || item.category_id === category.id,
-            ).map((item: any) => ({
-              ...item,
-              id: item.id || item._id, // Normalize id for React keys
-            })),
+            items: menuItems
+              .filter(
+                (item: any) =>
+                  item.category_id === category._id ||
+                  item.category_id === category.id,
+              )
+              .map((item: any) => ({
+                ...item,
+                id: item.id || item._id, // Normalize id for React keys
+              })),
           }));
 
-          const priorityItems = menuItems.filter(
-            (item: any) => item.isPriority,
-          ).map((item: any) => ({
-            ...item,
-            id: item.id || item._id, // Normalize id for React keys
-          }));
+          const priorityItems = menuItems
+            .filter((item: any) => item.isPriority)
+            .map((item: any) => ({
+              ...item,
+              id: item.id || item._id, // Normalize id for React keys
+            }));
 
           dispatch({
             type: "SET_RESTAURANT_DATA",
@@ -300,7 +315,10 @@ export default function MenuPage() {
         }
       } catch (error) {
         console.error("Error loading restaurant data:", error);
-        dispatch({ type: "SET_ERROR", payload: "Failed to load restaurant data" });
+        dispatch({
+          type: "SET_ERROR",
+          payload: "Failed to load restaurant data",
+        });
       } finally {
         dispatch({ type: "SET_LOADING", payload: false });
       }

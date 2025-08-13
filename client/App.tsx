@@ -51,7 +51,7 @@ const queryClient = new QueryClient({
 
 const App = () => {
   console.log("🚀 Main App component rendering...");
-  
+
   try {
     return (
       <QueryClientProvider client={queryClient}>
@@ -65,21 +65,48 @@ const App = () => {
                 <Route path="/menu/:restaurantId" element={<MenuPage />} />
                 <Route path="/cart" element={<CartPage />} />
                 <Route path="/payment" element={<PaymentPage />} />
-                <Route path="/order/confirmation" element={<OrderConfirmationPage />} />
-                <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
-                <Route path="/track-order/:orderId" element={<OrderTrackingPage />} />
+                <Route
+                  path="/order/confirmation"
+                  element={<OrderConfirmationPage />}
+                />
+                <Route
+                  path="/order-confirmation"
+                  element={<OrderConfirmationPage />}
+                />
+                <Route
+                  path="/track-order/:orderId"
+                  element={<OrderTrackingPage />}
+                />
                 <Route path="/track-order" element={<OrderTrackingPage />} />
                 <Route path="/api-test" element={<APITestPage />} />
                 <Route path="/kitchen" element={<KitchenDashboard />} />
-                <Route path="/KitchenDashboard" element={<KitchenDashboard />} />
+                <Route
+                  path="/KitchenDashboard"
+                  element={<KitchenDashboard />}
+                />
                 <Route path="/delivery" element={<DeliveryDashboard />} />
-                <Route path="/DeliveryDashboard" element={<DeliveryDashboard />} />
-                <Route path="/delivery-details/:orderId" element={<DeliveryDetailsPage />} />
-                <Route path="/delivery-details" element={<DeliveryDashboard />} />
-                <Route path="/DeliveryDetailsPage" element={<DeliveryDetailsPage />} />
+                <Route
+                  path="/DeliveryDashboard"
+                  element={<DeliveryDashboard />}
+                />
+                <Route
+                  path="/delivery-details/:orderId"
+                  element={<DeliveryDetailsPage />}
+                />
+                <Route
+                  path="/delivery-details"
+                  element={<DeliveryDashboard />}
+                />
+                <Route
+                  path="/DeliveryDetailsPage"
+                  element={<DeliveryDetailsPage />}
+                />
                 <Route path="/track/:trackingCode" element={<TrackingPage />} />
                 <Route path="/staff" element={<GeneralStaffDashboard />} />
-                <Route path="/GeneralStaffDashboard" element={<GeneralStaffDashboard />} />
+                <Route
+                  path="/GeneralStaffDashboard"
+                  element={<GeneralStaffDashboard />}
+                />
                 <Route path="/login" element={<LoginPage />} />
                 <Route path="/LoginPage" element={<LoginPage />} />
 
@@ -92,7 +119,9 @@ const App = () => {
                     path="restaurants"
                     element={
                       <div className="p-8 text-center">
-                        <h2 className="text-xl font-bold mb-4">Restaurants Management</h2>
+                        <h2 className="text-xl font-bold mb-4">
+                          Restaurants Management
+                        </h2>
                         <p className="text-gray-600">Coming Soon...</p>
                       </div>
                     }
@@ -101,7 +130,9 @@ const App = () => {
                     path="analytics"
                     element={
                       <div className="p-8 text-center">
-                        <h2 className="text-xl font-bold mb-4">Platform Analytics</h2>
+                        <h2 className="text-xl font-bold mb-4">
+                          Platform Analytics
+                        </h2>
                         <p className="text-gray-600">Coming Soon...</p>
                       </div>
                     }
@@ -110,7 +141,9 @@ const App = () => {
                     path="settings"
                     element={
                       <div className="p-8 text-center">
-                        <h2 className="text-xl font-bold mb-4">Platform Settings</h2>
+                        <h2 className="text-xl font-bold mb-4">
+                          Platform Settings
+                        </h2>
                         <p className="text-gray-600">Coming Soon...</p>
                       </div>
                     }
@@ -127,7 +160,10 @@ const App = () => {
                   <Route path="items" element={<Items />} />
                   <Route path="tables" element={<TableManagement />} />
                   <Route path="charges" element={<Charges />} />
-                  <Route path="delivery-management" element={<DeliveryManagement />} />
+                  <Route
+                    path="delivery-management"
+                    element={<DeliveryManagement />}
+                  />
                   <Route path="staff" element={<StaffManagement />} />
                   <Route path="settings" element={<Settings />} />
                 </Route>
@@ -145,10 +181,14 @@ const App = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-red-50">
         <div className="text-center p-8">
-          <h1 className="text-2xl font-bold text-red-600 mb-4">Application Error</h1>
-          <p className="text-red-500 mb-4">Something went wrong loading the application.</p>
-          <button 
-            onClick={() => window.location.reload()} 
+          <h1 className="text-2xl font-bold text-red-600 mb-4">
+            Application Error
+          </h1>
+          <p className="text-red-500 mb-4">
+            Something went wrong loading the application.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
             className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
           >
             Reload Page
