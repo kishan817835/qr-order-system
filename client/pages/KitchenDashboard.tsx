@@ -20,6 +20,7 @@ interface KitchenOrder {
 }
 
 export default function KitchenDashboard() {
+  const [filter, setFilter] = useState<ServiceType | 'all'>('all');
   const [orders, setOrders] = useState<KitchenOrder[]>([
     {
       id: '#1234',
