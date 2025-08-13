@@ -94,13 +94,23 @@ function restaurantReducer(state: RestaurantState, action: RestaurantAction): Re
         ...state,
         restaurant: action.payload.restaurant,
         categories: action.payload.categories,
+        priorityItems: action.payload.priorityItems,
         selectedCategory: action.payload.categories[0]?.id || null,
         isLoading: false,
         error: null,
       };
-    
+
     case 'SET_SELECTED_CATEGORY':
       return { ...state, selectedCategory: action.payload };
+
+    case 'SET_SERVICE_TYPE':
+      return { ...state, serviceType: action.payload };
+
+    case 'SET_TABLE_NUMBER':
+      return { ...state, tableNumber: action.payload };
+
+    case 'SET_EXTRA_CHARGES':
+      return { ...state, extraCharges: action.payload };
     
     case 'ADD_TO_CART':
       const existingItem = state.cart.find(item => item.id === action.payload.id);
