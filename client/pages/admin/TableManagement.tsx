@@ -186,6 +186,58 @@ export default function TableManagement() {
     }
   };
 
+  const printAllQRCodes = () => {
+    const printWindow = window.open('', '_blank');
+    if (!printWindow) return;
+
+    const printContent = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>QR Codes - All Tables</title>
+          <style>
+            body { font-family: Arial, sans-serif; margin: 20px; }
+            .qr-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+            .qr-item { text-align: center; border: 1px solid #ddd; padding: 20px; border-radius: 8px; }
+            .qr-placeholder { width: 150px; height: 150px; border: 2px solid #333; margin: 0 auto 10px;
+                             display: flex; align-items: center; justify-content: center; font-size: 12px; }
+            h1 { text-align: center; color: #333; }
+            .table-info { margin-bottom: 10px; font-weight: bold; }
+            .url { font-size: 10px; word-break: break-all; color: #666; margin-top: 10px; }
+            @media print {
+              .no-print { display: none; }
+              body { margin: 0; }
+            }
+          </style>
+        </head>
+        <body>
+          <h1>Spice Garden - Table QR Codes</h1>
+          <div class="qr-grid">
+            ${tables.map(table => `
+              <div class="qr-item">
+                <div class="table-info">Table ${table.tableNumber}</div>
+                <div class="qr-placeholder">QR Code<br/>Table ${table.tableNumber}</div>
+                <div>${table.location}</div>
+                <div class="url">${table.qrCodeUrl}</div>
+              </div>
+            `).join('')}
+          </div>
+          <script>
+            window.onload = function() {
+              window.print();
+              window.onafterprint = function() {
+                window.close();
+              }
+            }
+          </script>
+        </body>
+      </html>
+    `;
+
+    printWindow.document.write(printContent);
+    printWindow.document.close();
+  };
+
   return (
     <div>
       <div className="flex items-center justify-between mb-6">
