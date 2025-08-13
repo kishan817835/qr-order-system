@@ -220,12 +220,16 @@ export default function MenuPage() {
           const menuItems = menuResponse.data || [];
           const categories = categoriesResponse.data || [];
 
-          // Group menu items by category
+          // Group menu items by category and normalize IDs
           const categoriesWithItems = categories.map((category: any) => ({
             ...category,
+            id: category.id || category._id, // Normalize id for React keys
             items: menuItems.filter(
               (item: any) => item.category_id === category._id || item.category_id === category.id,
-            ),
+            ).map((item: any) => ({
+              ...item,
+              id: item.id || item._id, // Normalize id for React keys
+            })),
           }));
 
           const priorityItems = menuItems.filter(
