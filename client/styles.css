@@ -196,6 +196,18 @@ body {
   background-color: var(--danger-color);
 }
 
+.bg-blue-500 {
+  background-color: #3b82f6;
+}
+
+.bg-blue-600 {
+  background-color: #2563eb;
+}
+
+.bg-pink-500 {
+  background-color: #ec4899;
+}
+
 /* Border utilities */
 .border {
   border: 1px solid var(--border-color);
