@@ -10,6 +10,9 @@ import { RestaurantProvider } from "@/context/RestaurantContext";
 import MenuPage from "./pages/MenuPage";
 import CartPage from "./pages/CartPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import Orders from "./pages/admin/Orders";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
