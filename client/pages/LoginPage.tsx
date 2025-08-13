@@ -150,7 +150,7 @@ export default function LoginPage() {
       case 'admin': return 'Full access to all features';
       case 'kitchen': return 'Manage orders and kitchen operations';
       case 'delivery': return 'Handle delivery orders and tracking';
-      case 'staff': return 'Basic restaurant operations';
+      case 'staff': return 'Menu and category management';
     }
   };
 
