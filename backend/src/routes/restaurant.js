@@ -45,9 +45,28 @@ router.get("/:restaurantId", async (req, res) => {
 router.get("/:restaurantId/menu", async (req, res) => {
   try {
     const { restaurantId } = req.params;
+    let restaurant;
 
-    // Get restaurant
-    const restaurant = await Restaurant.findById(restaurantId);
+    if (!global.mongoConnected) {
+      // Use mock database
+      restaurant = findRestaurant(restaurantId);
+      if (!restaurant) {
+        return res.status(404).json({
+          success: false,
+          message: "Restaurant not found",
+        });
+      }
+
+      const menuItems = findMenuItems(restaurantId);
+      res.json({
+        success: true,
+        data: menuItems,
+      });
+      return;
+    }
+
+    // Get restaurant from MongoDB
+    restaurant = await Restaurant.findById(restaurantId);
     if (!restaurant) {
       return res.status(404).json({
         success: false,
