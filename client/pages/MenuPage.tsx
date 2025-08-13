@@ -20,6 +20,7 @@ import {
 import { useCartItemCount } from "@/context/RestaurantContext";
 import ItemDetailsModal from "@/components/ItemDetailsModal";
 import Footer from "@/components/Footer";
+import { apiService } from "@/lib/api";
 
 // Enhanced mock data with new features
 const mockRestaurantData = {
