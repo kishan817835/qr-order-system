@@ -122,11 +122,31 @@ router.post(
       if (!global.mongoConnected) {
         // Mock authentication for demo purposes when DB is not available
         const mockUsers = {
-          "admin@spicegarden.com": { password: "admin123", role: "admin", name: "Restaurant Admin" },
-          "superadmin@spicegarden.com": { password: "super123", role: "super_admin", name: "Super Admin" },
-          "kitchen@spicegarden.com": { password: "kitchen123", role: "kitchen_staff", name: "Kitchen Staff" },
-          "delivery@spicegarden.com": { password: "delivery123", role: "delivery_boy", name: "Delivery Boy" },
-          "waiter@spicegarden.com": { password: "waiter123", role: "waiter", name: "Waiter" },
+          "admin@spicegarden.com": {
+            password: "admin123",
+            role: "admin",
+            name: "Restaurant Admin",
+          },
+          "superadmin@spicegarden.com": {
+            password: "super123",
+            role: "super_admin",
+            name: "Super Admin",
+          },
+          "kitchen@spicegarden.com": {
+            password: "kitchen123",
+            role: "kitchen_staff",
+            name: "Kitchen Staff",
+          },
+          "delivery@spicegarden.com": {
+            password: "delivery123",
+            role: "delivery_boy",
+            name: "Delivery Boy",
+          },
+          "waiter@spicegarden.com": {
+            password: "waiter123",
+            role: "waiter",
+            name: "Waiter",
+          },
         };
 
         const mockUser = mockUsers[email];

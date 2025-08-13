@@ -15,7 +15,9 @@ const connectDB = async () => {
     global.mongoConnected = true;
   } catch (error) {
     console.error("❌ MongoDB connection error:", error.message);
-    console.log("⚠️  Continuing without database connection - using mock data mode");
+    console.log(
+      "⚠️  Continuing without database connection - using mock data mode",
+    );
     global.mongoConnected = false;
     // Don't exit, continue with mock data
   }
