@@ -30,6 +30,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/menu/:restaurantId" element={<MenuPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/payment" element={<PaymentPage />} />
             <Route path="/order/confirmation" element={<OrderConfirmationPage />} />
 
             {/* Admin Routes */}
