@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { Clock, CheckCircle, AlertCircle, Truck } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Clock, CheckCircle, AlertCircle, Truck, User, LogOut, ChevronDown, X } from 'lucide-react';
+import ProfileCard from '../components/ProfileCard';
 
 type OrderStatus = 'pending' | 'preparing' | 'ready' | 'completed' | 'out-for-delivery';
 type ServiceType = 'dining' | 'takeaway' | 'delivery';
@@ -21,6 +23,31 @@ interface KitchenOrder {
 
 export default function KitchenDashboard() {
   const [filter, setFilter] = useState<ServiceType | 'all'>('all');
+  const [showProfileDropdown, setShowProfileDropdown] = useState(false);
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const navigate = useNavigate();
+
+  const [kitchenProfile, setKitchenProfile] = useState({
+    id: 1,
+    name: 'Priya Sharma',
+    email: 'priya.sharma@spicegarden.com',
+    phone: '+91 98765 33333',
+    address: 'Kitchen Staff Quarters, Delhi',
+    photo: null,
+    role: 'kitchen'
+  });
+
+  const handleLogout = () => {
+    if (window.confirm('Are you sure you want to logout?')) {
+      localStorage.removeItem('userRole');
+      navigate('/login');
+    }
+  };
+
+  const handleUpdateProfile = (updatedProfile: any) => {
+    setKitchenProfile(updatedProfile);
+  };
   const [orders, setOrders] = useState<KitchenOrder[]>([
     {
       id: '#1234',
