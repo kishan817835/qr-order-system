@@ -273,9 +273,13 @@ export default function MenuPage() {
 
           const categoriesWithItems = categories.map((category: any) => ({
             ...category,
+            id: category.id || category._id, // Normalize id for React keys
             items: menuItems.filter(
               (item: any) => item.category_id === category._id || item.category_id === category.id,
-            ),
+            ).map((item: any) => ({
+              ...item,
+              id: item.id || item._id, // Normalize id for React keys
+            })),
           }));
 
           const priorityItems = menuItems.filter(
