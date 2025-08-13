@@ -118,6 +118,43 @@ router.post(
 
       const { email, password } = req.body;
 
+      // Check if MongoDB is connected
+      if (!global.mongoConnected) {
+        // Mock authentication for demo purposes when DB is not available
+        const mockUsers = {
+          "admin@spicegarden.com": { password: "admin123", role: "admin", name: "Restaurant Admin" },
+          "superadmin@spicegarden.com": { password: "super123", role: "super_admin", name: "Super Admin" },
+          "kitchen@spicegarden.com": { password: "kitchen123", role: "kitchen_staff", name: "Kitchen Staff" },
+          "delivery@spicegarden.com": { password: "delivery123", role: "delivery_boy", name: "Delivery Boy" },
+          "waiter@spicegarden.com": { password: "waiter123", role: "waiter", name: "Waiter" },
+        };
+
+        const mockUser = mockUsers[email];
+        if (!mockUser || mockUser.password !== password) {
+          return res.status(401).json({
+            success: false,
+            message: "Invalid credentials",
+          });
+        }
+
+        const token = generateToken("mock_user_id");
+
+        return res.json({
+          success: true,
+          message: "Login successful (Demo Mode - No Database)",
+          data: {
+            user: {
+              id: "mock_user_id",
+              name: mockUser.name,
+              email: email,
+              role: mockUser.role,
+              restaurant_id: "1",
+            },
+            token,
+          },
+        });
+      }
+
       // Find user
       const user = await User.findOne({ email }).select("+password");
       if (!user) {
