@@ -19,30 +19,32 @@ export default function CreateAdmin() {
   const [error, setError] = useState<string | null>(null);
 
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    password: '',
-    confirmPassword: '',
-    restaurant_id: ''
+    name: "",
+    email: "",
+    phone: "",
+    password: "",
+    confirmPassword: "",
+    restaurant_id: "",
   });
 
   const fetchRestaurants = async () => {
     try {
       setLoadingRestaurants(true);
       const result = await apiService.getSuperAdminRestaurants({ limit: 100 });
-      
+
       if (result.success) {
         // Filter restaurants that don't have an admin yet
         const restaurantsWithoutAdmin = result.data.restaurants.filter(
-          (restaurant: any) => !restaurant.admin
+          (restaurant: any) => !restaurant.admin,
         );
         setRestaurants(restaurantsWithoutAdmin);
       } else {
-        setError(result.error || 'Failed to fetch restaurants');
+        setError(result.error || "Failed to fetch restaurants");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch restaurants');
+      setError(
+        err instanceof Error ? err.message : "Failed to fetch restaurants",
+      );
     } finally {
       setLoadingRestaurants(false);
     }
@@ -54,14 +56,14 @@ export default function CreateAdmin() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (formData.password !== formData.confirmPassword) {
-      setError('Passwords do not match');
+      setError("Passwords do not match");
       return;
     }
 
     if (formData.password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError("Password must be at least 6 characters");
       return;
     }
 
@@ -74,28 +76,30 @@ export default function CreateAdmin() {
         email: formData.email,
         phone: formData.phone,
         password: formData.password,
-        restaurant_id: formData.restaurant_id
+        restaurant_id: formData.restaurant_id,
       });
 
       if (result.success) {
-        navigate('/super-admin/admins', {
-          state: { message: 'Admin created successfully' }
+        navigate("/super-admin/admins", {
+          state: { message: "Admin created successfully" },
         });
       } else {
-        setError(result.error || 'Failed to create admin');
+        setError(result.error || "Failed to create admin");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to create admin');
+      setError(err instanceof Error ? err.message : "Failed to create admin");
     } finally {
       setLoading(false);
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -105,15 +109,19 @@ export default function CreateAdmin() {
       <div className="bg-white shadow border-b">
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center space-x-4">
-            <Link 
+            <Link
               to="/super-admin/admins"
               className="text-gray-600 hover:text-gray-900"
             >
               <ArrowLeft className="w-6 h-6" />
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Create New Admin</h1>
-              <p className="text-gray-600">Add a new restaurant administrator</p>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Create New Admin
+              </h1>
+              <p className="text-gray-600">
+                Add a new restaurant administrator
+              </p>
             </div>
           </div>
         </div>
@@ -131,7 +139,9 @@ export default function CreateAdmin() {
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Admin Details */}
             <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Admin Details</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Admin Details
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -212,7 +222,9 @@ export default function CreateAdmin() {
 
             {/* Password Section */}
             <div>
-              <h3 className="text-lg font-medium text-gray-900 mb-4">Security</h3>
+              <h3 className="text-lg font-medium text-gray-900 mb-4">
+                Security
+              </h3>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -251,14 +263,20 @@ export default function CreateAdmin() {
             {/* Selected Restaurant Info */}
             {formData.restaurant_id && (
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-                <h4 className="font-medium text-blue-900 mb-2">Selected Restaurant</h4>
+                <h4 className="font-medium text-blue-900 mb-2">
+                  Selected Restaurant
+                </h4>
                 {(() => {
-                  const selectedRestaurant = restaurants.find(r => r._id === formData.restaurant_id);
+                  const selectedRestaurant = restaurants.find(
+                    (r) => r._id === formData.restaurant_id,
+                  );
                   return selectedRestaurant ? (
                     <div className="text-sm text-blue-800">
                       <p className="font-medium">{selectedRestaurant.name}</p>
                       <p>{selectedRestaurant.address}</p>
-                      <p>{selectedRestaurant.phone} • {selectedRestaurant.email}</p>
+                      <p>
+                        {selectedRestaurant.phone} • {selectedRestaurant.email}
+                      </p>
                     </div>
                   ) : null;
                 })()}
@@ -267,10 +285,7 @@ export default function CreateAdmin() {
 
             {/* Actions */}
             <div className="flex items-center justify-end space-x-4 pt-6 border-t border-gray-200">
-              <Link 
-                to="/super-admin/admins"
-                className="btn btn-secondary"
-              >
+              <Link to="/super-admin/admins" className="btn btn-secondary">
                 Cancel
               </Link>
               <button

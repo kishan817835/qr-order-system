@@ -48,7 +48,10 @@ export default function App() {
           <Route path="/menu/:restaurantId" element={<MenuPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/payment" element={<PaymentPage />} />
-          <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
+          <Route
+            path="/order-confirmation"
+            element={<OrderConfirmationPage />}
+          />
           <Route path="/track-order/:orderId" element={<OrderTrackingPage />} />
           <Route path="/track-order" element={<OrderTrackingPage />} />
           <Route path="/tracking" element={<TrackingPage />} />
@@ -65,9 +68,18 @@ export default function App() {
             <Route index element={<SuperAdminDashboard />} />
             <Route path="admins" element={<AdminsManagement />} />
             <Route path="create-admin" element={<CreateAdmin />} />
-            <Route path="restaurants" element={<div>Restaurants page - Coming soon</div>} />
-            <Route path="analytics" element={<div>Analytics page - Coming soon</div>} />
-            <Route path="settings" element={<div>Settings page - Coming soon</div>} />
+            <Route
+              path="restaurants"
+              element={<div>Restaurants page - Coming soon</div>}
+            />
+            <Route
+              path="analytics"
+              element={<div>Analytics page - Coming soon</div>}
+            />
+            <Route
+              path="settings"
+              element={<div>Settings page - Coming soon</div>}
+            />
           </Route>
 
           {/* Admin routes */}

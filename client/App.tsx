@@ -53,8 +53,14 @@ const App = () => (
               path="/order/confirmation"
               element={<OrderConfirmationPage />}
             />
-            <Route path="/order-confirmation" element={<OrderConfirmationPage />} />
-            <Route path="/track-order/:orderId" element={<OrderTrackingPage />} />
+            <Route
+              path="/order-confirmation"
+              element={<OrderConfirmationPage />}
+            />
+            <Route
+              path="/track-order/:orderId"
+              element={<OrderTrackingPage />}
+            />
             <Route path="/track-order" element={<OrderTrackingPage />} />
             <Route path="/kitchen" element={<KitchenDashboard />} />
             <Route path="/KitchenDashboard" element={<KitchenDashboard />} />
@@ -81,11 +87,42 @@ const App = () => (
             {/* Super Admin Routes */}
             <Route path="/super-admin" element={<SuperAdminLayout />}>
               <Route index element={<SuperAdminDashboard />} />
-              <Route path="admins" element={<div className="p-8 text-center">Admins Management - Coming Soon</div>} />
-              <Route path="create-admin" element={<div className="p-8 text-center">Create Admin - Coming Soon</div>} />
-              <Route path="restaurants" element={<div className="p-8 text-center">Restaurants - Coming Soon</div>} />
-              <Route path="analytics" element={<div className="p-8 text-center">Analytics - Coming Soon</div>} />
-              <Route path="settings" element={<div className="p-8 text-center">Settings - Coming Soon</div>} />
+              <Route
+                path="admins"
+                element={
+                  <div className="p-8 text-center">
+                    Admins Management - Coming Soon
+                  </div>
+                }
+              />
+              <Route
+                path="create-admin"
+                element={
+                  <div className="p-8 text-center">
+                    Create Admin - Coming Soon
+                  </div>
+                }
+              />
+              <Route
+                path="restaurants"
+                element={
+                  <div className="p-8 text-center">
+                    Restaurants - Coming Soon
+                  </div>
+                }
+              />
+              <Route
+                path="analytics"
+                element={
+                  <div className="p-8 text-center">Analytics - Coming Soon</div>
+                }
+              />
+              <Route
+                path="settings"
+                element={
+                  <div className="p-8 text-center">Settings - Coming Soon</div>
+                }
+              />
             </Route>
 
             {/* Admin Routes */}

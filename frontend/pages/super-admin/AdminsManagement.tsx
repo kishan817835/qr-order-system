@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  Edit, 
-  Trash2, 
+import {
+  Plus,
+  Search,
+  Filter,
+  Edit,
+  Trash2,
   Eye,
   Phone,
   Mail,
   Building2,
   Calendar,
-  Activity
+  Activity,
 } from "lucide-react";
 import apiService from "@/lib/api";
 
@@ -51,8 +51,12 @@ export default function AdminsManagement() {
   const fetchAdmins = async (page = 1, search = "") => {
     try {
       setLoading(true);
-      const result = await apiService.getSuperAdminAdmins({ page, search, limit: 20 });
-      
+      const result = await apiService.getSuperAdminAdmins({
+        page,
+        search,
+        limit: 20,
+      });
+
       if (result.success) {
         const data = result.data as AdminsResponse;
         setAdmins(data.admins);
@@ -61,10 +65,10 @@ export default function AdminsManagement() {
         setTotal(data.pagination.total);
         setError(null);
       } else {
-        setError(result.error || 'Failed to fetch admins');
+        setError(result.error || "Failed to fetch admins");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to fetch admins');
+      setError(err instanceof Error ? err.message : "Failed to fetch admins");
     } finally {
       setLoading(false);
     }
@@ -87,18 +91,20 @@ export default function AdminsManagement() {
 
   const toggleAdminStatus = async (adminId: string, currentStatus: boolean) => {
     try {
-      const result = await apiService.updateSuperAdminAdmin(adminId, { 
-        is_active: !currentStatus 
+      const result = await apiService.updateSuperAdminAdmin(adminId, {
+        is_active: !currentStatus,
       });
-      
+
       if (result.success) {
         // Refresh the list
         fetchAdmins(currentPage, searchTerm);
       } else {
-        alert(result.error || 'Failed to update admin status');
+        alert(result.error || "Failed to update admin status");
       }
     } catch (err) {
-      alert(err instanceof Error ? err.message : 'Failed to update admin status');
+      alert(
+        err instanceof Error ? err.message : "Failed to update admin status",
+      );
     }
   };
 
@@ -109,13 +115,12 @@ export default function AdminsManagement() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Admin Management</h1>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Admin Management
+              </h1>
               <p className="text-gray-600">Manage restaurant administrators</p>
             </div>
-            <Link 
-              to="/super-admin/create-admin"
-              className="btn btn-primary"
-            >
+            <Link to="/super-admin/create-admin" className="btn btn-primary">
               <Plus className="w-4 h-4 mr-2" />
               Create Admin
             </Link>
@@ -163,7 +168,7 @@ export default function AdminsManagement() {
               <div>
                 <p className="text-sm text-gray-600">Active Admins</p>
                 <p className="text-2xl font-bold text-primary">
-                  {admins.filter(admin => admin.is_active).length}
+                  {admins.filter((admin) => admin.is_active).length}
                 </p>
               </div>
               <div className="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
@@ -177,12 +182,14 @@ export default function AdminsManagement() {
               <div>
                 <p className="text-sm text-gray-600">Recent Logins</p>
                 <p className="text-2xl font-bold text-primary">
-                  {admins.filter(admin => {
-                    if (!admin.last_login) return false;
-                    const lastLogin = new Date(admin.last_login);
-                    const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
-                    return lastLogin > dayAgo;
-                  }).length}
+                  {
+                    admins.filter((admin) => {
+                      if (!admin.last_login) return false;
+                      const lastLogin = new Date(admin.last_login);
+                      const dayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+                      return lastLogin > dayAgo;
+                    }).length
+                  }
                 </p>
               </div>
               <div className="w-10 h-10 bg-orange-100 rounded-lg flex items-center justify-center">
@@ -202,7 +209,7 @@ export default function AdminsManagement() {
           ) : error ? (
             <div className="text-center py-12">
               <p className="text-red-600 mb-4">{error}</p>
-              <button 
+              <button
                 onClick={() => fetchAdmins(currentPage, searchTerm)}
                 className="btn btn-primary"
               >
@@ -248,7 +255,9 @@ export default function AdminsManagement() {
                       <tr key={admin._id} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div>
-                            <p className="font-medium text-gray-900">{admin.name}</p>
+                            <p className="font-medium text-gray-900">
+                              {admin.name}
+                            </p>
                             <div className="flex items-center space-x-4 mt-1 text-sm text-gray-600">
                               <div className="flex items-center">
                                 <Mail className="w-3 h-3 mr-1" />
@@ -263,29 +272,34 @@ export default function AdminsManagement() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div>
-                            <p className="font-medium text-gray-900">{admin.restaurant_id.name}</p>
-                            <p className="text-sm text-gray-600">{admin.restaurant_id.address}</p>
+                            <p className="font-medium text-gray-900">
+                              {admin.restaurant_id.name}
+                            </p>
+                            <p className="text-sm text-gray-600">
+                              {admin.restaurant_id.address}
+                            </p>
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                           {new Date(admin.createdAt).toLocaleDateString()}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                          {admin.last_login 
+                          {admin.last_login
                             ? new Date(admin.last_login).toLocaleDateString()
-                            : 'Never'
-                          }
+                            : "Never"}
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <button
-                            onClick={() => toggleAdminStatus(admin._id, admin.is_active)}
+                            onClick={() =>
+                              toggleAdminStatus(admin._id, admin.is_active)
+                            }
                             className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
                               admin.is_active
-                                ? 'bg-green-100 text-green-800'
-                                : 'bg-red-100 text-red-800'
+                                ? "bg-green-100 text-green-800"
+                                : "bg-red-100 text-red-800"
                             }`}
                           >
-                            {admin.is_active ? 'Active' : 'Inactive'}
+                            {admin.is_active ? "Active" : "Inactive"}
                           </button>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
@@ -317,7 +331,8 @@ export default function AdminsManagement() {
                 <div className="px-6 py-4 border-t border-gray-200">
                   <div className="flex items-center justify-between">
                     <p className="text-sm text-gray-600">
-                      Showing {((currentPage - 1) * 20) + 1} to {Math.min(currentPage * 20, total)} of {total} admins
+                      Showing {(currentPage - 1) * 20 + 1} to{" "}
+                      {Math.min(currentPage * 20, total)} of {total} admins
                     </p>
                     <div className="flex items-center space-x-2">
                       <button
@@ -327,20 +342,25 @@ export default function AdminsManagement() {
                       >
                         Previous
                       </button>
-                      {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-                        const page = i + 1;
-                        return (
-                          <button
-                            key={page}
-                            onClick={() => handlePageChange(page)}
-                            className={`btn btn-sm ${
-                              page === currentPage ? 'btn-primary' : 'btn-secondary'
-                            }`}
-                          >
-                            {page}
-                          </button>
-                        );
-                      })}
+                      {Array.from(
+                        { length: Math.min(5, totalPages) },
+                        (_, i) => {
+                          const page = i + 1;
+                          return (
+                            <button
+                              key={page}
+                              onClick={() => handlePageChange(page)}
+                              className={`btn btn-sm ${
+                                page === currentPage
+                                  ? "btn-primary"
+                                  : "btn-secondary"
+                              }`}
+                            >
+                              {page}
+                            </button>
+                          );
+                        },
+                      )}
                       <button
                         onClick={() => handlePageChange(currentPage + 1)}
                         disabled={currentPage === totalPages}

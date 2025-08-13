@@ -1,34 +1,34 @@
-import QRCode from 'qrcode';
-import fs from 'fs';
-import path from 'path';
+import QRCode from "qrcode";
+import fs from "fs";
+import path from "path";
 
 export const generateQRCode = async (text, options = {}) => {
   try {
     const defaultOptions = {
-      type: 'png',
+      type: "png",
       quality: 0.92,
       margin: 1,
       color: {
-        dark: '#000000',
-        light: '#FFFFFF'
+        dark: "#000000",
+        light: "#FFFFFF",
       },
       width: 256,
-      ...options
+      ...options,
     };
 
     // Generate QR code as data URL
     const qrCodeDataURL = await QRCode.toDataURL(text, defaultOptions);
-    
+
     return {
       success: true,
       dataURL: qrCodeDataURL,
-      text: text
+      text: text,
     };
   } catch (error) {
-    console.error('QR Code generation error:', error);
+    console.error("QR Code generation error:", error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 };
@@ -36,29 +36,29 @@ export const generateQRCode = async (text, options = {}) => {
 export const generateQRCodeBuffer = async (text, options = {}) => {
   try {
     const defaultOptions = {
-      type: 'png',
+      type: "png",
       quality: 0.92,
       margin: 1,
       color: {
-        dark: '#000000',
-        light: '#FFFFFF'
+        dark: "#000000",
+        light: "#FFFFFF",
       },
       width: 256,
-      ...options
+      ...options,
     };
 
     const qrCodeBuffer = await QRCode.toBuffer(text, defaultOptions);
-    
+
     return {
       success: true,
       buffer: qrCodeBuffer,
-      text: text
+      text: text,
     };
   } catch (error) {
-    console.error('QR Code generation error:', error);
+    console.error("QR Code generation error:", error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 };
@@ -66,15 +66,15 @@ export const generateQRCodeBuffer = async (text, options = {}) => {
 export const saveQRCodeFile = async (text, filePath, options = {}) => {
   try {
     const defaultOptions = {
-      type: 'png',
+      type: "png",
       quality: 0.92,
       margin: 1,
       color: {
-        dark: '#000000',
-        light: '#FFFFFF'
+        dark: "#000000",
+        light: "#FFFFFF",
       },
       width: 256,
-      ...options
+      ...options,
     };
 
     // Ensure directory exists
@@ -84,34 +84,39 @@ export const saveQRCodeFile = async (text, filePath, options = {}) => {
     }
 
     await QRCode.toFile(filePath, text, defaultOptions);
-    
+
     return {
       success: true,
       filePath: filePath,
-      text: text
+      text: text,
     };
   } catch (error) {
-    console.error('QR Code file save error:', error);
+    console.error("QR Code file save error:", error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 };
 
-export const generateTableQRCode = async (restaurantId, tableNumber, tableId, qrCodeId) => {
+export const generateTableQRCode = async (
+  restaurantId,
+  tableNumber,
+  tableId,
+  qrCodeId,
+) => {
   try {
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
+    const frontendUrl = process.env.FRONTEND_URL || "http://localhost:3000";
     const qrText = `${frontendUrl}/menu/${restaurantId}?table=${tableNumber}&service=dining&qr_id=${qrCodeId}`;
-    
+
     // Generate QR code with custom styling for restaurant
     const qrResult = await generateQRCode(qrText, {
       width: 300,
       margin: 2,
       color: {
-        dark: '#1a1a1a',
-        light: '#ffffff'
-      }
+        dark: "#1a1a1a",
+        light: "#ffffff",
+      },
     });
 
     if (!qrResult.success) {
@@ -123,13 +128,13 @@ export const generateTableQRCode = async (restaurantId, tableNumber, tableId, qr
       qrCodeDataURL: qrResult.dataURL,
       qrText: qrText,
       tableNumber: tableNumber,
-      restaurantId: restaurantId
+      restaurantId: restaurantId,
     };
   } catch (error) {
-    console.error('Table QR Code generation error:', error);
+    console.error("Table QR Code generation error:", error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 };
@@ -137,21 +142,21 @@ export const generateTableQRCode = async (restaurantId, tableNumber, tableId, qr
 export const generateBulkTableQRCodes = async (restaurantId, tables) => {
   try {
     const qrCodes = [];
-    
+
     for (const table of tables) {
       const qrResult = await generateTableQRCode(
         restaurantId,
         table.table_number,
         table._id,
-        table.qr_code_id
+        table.qr_code_id,
       );
-      
+
       if (qrResult.success) {
         qrCodes.push({
           tableId: table._id,
           tableNumber: table.table_number,
           qrCodeDataURL: qrResult.qrCodeDataURL,
-          qrText: qrResult.qrText
+          qrText: qrResult.qrText,
         });
       }
     }
@@ -159,13 +164,13 @@ export const generateBulkTableQRCodes = async (restaurantId, tables) => {
     return {
       success: true,
       qrCodes: qrCodes,
-      count: qrCodes.length
+      count: qrCodes.length,
     };
   } catch (error) {
-    console.error('Bulk QR Code generation error:', error);
+    console.error("Bulk QR Code generation error:", error);
     return {
       success: false,
-      error: error.message
+      error: error.message,
     };
   }
 };

@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { useParams, useSearchParams, Link } from "react-router-dom";
-import { 
-  Clock, 
-  CheckCircle, 
-  Package, 
-  Truck, 
-  MapPin, 
-  Phone, 
+import {
+  Clock,
+  CheckCircle,
+  Package,
+  Truck,
+  MapPin,
+  Phone,
   RefreshCw,
   ArrowLeft,
-  Utensils
+  Utensils,
 } from "lucide-react";
 
 interface Order {
@@ -41,34 +41,34 @@ interface Order {
 
 const statusSteps = {
   dining: [
-    { key: 'pending', label: 'Order Placed', icon: CheckCircle },
-    { key: 'confirmed', label: 'Confirmed', icon: CheckCircle },
-    { key: 'preparing', label: 'Preparing', icon: Utensils },
-    { key: 'ready', label: 'Ready to Serve', icon: CheckCircle },
-    { key: 'completed', label: 'Served', icon: CheckCircle }
+    { key: "pending", label: "Order Placed", icon: CheckCircle },
+    { key: "confirmed", label: "Confirmed", icon: CheckCircle },
+    { key: "preparing", label: "Preparing", icon: Utensils },
+    { key: "ready", label: "Ready to Serve", icon: CheckCircle },
+    { key: "completed", label: "Served", icon: CheckCircle },
   ],
   takeaway: [
-    { key: 'pending', label: 'Order Placed', icon: CheckCircle },
-    { key: 'confirmed', label: 'Confirmed', icon: CheckCircle },
-    { key: 'preparing', label: 'Preparing', icon: Utensils },
-    { key: 'ready', label: 'Ready for Pickup', icon: Package },
-    { key: 'completed', label: 'Picked Up', icon: CheckCircle }
+    { key: "pending", label: "Order Placed", icon: CheckCircle },
+    { key: "confirmed", label: "Confirmed", icon: CheckCircle },
+    { key: "preparing", label: "Preparing", icon: Utensils },
+    { key: "ready", label: "Ready for Pickup", icon: Package },
+    { key: "completed", label: "Picked Up", icon: CheckCircle },
   ],
   delivery: [
-    { key: 'pending', label: 'Order Placed', icon: CheckCircle },
-    { key: 'confirmed', label: 'Confirmed', icon: CheckCircle },
-    { key: 'preparing', label: 'Preparing', icon: Utensils },
-    { key: 'ready', label: 'Ready', icon: Package },
-    { key: 'out_for_delivery', label: 'Out for Delivery', icon: Truck },
-    { key: 'completed', label: 'Delivered', icon: CheckCircle }
-  ]
+    { key: "pending", label: "Order Placed", icon: CheckCircle },
+    { key: "confirmed", label: "Confirmed", icon: CheckCircle },
+    { key: "preparing", label: "Preparing", icon: Utensils },
+    { key: "ready", label: "Ready", icon: Package },
+    { key: "out_for_delivery", label: "Out for Delivery", icon: Truck },
+    { key: "completed", label: "Delivered", icon: CheckCircle },
+  ],
 };
 
 export default function OrderTrackingPage() {
   const { orderId } = useParams();
   const [searchParams] = useSearchParams();
-  const orderNumber = searchParams.get('orderNumber');
-  
+  const orderNumber = searchParams.get("orderNumber");
+
   const [order, setOrder] = useState<Order | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -85,7 +85,7 @@ export default function OrderTrackingPage() {
     items: [
       { name: "Butter Chicken", quantity: 2, price: 380 },
       { name: "Naan", quantity: 4, price: 60 },
-      { name: "Basmati Rice", quantity: 1, price: 120 }
+      { name: "Basmati Rice", quantity: 1, price: 120 },
     ],
     total_amount: 1000,
     estimated_time: 25,
@@ -93,8 +93,8 @@ export default function OrderTrackingPage() {
     restaurant_id: {
       name: "Spice Garden",
       address: "123 Main Street, Food District",
-      phone: "+91 12345 67890"
-    }
+      phone: "+91 12345 67890",
+    },
   };
 
   useEffect(() => {
@@ -109,33 +109,47 @@ export default function OrderTrackingPage() {
   }, [orderId, orderNumber]);
 
   const getCurrentStepIndex = (status: string, serviceType: string) => {
-    const steps = statusSteps[serviceType as keyof typeof statusSteps] || statusSteps.dining;
-    return steps.findIndex(step => step.key === status);
+    const steps =
+      statusSteps[serviceType as keyof typeof statusSteps] ||
+      statusSteps.dining;
+    return steps.findIndex((step) => step.key === status);
   };
 
   const getEstimatedTime = () => {
-    if (!order) return '';
-    
+    if (!order) return "";
+
     const orderTime = new Date(order.createdAt);
-    const estimatedDelivery = new Date(orderTime.getTime() + (order.estimated_time * 60000));
+    const estimatedDelivery = new Date(
+      orderTime.getTime() + order.estimated_time * 60000,
+    );
     const now = new Date();
-    
+
     if (estimatedDelivery > now) {
-      const diffMinutes = Math.ceil((estimatedDelivery.getTime() - now.getTime()) / 60000);
+      const diffMinutes = Math.ceil(
+        (estimatedDelivery.getTime() - now.getTime()) / 60000,
+      );
       return `${diffMinutes} minutes`;
     }
-    
-    return 'Expected soon';
+
+    return "Expected soon";
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'pending': return 'text-yellow-600';
-      case 'confirmed': case 'preparing': return 'text-orange-600';
-      case 'ready': case 'out_for_delivery': return 'text-blue-600';
-      case 'completed': return 'text-green-600';
-      case 'cancelled': return 'text-red-600';
-      default: return 'text-gray-600';
+      case "pending":
+        return "text-yellow-600";
+      case "confirmed":
+      case "preparing":
+        return "text-orange-600";
+      case "ready":
+      case "out_for_delivery":
+        return "text-blue-600";
+      case "completed":
+        return "text-green-600";
+      case "cancelled":
+        return "text-red-600";
+      default:
+        return "text-gray-600";
     }
   };
 
@@ -157,7 +171,9 @@ export default function OrderTrackingPage() {
           <div className="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
             <Package className="w-8 h-8 text-red-500" />
           </div>
-          <h1 className="text-xl font-bold text-gray-900 mb-2">Order Not Found</h1>
+          <h1 className="text-xl font-bold text-gray-900 mb-2">
+            Order Not Found
+          </h1>
           <p className="text-gray-600 mb-6">{error}</p>
           <Link to="/" className="btn btn-primary">
             Back to Home
@@ -169,8 +185,13 @@ export default function OrderTrackingPage() {
 
   if (!order) return null;
 
-  const steps = statusSteps[order.service_type as keyof typeof statusSteps] || statusSteps.dining;
-  const currentStepIndex = getCurrentStepIndex(order.status, order.service_type);
+  const steps =
+    statusSteps[order.service_type as keyof typeof statusSteps] ||
+    statusSteps.dining;
+  const currentStepIndex = getCurrentStepIndex(
+    order.status,
+    order.service_type,
+  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -181,7 +202,7 @@ export default function OrderTrackingPage() {
             <ArrowLeft className="w-6 h-6" />
           </Link>
           <h1 className="text-xl font-bold text-primary">Track Order</h1>
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="text-orange"
           >
@@ -195,15 +216,19 @@ export default function OrderTrackingPage() {
             <h2 className="text-xl font-bold text-primary mb-2">
               Order {order.order_number}
             </h2>
-            <div className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)} bg-opacity-10`}>
-              <div className={`w-2 h-2 rounded-full mr-2 ${getStatusColor(order.status).replace('text-', 'bg-')}`}></div>
-              {order.status.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}
+            <div
+              className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-medium ${getStatusColor(order.status)} bg-opacity-10`}
+            >
+              <div
+                className={`w-2 h-2 rounded-full mr-2 ${getStatusColor(order.status).replace("text-", "bg-")}`}
+              ></div>
+              {order.status
+                .replace("_", " ")
+                .replace(/\b\w/g, (l) => l.toUpperCase())}
             </div>
             <div className="flex items-center justify-center text-orange mt-3">
               <Clock className="w-4 h-4 mr-2" />
-              <span className="text-sm">
-                ETA: {getEstimatedTime()}
-              </span>
+              <span className="text-sm">ETA: {getEstimatedTime()}</span>
             </div>
           </div>
         </div>
@@ -212,8 +237,11 @@ export default function OrderTrackingPage() {
         <div className="card mb-6">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-orange rounded-full flex items-center justify-center">
-              {order.service_type === 'dining' ? '🍽️' : 
-               order.service_type === 'takeaway' ? '🥡' : '🚚'}
+              {order.service_type === "dining"
+                ? "🍽️"
+                : order.service_type === "takeaway"
+                  ? "🥡"
+                  : "🚚"}
             </div>
             <div>
               <p className="font-medium text-primary capitalize">
@@ -221,9 +249,9 @@ export default function OrderTrackingPage() {
                 {order.table_number && ` - Table ${order.table_number}`}
               </p>
               <p className="text-sm text-secondary">
-                {order.service_type === 'dining' && 'Dine-in service'}
-                {order.service_type === 'takeaway' && 'Ready for pickup'}
-                {order.service_type === 'delivery' && 'Home delivery'}
+                {order.service_type === "dining" && "Dine-in service"}
+                {order.service_type === "takeaway" && "Ready for pickup"}
+                {order.service_type === "delivery" && "Home delivery"}
               </p>
             </div>
           </div>
@@ -234,7 +262,9 @@ export default function OrderTrackingPage() {
               {order.customer_name && (
                 <div className="flex justify-between text-sm mb-1">
                   <span className="text-secondary">Customer:</span>
-                  <span className="text-primary font-medium">{order.customer_name}</span>
+                  <span className="text-primary font-medium">
+                    {order.customer_name}
+                  </span>
                 </div>
               )}
               {order.customer_phone && (
@@ -254,7 +284,8 @@ export default function OrderTrackingPage() {
                 <div>
                   <p className="text-sm text-secondary">Delivery Address:</p>
                   <p className="text-sm text-primary">
-                    {order.delivery_address.street}, {order.delivery_address.city}
+                    {order.delivery_address.street},{" "}
+                    {order.delivery_address.city}
                   </p>
                 </div>
               </div>
@@ -270,22 +301,30 @@ export default function OrderTrackingPage() {
               const StepIcon = step.icon;
               const isCompleted = index <= currentStepIndex;
               const isCurrent = index === currentStepIndex;
-              
+
               return (
                 <div key={step.key} className="flex items-center space-x-3">
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                    isCompleted 
-                      ? 'bg-green text-white' 
-                      : isCurrent 
-                        ? 'bg-orange text-white' 
-                        : 'bg-gray-200 text-gray-400'
-                  }`}>
+                  <div
+                    className={`w-8 h-8 rounded-full flex items-center justify-center ${
+                      isCompleted
+                        ? "bg-green text-white"
+                        : isCurrent
+                          ? "bg-orange text-white"
+                          : "bg-gray-200 text-gray-400"
+                    }`}
+                  >
                     <StepIcon className="w-4 h-4" />
                   </div>
                   <div className="flex-1">
-                    <p className={`font-medium ${
-                      isCompleted ? 'text-green' : isCurrent ? 'text-orange' : 'text-gray-400'
-                    }`}>
+                    <p
+                      className={`font-medium ${
+                        isCompleted
+                          ? "text-green"
+                          : isCurrent
+                            ? "text-orange"
+                            : "text-gray-400"
+                      }`}
+                    >
                       {step.label}
                     </p>
                     {isCurrent && (
@@ -311,13 +350,17 @@ export default function OrderTrackingPage() {
                   <p className="font-medium text-primary">{item.name}</p>
                   <p className="text-sm text-secondary">Qty: {item.quantity}</p>
                 </div>
-                <p className="font-medium text-primary">₹{item.price * item.quantity}</p>
+                <p className="font-medium text-primary">
+                  ₹{item.price * item.quantity}
+                </p>
               </div>
             ))}
             <div className="pt-3 border-t border-gray-200">
               <div className="flex justify-between items-center">
                 <p className="font-bold text-primary">Total Amount</p>
-                <p className="font-bold text-primary text-lg">₹{order.total_amount}</p>
+                <p className="font-bold text-primary text-lg">
+                  ₹{order.total_amount}
+                </p>
               </div>
             </div>
           </div>
@@ -325,13 +368,19 @@ export default function OrderTrackingPage() {
 
         {/* Restaurant Info */}
         <div className="card mb-6">
-          <h3 className="font-semibold text-primary mb-3">Restaurant Details</h3>
+          <h3 className="font-semibold text-primary mb-3">
+            Restaurant Details
+          </h3>
           <div className="space-y-2">
-            <p className="font-medium text-primary">{order.restaurant_id.name}</p>
-            <p className="text-sm text-secondary">{order.restaurant_id.address}</p>
+            <p className="font-medium text-primary">
+              {order.restaurant_id.name}
+            </p>
+            <p className="text-sm text-secondary">
+              {order.restaurant_id.address}
+            </p>
             <div className="flex items-center space-x-2">
               <Phone className="w-4 h-4 text-secondary" />
-              <a 
+              <a
                 href={`tel:${order.restaurant_id.phone}`}
                 className="text-sm text-orange font-medium"
               >
@@ -343,16 +392,16 @@ export default function OrderTrackingPage() {
 
         {/* Actions */}
         <div className="space-y-3">
-          <button 
+          <button
             onClick={() => window.location.reload()}
             className="btn btn-primary w-full"
           >
             <RefreshCw className="w-4 h-4 mr-2" />
             Refresh Status
           </button>
-          
+
           {order.restaurant_id.phone && (
-            <a 
+            <a
               href={`tel:${order.restaurant_id.phone}`}
               className="btn btn-secondary w-full text-center"
             >
@@ -360,11 +409,8 @@ export default function OrderTrackingPage() {
               Call Restaurant
             </a>
           )}
-          
-          <Link 
-            to={`/menu/1`}
-            className="btn btn-secondary w-full text-center"
-          >
+
+          <Link to={`/menu/1`} className="btn btn-secondary w-full text-center">
             Order Again
           </Link>
         </div>

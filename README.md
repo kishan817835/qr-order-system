@@ -5,6 +5,7 @@ A complete restaurant management system with QR code-based table ordering, real-
 ## 🚀 Features
 
 ### Customer Features
+
 - **QR Code Ordering**: Scan QR code at table to view menu and place orders
 - **Multiple Service Types**: Dining, Takeaway, Delivery
 - **Real-time Order Tracking**: Live updates on order status
@@ -13,6 +14,7 @@ A complete restaurant management system with QR code-based table ordering, real-
 - **Payment Integration**: Multiple payment options
 
 ### Restaurant Admin Features
+
 - **Dashboard**: Real-time analytics, order statistics, revenue tracking
 - **Table Management**: Create tables with unique QR codes, track status
 - **Menu Management**: Categories, items, pricing, availability
@@ -21,6 +23,7 @@ A complete restaurant management system with QR code-based table ordering, real-
 - **Analytics & Reports**: Sales reports, popular items, performance metrics
 
 ### Technical Features
+
 - **Real-time Updates**: Socket.io for live order notifications
 - **QR Code Generation**: Auto-generated unique QR codes for each table
 - **Responsive Design**: Mobile-first design for all devices
@@ -53,6 +56,7 @@ restaurant-management/
 ## 🛠️ Technology Stack
 
 ### Frontend
+
 - **React 18** - UI library
 - **TypeScript** - Type safety
 - **Vite** - Build tool and dev server
@@ -63,6 +67,7 @@ restaurant-management/
 - **Socket.io Client** - Real-time communication
 
 ### Backend
+
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
 - **MongoDB** - Database
@@ -75,6 +80,7 @@ restaurant-management/
 ## ⚡ Quick Start
 
 ### Prerequisites
+
 - Node.js (v18 or higher)
 - MongoDB (local installation or MongoDB Atlas)
 - pnpm (recommended) or npm
@@ -82,12 +88,14 @@ restaurant-management/
 ### Installation
 
 1. **Clone the repository**
+
 ```bash
 git clone <repository-url>
 cd restaurant-management
 ```
 
 2. **Setup Backend**
+
 ```bash
 cd backend
 npm install
@@ -97,6 +105,7 @@ npm run dev
 ```
 
 3. **Setup Frontend**
+
 ```bash
 cd frontend
 npm install
@@ -106,6 +115,7 @@ npm run dev
 ```
 
 4. **Setup Database**
+
 - Start MongoDB locally or use MongoDB Atlas
 - Update `MONGODB_URI` in backend/.env
 - The application will create collections automatically
@@ -113,6 +123,7 @@ npm run dev
 ### Environment Variables
 
 #### Backend (.env)
+
 ```env
 MONGODB_URI=mongodb://localhost:27017/restaurant_management
 JWT_SECRET=your_super_secret_jwt_key
@@ -122,6 +133,7 @@ FRONTEND_URL=http://localhost:3000
 ```
 
 #### Frontend (.env)
+
 ```env
 VITE_API_URL=http://localhost:5000/api
 VITE_SOCKET_URL=http://localhost:5000
@@ -162,32 +174,38 @@ VITE_SOCKET_URL=http://localhost:5000
 ## 🔧 API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/register` - Register user
 - `POST /api/auth/login` - Login user
 - `GET /api/auth/profile` - Get user profile
 
 ### Restaurant
+
 - `GET /api/restaurants/:id` - Get restaurant details
 - `GET /api/restaurants/:id/menu` - Get restaurant menu
 
 ### Tables
+
 - `GET /api/tables/restaurant/:id` - Get restaurant tables
 - `POST /api/tables` - Create table
 - `PUT /api/tables/:id` - Update table
 - `PATCH /api/tables/:id/status` - Update table status
 
 ### QR Codes
+
 - `GET /api/qr/table/:id` - Generate table QR code
 - `GET /api/qr/restaurant/:id/tables` - Generate all table QR codes
 - `POST /api/qr/table/:id/regenerate` - Regenerate table QR code
 
 ### Orders
+
 - `GET /api/orders/restaurant/:id` - Get restaurant orders
 - `POST /api/orders` - Create order
 - `PATCH /api/orders/:id/status` - Update order status
 - `GET /api/orders/analytics/:id` - Get order analytics
 
 ### Admin
+
 - `GET /api/admin/dashboard/:id` - Dashboard statistics
 - `GET /api/admin/staff/:id` - Get staff members
 - `GET /api/admin/reports/:id` - Generate reports
@@ -213,6 +231,7 @@ The system uses Socket.io for real-time updates:
 ## 📊 Database Schema
 
 ### Key Collections
+
 - **restaurants** - Restaurant information and settings
 - **tables** - Table details with QR codes
 - **categories** - Menu categories
@@ -224,12 +243,14 @@ The system uses Socket.io for real-time updates:
 ## 🚀 Deployment
 
 ### Backend Deployment
+
 1. Set up MongoDB Atlas or cloud MongoDB
 2. Deploy to services like Heroku, Railway, or DigitalOcean
 3. Update environment variables
 4. Set up process manager (PM2) for production
 
 ### Frontend Deployment
+
 1. Build the frontend: `npm run build`
 2. Deploy to Netlify, Vercel, or any static hosting
 3. Update API URLs to production backend
@@ -249,6 +270,7 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## 🆘 Support
 
 For support and questions:
+
 - Create an issue on GitHub
 - Check the documentation
 - Review the API endpoints

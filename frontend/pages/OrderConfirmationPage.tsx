@@ -16,8 +16,11 @@ export default function OrderConfirmationPage() {
 
   // Get order details from location state (for delivery/takeaway) or generate for dining
   const orderData = location.state || {};
-  const orderNumber = orderData.orderNumber || `ORD${Date.now()}${Math.floor(Math.random() * 100)}`;
-  const estimatedTime = orderData.estimatedTime || Math.floor(Math.random() * 15) + 20; // 20-35 minutes
+  const orderNumber =
+    orderData.orderNumber ||
+    `ORD${Date.now()}${Math.floor(Math.random() * 100)}`;
+  const estimatedTime =
+    orderData.estimatedTime || Math.floor(Math.random() * 15) + 20; // 20-35 minutes
   const isDining = state.serviceType === "dining";
 
   useEffect(() => {
@@ -25,7 +28,7 @@ export default function OrderConfirmationPage() {
     if (orderData.orderId) {
       setOrderId(orderData.orderId);
     }
-    
+
     // Clear cart after order is placed
     dispatch({ type: "CLEAR_CART" });
   }, [dispatch, orderData.orderId]);
@@ -214,21 +217,21 @@ export default function OrderConfirmationPage() {
         <div className="space-y-3">
           {/* Track Order Button - Updated to work */}
           {orderId ? (
-            <Link 
+            <Link
               to={`/track-order/${orderId}`}
               className="btn btn-primary w-full text-center"
             >
               Track Order
             </Link>
           ) : (
-            <Link 
+            <Link
               to={`/track-order?orderNumber=${orderNumber}`}
               className="btn btn-primary w-full text-center"
             >
               Track Order
             </Link>
           )}
-          
+
           <Link
             to={`/menu/${state.restaurant?.id || 1}`}
             className="btn btn-secondary w-full text-center"
