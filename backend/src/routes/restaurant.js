@@ -12,8 +12,14 @@ const router = express.Router();
 router.get("/:restaurantId", async (req, res) => {
   try {
     const { restaurantId } = req.params;
+    let restaurant;
 
-    const restaurant = await Restaurant.findById(restaurantId);
+    if (!global.mongoConnected) {
+      // Use mock database
+      restaurant = findRestaurant(restaurantId);
+    } else {
+      restaurant = await Restaurant.findById(restaurantId);
+    }
 
     if (!restaurant) {
       return res.status(404).json({
@@ -24,7 +30,7 @@ router.get("/:restaurantId", async (req, res) => {
 
     res.json({
       success: true,
-      data: { restaurant },
+      data: restaurant,
     });
   } catch (error) {
     res.status(500).json({
