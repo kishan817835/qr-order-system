@@ -328,10 +328,21 @@ export default function TableManagement() {
                   <p className="text-sm text-secondary">{table.location}</p>
                 </div>
               </div>
-              <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(table.status)}`}>
-                <span className="mr-1">{getStatusIcon(table.status)}</span>
-                {table.status.toUpperCase()}
-              </span>
+              <div className="flex items-center space-x-2">
+                <select
+                  value={table.status}
+                  onChange={(e) => changeTableStatus(table.id, e.target.value as any)}
+                  className={`text-xs font-medium border-0 rounded-full px-2 py-1 ${getStatusColor(table.status)}`}
+                  style={{ backgroundColor: getStatusColor(table.status).includes('bg-green') ? '#16a34a' :
+                           getStatusColor(table.status).includes('bg-red') ? '#dc2626' :
+                           getStatusColor(table.status).includes('bg-orange') ? '#ea580c' : '#6b7280' }}
+                >
+                  <option value="available">✅ Available</option>
+                  <option value="occupied">🔴 Occupied</option>
+                  <option value="reserved">⏰ Reserved</option>
+                  <option value="maintenance">🔧 Maintenance</option>
+                </select>
+              </div>
             </div>
 
             <div className="space-y-2 mb-4">
