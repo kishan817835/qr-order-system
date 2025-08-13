@@ -134,6 +134,8 @@ export default function MenuPage() {
   const cartItemCount = useCartItemCount();
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isSearching, setIsSearching] = useState(false);
 
   useEffect(() => {
     dispatch({ type: 'SET_LOADING', payload: true });
