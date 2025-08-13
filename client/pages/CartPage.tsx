@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useRestaurant, useCartTotal, useCartItemCount } from '@/context/RestaurantContext';
 import { ArrowLeft, Minus, Plus, Trash2, ShoppingBag } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 export default function CartPage() {
   const { state, dispatch } = useRestaurant();
