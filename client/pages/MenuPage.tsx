@@ -304,6 +304,13 @@ export default function MenuPage() {
           </span>
         </Link>
       )}
+
+      {/* Item Details Modal */}
+      <ItemDetailsModal
+        item={selectedItem}
+        isOpen={isModalOpen}
+        onClose={closeItemModal}
+      />
     </div>
   );
 }
