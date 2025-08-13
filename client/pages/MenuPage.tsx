@@ -234,44 +234,48 @@ export default function MenuPage() {
             },
           });
         } else {
-          // Fetch with provided restaurant ID
-          const restaurantResponse =
-            await apiService.getRestaurant(restaurantId);
-          const menuResponse = await apiService.getRestaurantMenu(restaurantId);
-          const categoriesResponse =
-            await apiService.getCategories(restaurantId);
+          // Fetch with provided restaurant ID, but use restaurant_1 format
+          const actualRestaurantId = restaurantId === "1" ? "restaurant_1" : restaurantId;
 
-          if (
-            restaurantResponse.success &&
-            menuResponse.success &&
-            categoriesResponse.success
-          ) {
-            const restaurant = restaurantResponse.data;
-            const menuItems = menuResponse.data || [];
-            const categories = categoriesResponse.data || [];
-
-            const categoriesWithItems = categories.map((category: any) => ({
-              ...category,
-              items: menuItems.filter(
-                (item: any) => item.category_id === category._id,
-              ),
-            }));
-
-            const priorityItems = menuItems.filter(
-              (item: any) => item.isPriority,
-            );
-
-            dispatch({
-              type: "SET_RESTAURANT_DATA",
-              payload: {
-                restaurant,
-                categories: categoriesWithItems,
-                priorityItems,
-              },
-            });
-          } else {
+          const restaurantResponse = await apiService.getRestaurant(actualRestaurantId);
+          if (!restaurantResponse.success) {
             throw new Error("Failed to load restaurant data");
           }
+
+          const menuResponse = await apiService.getRestaurantMenu(actualRestaurantId);
+          if (!menuResponse.success) {
+            throw new Error("Failed to load menu data");
+          }
+
+          const categoriesResponse = await apiService.getCategories(actualRestaurantId);
+          if (!categoriesResponse.success) {
+            throw new Error("Failed to load categories data");
+          }
+
+          // Process the successful responses
+          const restaurant = restaurantResponse.data;
+          const menuItems = menuResponse.data || [];
+          const categories = categoriesResponse.data || [];
+
+          const categoriesWithItems = categories.map((category: any) => ({
+            ...category,
+            items: menuItems.filter(
+              (item: any) => item.category_id === category._id || item.category_id === category.id,
+            ),
+          }));
+
+          const priorityItems = menuItems.filter(
+            (item: any) => item.isPriority,
+          );
+
+          dispatch({
+            type: "SET_RESTAURANT_DATA",
+            payload: {
+              restaurant,
+              categories: categoriesWithItems,
+              priorityItems,
+            },
+          });
         }
       } catch (error) {
         console.error("Error loading restaurant data:", error);
