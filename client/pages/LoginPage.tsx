@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { User, Mail, Phone, Lock, Eye, EyeOff, UserCheck } from "lucide-react";
+import { apiService } from "../lib/api";
 
-type UserRole = "admin" | "kitchen" | "delivery" | "staff";
+type UserRole = "admin" | "kitchen_staff" | "delivery_boy" | "waiter" | "manager" | "customer";
 
 interface LoginData {
   email: string;
@@ -22,6 +23,7 @@ export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const [loginData, setLoginData] = useState<LoginData>({
@@ -35,7 +37,7 @@ export default function LoginPage() {
     phone: "",
     password: "",
     confirmPassword: "",
-    role: "staff",
+    role: "customer",
   });
 
   const [errors, setErrors] = useState<any>({});
@@ -90,87 +92,130 @@ export default function LoginPage() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateLogin()) return;
 
-    // Mock authentication - in real app, this would call an API
-    console.log("Login attempt:", loginData);
+    setLoading(true);
+    setErrors({});
 
-    // Simulate login success and redirect based on role
-    // For demo, admin credentials: admin@spicegarden.com / admin123
-    if (
-      loginData.email === "admin@spicegarden.com" &&
-      loginData.password === "admin123"
-    ) {
-      localStorage.setItem("userRole", "admin");
-      navigate("/admin");
-    } else if (
-      loginData.email === "kitchen@spicegarden.com" &&
-      loginData.password === "kitchen123"
-    ) {
-      localStorage.setItem("userRole", "kitchen");
-      navigate("/kitchen");
-    } else if (
-      loginData.email === "delivery@spicegarden.com" &&
-      loginData.password === "delivery123"
-    ) {
-      localStorage.setItem("userRole", "delivery");
-      navigate("/delivery");
-    } else if (
-      loginData.email === "staff@spicegarden.com" &&
-      loginData.password === "staff123"
-    ) {
-      localStorage.setItem("userRole", "staff");
-      navigate("/staff");
-    } else {
-      setErrors({ general: "Invalid email or password" });
+    try {
+      const response = await apiService.login(loginData.email, loginData.password);
+      
+      if (response.success && response.data) {
+        // Store token and user info
+        apiService.setToken(response.data.token);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        localStorage.setItem("userRole", response.data.user.role);
+        
+        // Redirect based on role
+        const role = response.data.user.role;
+        switch (role) {
+          case "super_admin":
+            navigate("/super-admin");
+            break;
+          case "admin":
+            navigate("/admin");
+            break;
+          case "kitchen_staff":
+            navigate("/kitchen");
+            break;
+          case "delivery_boy":
+            navigate("/delivery");
+            break;
+          case "waiter":
+          case "manager":
+            navigate("/staff");
+            break;
+          default:
+            navigate("/menu");
+        }
+      } else {
+        setErrors({ general: response.message || "Login failed" });
+      }
+    } catch (error) {
+      console.error("Login error:", error);
+      setErrors({ general: "Network error. Please try again." });
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateSignup()) return;
 
-    // Mock registration - in real app, this would call an API
-    console.log("Signup attempt:", signupData);
+    setLoading(true);
+    setErrors({});
 
-    // Simulate successful registration
-    alert("Account created successfully! Please login with your credentials.");
-    setIsLogin(true);
-    setSignupData({
-      name: "",
-      email: "",
-      phone: "",
-      password: "",
-      confirmPassword: "",
-      role: "staff",
-    });
+    try {
+      const userData = {
+        name: signupData.name,
+        email: signupData.email,
+        phone: signupData.phone,
+        password: signupData.password,
+        role: signupData.role,
+      };
+
+      const response = await apiService.register(userData);
+      
+      if (response.success) {
+        alert("Account created successfully! Please login with your credentials.");
+        setIsLogin(true);
+        setSignupData({
+          name: "",
+          email: "",
+          phone: "",
+          password: "",
+          confirmPassword: "",
+          role: "customer",
+        });
+      } else {
+        setErrors({ general: response.message || "Registration failed" });
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      setErrors({ general: "Network error. Please try again." });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getRoleIcon = (role: UserRole) => {
     switch (role) {
       case "admin":
         return "👨‍💼";
-      case "kitchen":
+      case "kitchen_staff":
         return "👨‍🍳";
-      case "delivery":
+      case "delivery_boy":
         return "🚚";
-      case "staff":
+      case "waiter":
+        return "🧑‍🍳";
+      case "manager":
         return "👨‍💻";
+      case "customer":
+        return "👤";
+      default:
+        return "👤";
     }
   };
 
   const getRoleDescription = (role: UserRole) => {
     switch (role) {
       case "admin":
-        return "Full access to all features";
-      case "kitchen":
+        return "Full access to restaurant management";
+      case "kitchen_staff":
         return "Manage orders and kitchen operations";
-      case "delivery":
+      case "delivery_boy":
         return "Handle delivery orders and tracking";
-      case "staff":
-        return "Menu and category management";
+      case "waiter":
+        return "Take orders and serve customers";
+      case "manager":
+        return "Supervise restaurant operations";
+      case "customer":
+        return "Place orders and track status";
+      default:
+        return "Basic access";
     }
   };
 
@@ -237,6 +282,7 @@ export default function LoginPage() {
                   onChange={(e) =>
                     setLoginData({ ...loginData, email: e.target.value })
                   }
+                  disabled={loading}
                 />
                 {errors.email && (
                   <p className="text-red text-sm mt-1">{errors.email}</p>
@@ -257,11 +303,13 @@ export default function LoginPage() {
                     onChange={(e) =>
                       setLoginData({ ...loginData, password: e.target.value })
                     }
+                    disabled={loading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform translate-y-neg-half text-secondary"
+                    disabled={loading}
                   >
                     {showPassword ? (
                       <EyeOff className="w-4 h-4" />
@@ -275,8 +323,12 @@ export default function LoginPage() {
                 )}
               </div>
 
-              <button type="submit" className="btn btn-primary w-full">
-                Sign In
+              <button 
+                type="submit" 
+                className="btn btn-primary w-full"
+                disabled={loading}
+              >
+                {loading ? "Signing In..." : "Sign In"}
               </button>
             </form>
 
@@ -287,18 +339,16 @@ export default function LoginPage() {
               </h3>
               <div className="space-y-1 text-sm text-secondary">
                 <p>
+                  <strong>Super Admin:</strong> superadmin@spicegarden.com / super123
+                </p>
+                <p>
                   <strong>Admin:</strong> admin@spicegarden.com / admin123
                 </p>
                 <p>
                   <strong>Kitchen:</strong> kitchen@spicegarden.com / kitchen123
                 </p>
                 <p>
-                  <strong>Delivery:</strong> delivery@spicegarden.com /
-                  delivery123
-                </p>
-                <p>
-                  <strong>General Staff:</strong> staff@spicegarden.com /
-                  staff123
+                  <strong>Delivery:</strong> delivery@spicegarden.com / delivery123
                 </p>
               </div>
             </div>
@@ -309,6 +359,12 @@ export default function LoginPage() {
             <h2 className="text-xl font-semibold text-primary mb-6">
               Create Account
             </h2>
+
+            {errors.general && (
+              <div className="bg-red bg-opacity-10 border border-red text-red p-3 rounded-lg mb-4">
+                {errors.general}
+              </div>
+            )}
 
             <form onSubmit={handleSignup} className="space-y-4">
               <div>
@@ -324,6 +380,7 @@ export default function LoginPage() {
                   onChange={(e) =>
                     setSignupData({ ...signupData, name: e.target.value })
                   }
+                  disabled={loading}
                 />
                 {errors.name && (
                   <p className="text-red text-sm mt-1">{errors.name}</p>
@@ -343,6 +400,7 @@ export default function LoginPage() {
                   onChange={(e) =>
                     setSignupData({ ...signupData, email: e.target.value })
                   }
+                  disabled={loading}
                 />
                 {errors.email && (
                   <p className="text-red text-sm mt-1">{errors.email}</p>
@@ -362,6 +420,7 @@ export default function LoginPage() {
                   onChange={(e) =>
                     setSignupData({ ...signupData, phone: e.target.value })
                   }
+                  disabled={loading}
                 />
                 {errors.phone && (
                   <p className="text-red text-sm mt-1">{errors.phone}</p>
@@ -382,10 +441,13 @@ export default function LoginPage() {
                       role: e.target.value as UserRole,
                     })
                   }
+                  disabled={loading}
                 >
-                  <option value="staff">General Staff</option>
-                  <option value="kitchen">Kitchen Staff</option>
-                  <option value="delivery">Delivery Boy</option>
+                  <option value="customer">Customer</option>
+                  <option value="waiter">Waiter</option>
+                  <option value="kitchen_staff">Kitchen Staff</option>
+                  <option value="delivery_boy">Delivery Boy</option>
+                  <option value="manager">Manager</option>
                 </select>
                 <p className="text-xs text-secondary mt-1 flex items-center">
                   <span className="mr-1">{getRoleIcon(signupData.role)}</span>
@@ -407,11 +469,13 @@ export default function LoginPage() {
                     onChange={(e) =>
                       setSignupData({ ...signupData, password: e.target.value })
                     }
+                    disabled={loading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
                     className="absolute right-3 top-1/2 transform translate-y-neg-half text-secondary"
+                    disabled={loading}
                   >
                     {showPassword ? (
                       <EyeOff className="w-4 h-4" />
@@ -442,11 +506,13 @@ export default function LoginPage() {
                         confirmPassword: e.target.value,
                       })
                     }
+                    disabled={loading}
                   />
                   <button
                     type="button"
                     onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                     className="absolute right-3 top-1/2 transform translate-y-neg-half text-secondary"
+                    disabled={loading}
                   >
                     {showConfirmPassword ? (
                       <EyeOff className="w-4 h-4" />
@@ -462,8 +528,12 @@ export default function LoginPage() {
                 )}
               </div>
 
-              <button type="submit" className="btn btn-primary w-full">
-                Create Account
+              <button 
+                type="submit" 
+                className="btn btn-primary w-full"
+                disabled={loading}
+              >
+                {loading ? "Creating Account..." : "Create Account"}
               </button>
             </form>
           </div>
