@@ -18,6 +18,7 @@ import Categories from "./pages/admin/Categories";
 import Items from "./pages/admin/Items";
 import Charges from "./pages/admin/Charges";
 import Settings from "./pages/admin/Settings";
+import KitchenDashboard from "./pages/KitchenDashboard";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
