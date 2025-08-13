@@ -214,8 +214,11 @@ export default function DeliveryDashboard() {
                     <button
                       onClick={() => {
                         const activeOrder = [...pickedUpOrders, ...onTheWayOrders][0];
-                        if (activeOrder) {
+                        if (activeOrder && activeOrder.id) {
                           navigate(`/delivery-details/${activeOrder.id}`);
+                        } else {
+                          alert('No active delivery found!');
+                          window.location.reload(); // Refresh to get latest data
                         }
                       }}
                       className="bg-red text-white px-2 py-1 rounded text-xs hover:bg-red-dark transition"
