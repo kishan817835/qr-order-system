@@ -130,6 +130,10 @@ class ApiService {
     return this.request(`/orders/${orderId}`);
   }
 
+  async searchOrderByNumber(orderNumber: string) {
+    return this.request(`/orders/search?orderNumber=${orderNumber}`);
+  }
+
   async createOrder(orderData: any) {
     return this.request('/orders', {
       method: 'POST',
@@ -251,6 +255,51 @@ class ApiService {
   async getReports(restaurantId: string, params: any) {
     const queryParams = new URLSearchParams(params).toString();
     return this.request(`/admin/reports/${restaurantId}?${queryParams}`);
+  }
+
+  // Super Admin APIs
+  async getSuperAdminDashboard() {
+    return this.request('/super-admin/dashboard');
+  }
+
+  async getSuperAdminAdmins(params?: { page?: number; search?: string; limit?: number }) {
+    const queryParams = params ? new URLSearchParams({
+      page: params.page?.toString() || '1',
+      search: params.search || '',
+      limit: params.limit?.toString() || '20'
+    }).toString() : '';
+    return this.request(`/super-admin/admins${queryParams ? `?${queryParams}` : ''}`);
+  }
+
+  async createSuperAdminAdmin(adminData: any) {
+    return this.request('/super-admin/admins', {
+      method: 'POST',
+      body: JSON.stringify(adminData),
+    });
+  }
+
+  async updateSuperAdminAdmin(adminId: string, updateData: any) {
+    return this.request(`/super-admin/admins/${adminId}`, {
+      method: 'PUT',
+      body: JSON.stringify(updateData),
+    });
+  }
+
+  async getSuperAdminRestaurants(params?: { page?: number; search?: string; limit?: number }) {
+    const queryParams = params ? new URLSearchParams({
+      page: params.page?.toString() || '1',
+      search: params.search || '',
+      limit: params.limit?.toString() || '20'
+    }).toString() : '';
+    return this.request(`/super-admin/restaurants${queryParams ? `?${queryParams}` : ''}`);
+  }
+
+  async getSuperAdminRestaurantDetails(restaurantId: string) {
+    return this.request(`/super-admin/restaurants/${restaurantId}/details`);
+  }
+
+  async getSuperAdminAnalytics(period = 'week') {
+    return this.request(`/super-admin/analytics?period=${period}`);
   }
 
   // Auth APIs
