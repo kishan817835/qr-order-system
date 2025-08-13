@@ -245,13 +245,24 @@ export default function TableManagement() {
           <h1 className="text-2xl font-bold text-primary">Table Management</h1>
           <p className="text-secondary">Manage restaurant tables and QR codes</p>
         </div>
-        <button 
-          onClick={() => setShowCreateModal(true)}
-          className="btn btn-primary"
-        >
-          <Plus className="w-4 h-4 mr-2" />
-          Create Table
-        </button>
+        <div className="flex space-x-3">
+          {tables.length > 0 && (
+            <button
+              onClick={printAllQRCodes}
+              className="btn btn-secondary"
+            >
+              <Download className="w-4 h-4 mr-2" />
+              Print All QR
+            </button>
+          )}
+          <button
+            onClick={() => setShowCreateModal(true)}
+            className="btn btn-primary"
+          >
+            <Plus className="w-4 h-4 mr-2" />
+            Create Table
+          </button>
+        </div>
       </div>
 
       {/* Tables Overview */}
