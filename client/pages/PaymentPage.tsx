@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useRestaurant, useCartTotal, useCartItemCount } from '@/context/RestaurantContext';
 import { ArrowLeft, CreditCard, Truck, MapPin, Phone, User, Mail } from 'lucide-react';
+import Footer from '@/components/Footer';
 
 interface CustomerForm {
   name: string;
