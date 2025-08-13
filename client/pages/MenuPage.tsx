@@ -500,35 +500,37 @@ export default function MenuPage() {
       )}
 
       {/* Categories */}
-      <div className="container py-6">
-        <h2 className="text-lg font-bold text-primary mb-4">Menu Categories</h2>
-        <div className="category-scroll">
-          {state.categories.map((category) => (
-            <div
-              key={category.id}
-              className="category-card"
-              onClick={() => dispatch({ type: 'SET_SELECTED_CATEGORY', payload: category.id })}
-            >
-              <h3 className="font-semibold text-primary mb-2">{category.name}</h3>
-              <p className="text-sm text-secondary">{category.items.length} items</p>
-              {category.items[0] && (
-                <img 
-                  src={category.items[0].image_url}
-                  alt={category.name}
-                  className="w-full h-20 object-cover rounded mt-3"
-                />
-              )}
-              <div className="flex items-center justify-between mt-3">
-                <span className="text-sm text-orange font-medium">View All</span>
-                <ArrowRight className="w-4 h-4 text-orange" />
+      {!isSearching && (
+        <div className="container py-6">
+          <h2 className="text-lg font-bold text-primary mb-4">Menu Categories</h2>
+          <div className="category-scroll">
+            {state.categories.map((category) => (
+              <div
+                key={category.id}
+                className="category-card"
+                onClick={() => dispatch({ type: 'SET_SELECTED_CATEGORY', payload: category.id })}
+              >
+                <h3 className="font-semibold text-primary mb-2">{category.name}</h3>
+                <p className="text-sm text-secondary">{category.items.length} items</p>
+                {category.items[0] && (
+                  <img
+                    src={category.items[0].image_url}
+                    alt={category.name}
+                    className="w-full h-20 object-cover rounded mt-3"
+                  />
+                )}
+                <div className="flex items-center justify-between mt-3">
+                  <span className="text-sm text-orange font-medium">View All</span>
+                  <ArrowRight className="w-4 h-4 text-orange" />
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
+      )}
 
       {/* Selected Category Items */}
-      {selectedCategory && (
+      {!isSearching && selectedCategory && (
         <div className="container pb-24">
           <div className="flex items-center justify-between mb-4">
             <h2 className="text-lg font-bold text-primary">{selectedCategory.name}</h2>
