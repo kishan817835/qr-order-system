@@ -11,6 +11,7 @@ import MenuPage from "./pages/MenuPage";
 import CartPage from "./pages/CartPage";
 import PaymentPage from "./pages/PaymentPage";
 import OrderConfirmationPage from "./pages/OrderConfirmationPage";
+import OrderTrackingPage from "./pages/OrderTrackingPage";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
 import Orders from "./pages/admin/Orders";
@@ -30,6 +31,10 @@ import LoginPage from "./pages/LoginPage";
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 
+// Super Admin imports
+import SuperAdminLayout from "./pages/super-admin/SuperAdminLayout";
+import SuperAdminDashboard from "./pages/super-admin/SuperAdminDashboard";
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -48,6 +53,15 @@ const App = () => (
               path="/order/confirmation"
               element={<OrderConfirmationPage />}
             />
+            <Route
+              path="/order-confirmation"
+              element={<OrderConfirmationPage />}
+            />
+            <Route
+              path="/track-order/:orderId"
+              element={<OrderTrackingPage />}
+            />
+            <Route path="/track-order" element={<OrderTrackingPage />} />
             <Route path="/kitchen" element={<KitchenDashboard />} />
             <Route path="/KitchenDashboard" element={<KitchenDashboard />} />
             <Route path="/delivery" element={<DeliveryDashboard />} />
@@ -69,6 +83,47 @@ const App = () => (
             />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/LoginPage" element={<LoginPage />} />
+
+            {/* Super Admin Routes */}
+            <Route path="/super-admin" element={<SuperAdminLayout />}>
+              <Route index element={<SuperAdminDashboard />} />
+              <Route
+                path="admins"
+                element={
+                  <div className="p-8 text-center">
+                    Admins Management - Coming Soon
+                  </div>
+                }
+              />
+              <Route
+                path="create-admin"
+                element={
+                  <div className="p-8 text-center">
+                    Create Admin - Coming Soon
+                  </div>
+                }
+              />
+              <Route
+                path="restaurants"
+                element={
+                  <div className="p-8 text-center">
+                    Restaurants - Coming Soon
+                  </div>
+                }
+              />
+              <Route
+                path="analytics"
+                element={
+                  <div className="p-8 text-center">Analytics - Coming Soon</div>
+                }
+              />
+              <Route
+                path="settings"
+                element={
+                  <div className="p-8 text-center">Settings - Coming Soon</div>
+                }
+              />
+            </Route>
 
             {/* Admin Routes */}
             <Route path="/admin" element={<AdminLayout />}>
