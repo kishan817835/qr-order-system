@@ -1,13 +1,18 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Index() {
   const navigate = useNavigate();
+  const [redirected, setRedirected] = useState(false);
 
   useEffect(() => {
-    // Redirect to demo restaurant menu
-    navigate("/menu/1");
-  }, [navigate]);
+    // Prevent multiple redirects
+    if (!redirected) {
+      setRedirected(true);
+      // Use replace instead of navigate to avoid back button issues
+      navigate("/menu/1", { replace: true });
+    }
+  }, [navigate, redirected]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
