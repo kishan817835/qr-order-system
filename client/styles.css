@@ -740,13 +740,62 @@ body {
   .admin-sidebar {
     transform: translateX(-100%);
     transition: transform 0.3s ease;
+    z-index: 60;
   }
-  
+
   .admin-sidebar.open {
     transform: translateX(0);
   }
-  
+
   .admin-content {
     margin-left: 0;
+    padding: 12px;
+  }
+
+  .container {
+    padding: 0 8px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .btn {
+    padding: 10px 12px;
+    font-size: 14px;
+  }
+
+  .form-input {
+    padding: 10px 12px;
+  }
+}
+
+/* Tablet responsiveness */
+@media (max-width: 1024px) and (min-width: 769px) {
+  .admin-sidebar {
+    width: 200px;
+  }
+
+  .admin-content {
+    margin-left: 200px;
+  }
+}
+
+/* Mobile-first container improvements */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 6px;
+  }
+
+  .text-2xl {
+    font-size: 20px;
+  }
+
+  .text-xl {
+    font-size: 18px;
+  }
+
+  .grid-cols-1 {
+    gap: 12px;
   }
 }
